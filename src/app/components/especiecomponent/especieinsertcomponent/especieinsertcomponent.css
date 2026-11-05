@@ -1,0 +1,56 @@
+.container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 24px 32px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+h2 {
+  text-align: center;
+  color: #3f51b5;
+  margin-bottom: 24px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.example-section {
+  margin: 8px 0 16px 0;
+}
+
+button[matButton] {
+  align-self: center;
+  padding: 8px 32px;
+  margin-top: 8px;
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button[matButton]:hover {
+  background-color: #303f9f;
+}
+
+p {
+  text-align: center;
+  margin-top: 16px;
+  color: #d32f2f;
+  font-weight: 500;
+}

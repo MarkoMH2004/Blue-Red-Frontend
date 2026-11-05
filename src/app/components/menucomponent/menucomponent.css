@@ -1,0 +1,24 @@
+mat-toolbar {
+  background: #108fa0;
+  color: #ffffff;
+  padding: 0 24px;
+  gap: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+  border-bottom: 3px solid #ece3e3;
+  --mat-button-text-label-text-color: #ffffff;
+}
+
+button {
+  color: #181717;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: rgba(229, 9, 20, 0.2);
+}
+
+mat-icon {
+  color: #f4f1f1;
+}

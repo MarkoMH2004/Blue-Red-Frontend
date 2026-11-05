@@ -1,0 +1,40 @@
+<div class="container">
+  <div>
+    <h2>Registro de Especie</h2>
+  </div>
+  <div>
+    <form [formGroup]="formulario" (ngSubmit)="registrarEspecie()">
+      
+      <mat-form-field class="example-full-width">
+        <mat-label>Nombre Común</mat-label>
+        <input matInput placeholder="Ex. Anchoveta" formControlName="nombreComun" />
+      </mat-form-field>
+      
+      <br />
+      
+      <mat-form-field class="example-full-width">
+        <mat-label>Nombre Científico</mat-label>
+        <input matInput placeholder="Ex. Engraulis ringens" formControlName="nombreCientifico" />
+      </mat-form-field>
+      
+      <br />
+      
+      <mat-form-field class="example-full-width">
+        <mat-label>Talla Mínima (cm)</mat-label>
+        <input matInput type="number" placeholder="Ex. 12.5" formControlName="tallaMinima" />
+      </mat-form-field>
+      
+      <br />
+      
+      <section class="example-section">
+        <mat-checkbox class="example-margin" formControlName="enVeda">¿Está en Veda?</mat-checkbox>
+      </section>
+      
+      <button matButton type="submit">Registrar</button>
+    </form>
+    
+    @if (mensaje) {
+      <p>{{ mensaje }}</p>
+    }
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="container">
+  <mat-toolbar>
+    <button matIconButton class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>home</mat-icon>
+    </button>
+    <button matButton [matMenuTriggerFor]="menuEspecie" style="color: aliceblue;">Especie</button>
+        <mat-menu #menuEspecie="matMenu">
+      <button mat-menu-item routerLink="/especies/listar">Listar</button>
+      <button mat-menu-item routerLink="/especies/insertar">Registrar</button> 
+    </mat-menu>
+  </mat-toolbar>
+</div>
