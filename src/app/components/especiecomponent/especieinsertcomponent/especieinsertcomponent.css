@@ -35,7 +35,7 @@ button[matButton] {
   align-self: center;
   padding: 8px 32px;
   margin-top: 8px;
-  background-color: #3f51b5;
+  background-color: #d7263d;
   color: white;
   border: none;
   border-radius: 6px;
@@ -45,7 +45,7 @@ button[matButton] {
 }
 
 button[matButton]:hover {
-  background-color: #303f9f;
+  background-color: #1f7ab8;
 }
 
 p {

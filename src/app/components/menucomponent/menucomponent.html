@@ -1,24 +1,18 @@
-<header class="navbar">
-  <div class="nav-container">
-    <!-- Logo y Nombre de la Startup -->
-    <div class="nav-logo">
-      <span class="logo-icon">🌊</span>
-      <span class="logo-text">Blue<strong>Red</strong></span>
-    </div>
+<div class="container">
+  <mat-toolbar>
+    <button matIconButton class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>home</mat-icon>
+    </button>
+    <button matButton [matMenuTriggerFor]="menuEspecie" style="color: aliceblue">Especie</button>
+    <mat-menu #menuEspecie="matMenu">
+      <button mat-menu-item routerLink="/especies/listar">Listar</button>
+      <button mat-menu-item routerLink="/especies/insertar">Registrar</button>
+    </mat-menu>
 
-    <!-- Enlaces de Navegación de la Landing Page -->
-    <nav class="nav-links">
-      <a href="#inicio" class="nav-link active">Inicio</a>
-      <a href="#nosotros" class="nav-link">Nosotros</a>
-      <a href="#como-funciona" class="nav-link">Cómo funciona</a>
-      <a href="#beneficios" class="nav-link">Beneficios</a>
-      <a href="#contacto" class="nav-link">Contacto</a>
-    </nav>
-
-    <!-- En tu menucomponent.html -->
-<div class="nav-action">
-  <!-- Redirige directamente al dashboard simulando el acceso -->
-  <button class="btn-login" routerLink="/dashboard/especies/listar">Iniciar sesión</button>
+    <button matButton [matMenuTriggerFor]="menuLote" style="color: aliceblue">Lote de captura</button>
+    <mat-menu #menuLote="matMenu">
+      <button mat-menu-item routerLink="/lotes-captura/listar">Listar</button>
+      <button mat-menu-item routerLink="/lotes-captura/insertar">Registrar</button>
+    </mat-menu>
+  </mat-toolbar>
 </div>
-  </div>
-</header>
