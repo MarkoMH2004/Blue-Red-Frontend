@@ -1,1 +1,105 @@
-<p>lclistcomponent works!</p>
+<div class="container">
+  <div class="encabezado">
+    <div class="titulo">
+      <h2>Mis capturas</h2>
+      <p class="descripcion">
+        Revisa tus lotes registrados y el estado de su validación y certificación.
+      </p>
+    </div>
+    <button mat-flat-button class="btn-nuevo" routerLink="/lotecaptura/insertar">
+      + Registrar nuevo lote
+    </button>
+  </div>
+  <div class="bloque">
+    @if (dataSource.length > 0) {
+      <h3>Historial de capturas</h3>
+      <!--Muestre la tabla-->
+      <table mat-table [dataSource]="dataSource" class="mat-shadow-2">
+        <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="CID">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let element">{{ element.idLoteCaptura }}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="CESPECIE">
+          <th mat-header-cell *matHeaderCellDef>Especie</th>
+          <td mat-cell *matCellDef="let element">{{ nombreEspecie(element.idEspecie) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="CFECHACAPTURA">
+          <th mat-header-cell *matHeaderCellDef>Fecha de captura</th>
+          <td mat-cell *matCellDef="let element">{{ element.fechaCaptura }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="CESTADO">
+          <th mat-header-cell *matHeaderCellDef>Estado</th>
+          <td mat-cell *matCellDef="let element">{{ element.estado }}</td>
+        </ng-container>
+
+        <!-- ICONO ELIMINAR -->
+        <ng-container matColumnDef="CELIMINAR">
+          <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+          <td mat-cell *matCellDef="let element">
+            <button
+              matButton
+              (click)="eliminarLotesCaptura(element.idLoteCaptura)"
+              class="btn-eliminar"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- ICONO EDITAR -->
+        <ng-container matColumnDef="CEDITAR">
+          <th mat-header-cell *matHeaderCellDef>Editar</th>
+
+          <td mat-cell *matCellDef="let element">
+            <button
+              mat-button
+              class="btn-eliminar"
+              [routerLink]="['/cultivos/editar', element.idLoteCaptura]"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- ICONO DETALLE -->
+        <ng-container matColumnDef="CDETALLE">
+          <th mat-header-cell *matHeaderCellDef>Detalle</th>
+
+          <td mat-cell *matCellDef="let element">
+            <button
+              mat-button
+              class="btn-eliminar"
+              [routerLink]="['/cultivos/editar', element.idLoteCaptura]"
+            >
+              <mat-icon>info</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <!-- PAGINADOR -->
+      <mat-paginator
+        [length]="100"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        aria-label="Select page"
+      >
+      </mat-paginator>
+
+    } @else {
+      <!--mensaje-->
+      <p>No hay especies registradas</p>
+    }
+  </div>
+</div>

@@ -3,10 +3,16 @@
     <button matIconButton class="example-icon" aria-label="Example icon-button with menu icon">
       <mat-icon>home</mat-icon>
     </button>
-    <button matButton [matMenuTriggerFor]="menuEspecie" style="color: aliceblue;">Especie</button>
-        <mat-menu #menuEspecie="matMenu">
+    <button matButton [matMenuTriggerFor]="menuEspecie" style="color: aliceblue">Especie</button>
+    <mat-menu #menuEspecie="matMenu">
       <button mat-menu-item routerLink="/especies/listar">Listar</button>
-      <button mat-menu-item routerLink="/especies/insertar">Registrar</button> 
+      <button mat-menu-item routerLink="/especies/insertar">Registrar</button>
+    </mat-menu>
+
+    <button matButton [matMenuTriggerFor]="menuLote" style="color: aliceblue">Lote de captura</button>
+    <mat-menu #menuLote="matMenu">
+      <button mat-menu-item routerLink="/lotes-captura/listar">Listar</button>
+      <button mat-menu-item routerLink="/lotes-captura/insertar">Registrar</button>
     </mat-menu>
   </mat-toolbar>
 </div>
