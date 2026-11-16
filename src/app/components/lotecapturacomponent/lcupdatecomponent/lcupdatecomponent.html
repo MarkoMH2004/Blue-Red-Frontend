@@ -1,0 +1,130 @@
+<div class="container">
+  <div class="encabezado">
+    <h2>Actualizar lote de captura</h2>
+  </div>
+
+  <div class="formulario">
+    <form [formGroup]="formLoteCaptura" (ngSubmit)="actualizarLoteCaptura()">
+      <div class="bloque-id">
+        <h3>ID de la captura</h3>
+        <div class="dato">
+          <span class="valor">{{ formLoteCaptura.value.ID }}</span>
+        </div>
+      </div>
+
+      <div class="bloque-A">
+        <h3>Datos de la captura</h3>
+        <!-- Especie -->
+        <mat-form-field appearance="outline">
+          <mat-label>Especie marina</mat-label>
+          <mat-select formControlName="idEspecie">
+            @for (e of especies; track e.idEspecie) {
+              <mat-option [value]="e.idEspecie">{{ e.nombreComun }}</mat-option>
+            }
+          </mat-select>
+          <mat-error>Seleccione una especie</mat-error>
+        </mat-form-field>
+
+        <!-- Fecha de captura -->
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha de captura</mat-label>
+          <input matInput [matDatepicker]="picker1" formControlName="fechacaptura" />
+
+          <mat-datepicker-toggle matIconSuffix [for]="picker1"> </mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+
+        <!-- Cantidad -->
+        <mat-form-field appearance="outline">
+          <mat-label>Cantidad de peces</mat-label>
+          <input matInput type="number" placeholder="Ej. 50" formControlName="cantidad" />
+          <mat-error>Ingrese la cantidad de peces</mat-error>
+        </mat-form-field>
+
+        <!-- Peso -->
+        <mat-form-field appearance="outline">
+          <mat-label>Peso total</mat-label>
+          <input matInput type="number" placeholder="Ej. 100" formControlName="peso" />
+          <mat-error>Ingrese el peso total</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="bloque-B">
+        <h3>Ubicación de la captura</h3>
+
+        <!-- Mapa -->
+        <div id="mapa" class="mapa"></div>
+
+        <!-- Latitud -->
+        <mat-form-field appearance="outline">
+          <mat-label>Latitud</mat-label>
+          <input matInput type="number" placeholder="Ej. 10.5" formControlName="latitud" />
+          <mat-error>Ingrese la latitud</mat-error>
+        </mat-form-field>
+
+        <!-- Longitud -->
+        <mat-form-field appearance="outline">
+          <mat-label>Longitud</mat-label>
+          <input matInput type="number" placeholder="Ej. -70.5" formControlName="longitud" />
+          <mat-error>Ingrese la longitud</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="bloque-C">
+        <h3>Información adicional</h3>
+
+        <!-- Imagen -->
+        <div class="grupo-imagen">
+          <div class="campo-imagen">
+            <input
+              #archivo
+              type="file"
+              accept="image/*"
+              hidden
+              (change)="seleccionarImagen($event)"
+            />
+            <button matButton type="button" (click)="archivo.click()">
+              <mat-icon>upload</mat-icon> Adjuntar imagen
+            </button>
+
+            @if (nombreImagen) {
+              <span class="nombre-archivo">{{ nombreImagen }}</span>
+            }
+          </div>
+
+          @if (
+            formLoteCaptura.get('imagenReferencia')?.invalid &&
+            formLoteCaptura.get('imagenReferencia')?.touched
+          ) {
+            <span class="error-imagen">Adjunte una imagen referencial</span>
+          }
+        </div>
+
+        <!-- Precio -->
+        <mat-form-field appearance="outline">
+          <mat-label>Precio del lote</mat-label>
+          <input matInput type="number" placeholder="Ej. 10.5" formControlName="precio" />
+          <mat-error>Ingrese el precio por kilogramo</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="bloque-estado">
+        <h3>Estado de la captura</h3>
+        <div class="dato">
+          <span class="estado" [class]="claseEstado()">{{ formLoteCaptura.value.estado }}</span>
+        </div>
+      </div>
+
+      <div class="acciones">
+        <button matButton type="button" class="btn-cancelar" routerLink="/lotes-captura/listar">
+          Cancelar
+        </button>
+        <button matButton type="submit">Actualizar lote</button>
+      </div>
+    </form>
+
+    @if (mensaje) {
+      <p class="mensaje">{{ mensaje }}</p>
+    }
+  </div>
+</div>

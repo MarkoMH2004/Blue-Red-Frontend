@@ -1,7 +1,7 @@
 export class LoteCapturaDTO {
     idLoteCaptura: number=0;
-    usuario: number=0;
-    especie: number=0;
+    idUsuario: number=0;
+    idEspecie: number=0;
     fechaCaptura: Date=new Date();
     latitud: number=0;
     longitud: number=0;

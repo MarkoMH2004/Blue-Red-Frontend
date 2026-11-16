@@ -1,0 +1,89 @@
+<div class="container">
+  <div class="encabezado">
+    <div class="titulo">
+      <h2>Detalle del lote de captura</h2>
+      <p class="descripcion">Consulta la información registrada de este lote.</p>
+    </div>
+    <button
+      matButton
+      class="btn-nuevo"
+      [routerLink]="['/lotes-captura/editar', lote?.idLoteCaptura]"
+    >
+      <mat-icon>edit</mat-icon> Editar
+    </button>
+  </div>
+  @if (lote) {
+    <div class="bloque-id">
+      <h3>ID de la captura</h3>
+      <div class="dato">
+        <span class="valor">{{ lote.idLoteCaptura }}</span>
+      </div>
+    </div>
+
+    <div class="bloque-A">
+      <h3>Datos de la captura</h3>
+      <!-- Especie -->
+      <div class="dato">
+        <span class="etiqueta">Especie marina</span>
+        <span class="valor">{{ nombreEspecie(lote.idEspecie) }}</span>
+      </div>
+
+      <!-- Fecha de captura -->
+      <div class="dato">
+        <span class="etiqueta">Fecha de captura</span>
+        <span class="valor">{{ lote.fechaCaptura | date: 'dd/MM/yyyy' }}</span>
+      </div>
+
+      <!-- Cantidad -->
+      <div class="dato">
+        <span class="etiqueta">Cantidad de peces</span>
+        <span class="valor">{{ lote.cantidadPeces }}</span>
+      </div>
+
+      <!-- Peso -->
+      <div class="dato">
+        <span class="etiqueta">Peso total</span>
+        <span class="valor">{{ lote.pesoTotal }} kg</span>
+      </div>
+    </div>
+
+    <div class="bloque-B">
+      <h3>Ubicación de la captura</h3>
+
+      <!-- Latitud -->
+      <div class="dato">
+        <span class="etiqueta">Latitud</span>
+        <span class="valor">{{ lote.latitud }}</span>
+      </div>
+
+      <!-- Longitud -->
+      <div class="dato">
+        <span class="etiqueta">Longitud</span>
+        <span class="valor">{{ lote.longitud }}</span>
+      </div>
+    </div>
+
+    <div class="bloque-C">
+      <h3>Información adicional</h3>
+
+      <!-- Imagen -->
+      <div class="dato">
+        <span class="etiqueta">Imagen de referencia</span>
+        <span class="valor">{{ lote.imagenReferencia }}</span>
+      </div>
+
+      <!-- Precio -->
+      <div class="dato">
+        <span class="etiqueta">Precio del lote</span>
+        <span class="valor">S/ {{ lote.precioLote }}</span>
+      </div>
+    </div>
+
+    <div class="bloque-estado">
+      <h3>Estado de la captura</h3>
+      <div class="dato">
+        <span class="estado" [class]="claseEstado()">{{ lote.estado }}</span>
+      </div>
+    </div>
+  }
+</div>

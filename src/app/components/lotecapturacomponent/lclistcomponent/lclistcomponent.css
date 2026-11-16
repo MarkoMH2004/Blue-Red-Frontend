@@ -47,8 +47,13 @@
   border: none;
   font-weight: bold;
   margin-top: 20px;
+  cursor: pointer;
 }
 
+/* Efecto del botón */
+.btn-nuevo:hover {
+  background-color: #1f7ab8;
+}
 
 /* Título */
 
@@ -119,6 +124,17 @@ table {
 
 }
 
+.estado {
+  align-self: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 550;
+}
+
+.estado.pendiente { background: #f2a900; color: #fcfcfc; }
+.estado.aceptado  { background: #1e7f54; color: #fcfcfc; }
+.estado.rechazado { background: #b3261e; color: #fcfcfc; }
 
 
 /* Encabezados */
@@ -207,7 +223,7 @@ p {
 
  background-color: white;
 
- color: #31368a;
+ color: #1f7ab8;
 
  font-size: 16px;
 
@@ -215,7 +231,7 @@ p {
 
  border-radius: 8px;
 
- box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+ /*box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);*/
 
 }
 
@@ -227,7 +243,8 @@ p {
 
  :host {
 
-  padding: 12px;
+  margin: 15px;
+  padding: 20px;
 
  }
 
@@ -250,26 +267,32 @@ p {
   font-size: 10px;
 
  }
-
+ 
 }
 
-.btn-eliminar {
+.btn-eliminar,
+.btn-editar,
+.btn-detalle {
 
-  color: rgb(30, 16, 94);
+  color: #1f7ab8;
 
   border: none;
 
   box-shadow: none;
 
   background: transparent;
+  cursor: pointer;
 
 }
 
 
 
-.btn-eliminar:hover {
+.btn-eliminar:hover,
+.btn-editar:hover,
+.btn-detalle:hover  {
 
   background-color: #e38895;
   border-radius: 15px;
+
 
 }
