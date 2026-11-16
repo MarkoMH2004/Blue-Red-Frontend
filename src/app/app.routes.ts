@@ -2,14 +2,16 @@ import { Routes } from '@angular/router';
 import { Homecomponent } from './components/homecomponent/homecomponent';
 import { Especiecomponent } from './components/especiecomponent/especiecomponent';
 import { Especielistcomponent } from './components/especiecomponent/especielistcomponent/especielistcomponent';
-import {Especieinsertcomponent} from './components/especiecomponent/especieinsertcomponent/especieinsertcomponent';
+import { Especieinsertcomponent } from './components/especiecomponent/especieinsertcomponent/especieinsertcomponent';
 import { Lotecapturacomponent } from './components/lotecapturacomponent/lotecapturacomponent';
 import { Lclistcomponent } from './components/lotecapturacomponent/lclistcomponent/lclistcomponent';
 import { Lcinsertcomponent } from './components/lotecapturacomponent/lcinsertcomponent/lcinsertcomponent';
+import { Lcupdatecomponent } from './components/lotecapturacomponent/lcupdatecomponent/lcupdatecomponent';
+import { Lcdetallecomponent } from './components/lotecapturacomponent/lcdetallecomponent/lcdetallecomponent';
 export const routes: Routes = [
   {
     path: '',
-    component: Homecomponent
+    component: Homecomponent,
   },
   {
     path: 'especies',
@@ -18,17 +20,17 @@ export const routes: Routes = [
       {
         path: '',
         redirectTo: 'listar',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'listar',
-        component: Especielistcomponent
+        component: Especielistcomponent,
       },
       {
-        path: 'insertar',                  
-        component: Especieinsertcomponent  
-      }
-    ]
+        path: 'insertar',
+        component: Especieinsertcomponent,
+      },
+    ],
   },
   {
     path: 'lotes-captura',
@@ -37,16 +39,24 @@ export const routes: Routes = [
       {
         path: '',
         redirectTo: 'listar',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'listar',
-        component: Lclistcomponent
+        component: Lclistcomponent,
       },
       {
-        path: 'insertar',                  
-        component:  Lcinsertcomponent
+        path: 'insertar',
+        component: Lcinsertcomponent,
+      },
+      {
+        path: 'editar/:id',
+        component: Lcupdatecomponent,
+      },
+      {
+        path: 'detalle/:id',
+        component: Lcdetallecomponent,
       }
-    ]
-  }
+    ],
+  },
 ];

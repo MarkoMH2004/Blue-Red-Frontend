@@ -6,12 +6,13 @@
         Revisa tus lotes registrados y el estado de su validación y certificación.
       </p>
     </div>
-    <button mat-flat-button class="btn-nuevo" routerLink="/lotecaptura/insertar">
+    <button matButton type="button" class="btn-nuevo" routerLink="/lotes-captura/insertar">
       + Registrar nuevo lote
     </button>
+
   </div>
   <div class="bloque">
-    @if (dataSource.length > 0) {
+    @if (dataSource.data.length > 0) {
       <h3>Historial de capturas</h3>
       <!--Muestre la tabla-->
       <table mat-table [dataSource]="dataSource" class="mat-shadow-2">
@@ -37,7 +38,7 @@
 
         <ng-container matColumnDef="CESTADO">
           <th mat-header-cell *matHeaderCellDef>Estado</th>
-          <td mat-cell *matCellDef="let element">{{ element.estado }}</td>
+          <td mat-cell *matCellDef="let element"><span [class]="claseEstado(element.estado)">{{ element.estado }}</span></td>
         </ng-container>
 
         <!-- ICONO ELIMINAR -->
@@ -61,8 +62,8 @@
           <td mat-cell *matCellDef="let element">
             <button
               mat-button
-              class="btn-eliminar"
-              [routerLink]="['/cultivos/editar', element.idLoteCaptura]"
+              class="btn-editar"
+              [routerLink]="['/lotes-captura/editar', element.idLoteCaptura]"
             >
               <mat-icon>edit</mat-icon>
             </button>
@@ -76,8 +77,8 @@
           <td mat-cell *matCellDef="let element">
             <button
               mat-button
-              class="btn-eliminar"
-              [routerLink]="['/cultivos/editar', element.idLoteCaptura]"
+              class="btn-detalle"
+              [routerLink]="['/lotes-captura/detalle', element.idLoteCaptura]"
             >
               <mat-icon>info</mat-icon>
             </button>
@@ -90,8 +91,8 @@
 
       <!-- PAGINADOR -->
       <mat-paginator
-        [length]="100"
-        [pageSize]="10"
+        [length]="dataSource.data.length"
+        [pageSize]="5"
         [pageSizeOptions]="[5, 10, 25, 100]"
         aria-label="Select page"
       >

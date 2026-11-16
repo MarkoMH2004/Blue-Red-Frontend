@@ -8,19 +8,26 @@ import { LoteCapturaDTO } from '../models/LoteCapturaDTO';
   providedIn: 'root',
 })
 export class Lotecapturaservice {
-    private apiURL = `${environment.base}/api/lote-captura`
-    constructor(private http: HttpClient) { }
+  private apiURL = `${environment.base}/api/lote-captura`;
+  constructor(private http: HttpClient) {}
 
-    getLoteCaptura(): Observable<LoteCapturaDTO[]> {
-        return this.http.get<LoteCapturaDTO[]>(this.apiURL);
-    }
+  getLoteCaptura(): Observable<LoteCapturaDTO[]> {
+    return this.http.get<LoteCapturaDTO[]>(this.apiURL);
+  }
 
-    insert(lc: LoteCapturaDTO): Observable<LoteCapturaDTO> {
-    return this.http.post<LoteCapturaDTO>(this.apiURL, lc)
+  insert(lc: LoteCapturaDTO): Observable<LoteCapturaDTO> {
+    return this.http.post<LoteCapturaDTO>(this.apiURL, lc);
   }
 
   deleteLoteCaptura(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiURL}/${id}`);
   }
 
+  listId(id: number): Observable<LoteCapturaDTO> {
+    return this.http.get<LoteCapturaDTO>(`${this.apiURL}/${id}`);
+  }
+
+  update(dto: LoteCapturaDTO): Observable<LoteCapturaDTO> {
+    return this.http.put<LoteCapturaDTO>(this.apiURL, dto);
+  }
 }
