@@ -1,2 +1,33 @@
-<app-menucomponent></app-menucomponent>
-<router-outlet></router-outlet>
+<!-- especiecomponent.html (El contenedor del panel interno) -->
+<div class="dashboard-layout">
+  
+  <!-- BARRA SUPERIOR INTERNA -->
+  <header class="dashboard-header">
+    <div class="dashboard-logo">[Logo BlueRed]</div>
+    <div class="dashboard-user">
+      <span>👤 Mi perfil</span> | 
+      <span routerLink="/" class="logout-link">Cerrar sesión</span>
+    </div>
+  </header>
+
+  <div class="dashboard-body">
+    <!-- MENÚ LATERAL IZQUIERDO -->
+    <aside class="sidebar">
+      <span class="menu-title">MENÚ</span>
+      <nav class="sidebar-nav">
+        <a routerLink="/dashboard/inicio" class="sidebar-item">🏠 Inicio</a>
+        <a routerLink="/dashboard/capturas" class="sidebar-item">📦 Mis capturas</a>
+        <a routerLink="/dashboard/registrar" class="sidebar-item">+ Registrar lote</a>
+        <!-- Opción activa basada en tu Figma -->
+        <a routerLink="/dashboard/especies/listar" class="sidebar-item active">🐟 Especies</a>
+        <a routerLink="/dashboard/validaciones" class="sidebar-item">🛡️ Validaciones</a>
+        <a routerLink="/dashboard/certificaciones" class="sidebar-item">📄 Certificaciones</a>
+      </nav>
+    </aside>
+
+    <!-- ÁREA DE CONTENIDO PRINCIPAL (Aquí se carga tu listar y registrar) -->
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

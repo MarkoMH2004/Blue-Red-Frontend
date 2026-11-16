@@ -4,10 +4,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { EspecieDTO } from '../../../models/EspecieDTO';
 import { Especieservice } from '../../../services/especieservice';
+import { Especieinsertcomponent } from '../especieinsertcomponent/especieinsertcomponent';
 
 @Component({
   selector: 'app-especielistcomponent',
-  imports: [MatTableModule, MatIconModule, MatButtonModule],
+  imports: [MatTableModule, MatIconModule, MatButtonModule,Especieinsertcomponent],
   templateUrl: './especielistcomponent.html',
   styleUrl: './especielistcomponent.css',
 })
