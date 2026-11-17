@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="encabezado">
+    <div class="titulo">
+      <h2>Reconocimiento de especies con IA</h2>
+      <p class="descripcion">Selecciona una fotografía de un pez para identificar su especie.</p>
+    </div>
+  </div>
+  <div class="bloque">
+    @if (sinSesion) {
+      <p class="aviso-sesion">
+        No hay una sesión iniciada. <a routerLink="/login-prueba">Iniciar sesión (prueba)</a>
+      </p>
+    }
+    <input type="file" accept="image/jpeg,image/png" (change)="seleccionarImagen($event)" />
+
+    @if (vistaPrevia) {
+      <div class="vista-previa">
+        <img [src]="vistaPrevia" alt="Vista previa de la fotografía seleccionada" />
+      </div>
+    }
+
+    <button matButton type="button" class="btn-analizar" [disabled]="!archivo || cargando"
+      (click)="analizarImagen()">
+      Analizar imagen
+    </button>
+
+    @if (cargando) {
+      <div class="cargando">
+        <mat-spinner diameter="32"></mat-spinner>
+        <span>Analizando fotografía...</span>
+      </div>
+    }
+
+    @if (mensaje) {
+      <p class="mensaje-error">{{ mensaje }}</p>
+    }
+
+    @if (resultado) {
+      <div class="resultado">
+        <h3>Resultado</h3>
+        <p><strong>Especie identificada:</strong> {{ resultado.especie }}</p>
+        <p><strong>Confianza:</strong> {{ porcentajeConfianza() }} %</p>
+      </div>
+    }
+  </div>
+</div>

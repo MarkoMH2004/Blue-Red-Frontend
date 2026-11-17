@@ -11,6 +11,8 @@ import { Lcupdatecomponent } from './components/lotecapturacomponent/lcupdatecom
 import { Lcdetallecomponent } from './components/lotecapturacomponent/lcdetallecomponent/lcdetallecomponent';
 import { Validacioncomponent } from './components/validacioncomponent/validacioncomponent';
 import { Vlistcomponent } from './components/validacioncomponent/vlistcomponent/vlistcomponent';
+import { Vreconocimientocomponent } from './components/validacioncomponent/vreconocimientocomponent/vreconocimientocomponent';
+import { Loginpruebacomponent } from './components/loginpruebacomponent/loginpruebacomponent';
 export const routes: Routes = [
   {
     path: '',
@@ -67,6 +69,10 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'login-prueba',
+    component: Loginpruebacomponent,
+  },
+  {
     path: 'validaciones',
     component: Validacioncomponent,
     children: [
@@ -78,6 +84,10 @@ export const routes: Routes = [
       {
         path: 'listar',
         component: Vlistcomponent,
+      },
+      {
+        path: 'reconocer-especie',
+        component: Vreconocimientocomponent,
       },
     ],
   },
