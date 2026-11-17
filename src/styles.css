@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+/* Aplicar tipografía base Inter a todo el cuerpo */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #D6EBF7; /* Fondo Espuma claro y minimalista */
+  color: #0F1B2A;          /* Tinta para textos generales */
+  margin: 0;
+}
+
+/* Tipografía Poppins Bold y en mayúsculas para todos los títulos y headers */
+h1, h2, h3, mat-card-title {
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  color: #0B3C5D !important; /* Azul Océano para títulos */
+}
