@@ -1,18 +1,23 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field'; // <-- Necesario para los errores individuales
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { Especieservice } from '../../../services/especieservice';
 import { EspecieDTO } from '../../../models/EspecieDTO';
-
+import {MatCardModule} from '@angular/material/card';
 @Component({
   selector: 'app-especieinsertcomponent',
   imports: [
     MatInputModule,
+    CommonModule,
+    MatFormFieldModule, 
     MatCheckboxModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatCardModule
   ],
   templateUrl: './especieinsertcomponent.html',
   styleUrl: './especieinsertcomponent.css',
@@ -36,7 +41,8 @@ export class Especieinsertcomponent {
 
   registrarEspecie() {
     if (this.formulario.invalid) {
-      this.mensaje = 'Los campos son obligatorios y la talla debe ser mayor a 0!!';
+      // En lugar del mensaje global, marcamos todo como tocado para activar los mat-error individuales
+      this.formulario.markAllAsTouched();
       return;
     }
 

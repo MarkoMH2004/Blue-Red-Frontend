@@ -3,6 +3,7 @@ import { Homecomponent } from './components/homecomponent/homecomponent';
 import { Especiecomponent } from './components/especiecomponent/especiecomponent';
 import { Especielistcomponent } from './components/especiecomponent/especielistcomponent/especielistcomponent';
 import { Especieinsertcomponent } from './components/especiecomponent/especieinsertcomponent/especieinsertcomponent';
+import {Especieupdatecomponent} from './components/especiecomponent/especieupdatecomponent/especieupdatecomponent';
 import { Lotecapturacomponent } from './components/lotecapturacomponent/lotecapturacomponent';
 import { Lclistcomponent } from './components/lotecapturacomponent/lclistcomponent/lclistcomponent';
 import { Lcinsertcomponent } from './components/lotecapturacomponent/lcinsertcomponent/lcinsertcomponent';
@@ -29,6 +30,10 @@ export const routes: Routes = [
       {
         path: 'insertar',
         component: Especieinsertcomponent,
+      },
+      {
+        path: 'edicion/:id',
+        component: Especieupdatecomponent,
       },
     ],
   },
