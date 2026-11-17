@@ -1,0 +1,64 @@
+<div class="container">
+  <mat-card class="card-container">
+    
+    <mat-card-header class="card-header-custom">
+      <mat-card-title class="card-title-custom">Modificar Especie</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="formulario" (ngSubmit)="actualizarEspecie()">
+        
+        <input type="hidden" formControlName="idEspecie">
+
+        <!-- Nombre Común -->
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Nombre Común*</mat-label>
+          <input matInput formControlName="nombreComun" placeholder="Ingrese nombre común">
+          <mat-error *ngIf="formulario.get('nombreComun')?.hasError('required')">
+            El nombre común es obligatorio
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Nombre Científico -->
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Nombre Científico*</mat-label>
+          <input matInput formControlName="nombreCientifico" placeholder="Ingrese nombre científico">
+          <mat-error *ngIf="formulario.get('nombreCientifico')?.hasError('required')">
+            El nombre científico es obligatorio
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Talla Mínima -->
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Talla Mínima (cm)*</mat-label>
+          <input matInput type="number" formControlName="tallaMinima" placeholder="Ingrese talla mínima">
+          <mat-error *ngIf="formulario.get('tallaMinima')?.hasError('required')">
+            La talla mínima es obligatoria
+          </mat-error>
+          <mat-error *ngIf="formulario.get('tallaMinima')?.hasError('min')">
+            La talla debe ser mayor a 0
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Checkbox en Veda -->
+        <div class="checkbox-container">
+          <mat-checkbox formControlName="enVeda">¿Está en Veda?</mat-checkbox>
+        </div>
+
+        <!-- Botón Modificar -->
+        <div>
+          <button mat-raised-button color="primary" type="submit" class="submit-btn">
+            Modificar
+          </button>
+        </div>
+
+        <!-- Mensaje -->
+        <div *ngIf="mensaje" class="mensaje-exito">
+          {{ mensaje }}
+        </div>
+
+      </form>
+    </mat-card-content>
+
+  </mat-card>
+</div>
