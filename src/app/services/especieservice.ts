@@ -23,4 +23,16 @@ export class Especieservice {
   insertEspecie(dto: EspecieDTO): Observable<EspecieDTO> {
     return this.http.post<EspecieDTO>(this.apiURL, dto);
   }
+
+  // --- MÉTODOS NUEVOS PARA LA EDICIÓN ---
+  
+  // 1. Obtener la especie por ID para rellenar el formulario de actualización
+  listId(id: number): Observable<EspecieDTO> {
+    return this.http.get<EspecieDTO>(`${this.apiURL}/${id}`);
+  }
+
+  // 2. Enviar los datos modificados al backend (usando la misma apiURL tal como el insert)
+  updateEspecie(dto: EspecieDTO): Observable<EspecieDTO> {
+    return this.http.put<EspecieDTO>(this.apiURL, dto);
+  }
 }

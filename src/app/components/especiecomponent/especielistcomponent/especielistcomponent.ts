@@ -5,16 +5,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { EspecieDTO } from '../../../models/EspecieDTO';
 import { Especieservice } from '../../../services/especieservice';
 import { Especieinsertcomponent } from '../especieinsertcomponent/especieinsertcomponent';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-especielistcomponent',
-  imports: [MatTableModule, MatIconModule, MatButtonModule,Especieinsertcomponent],
+  imports: [MatTableModule, MatIconModule, MatButtonModule,Especieinsertcomponent,RouterLink],
   templateUrl: './especielistcomponent.html',
   styleUrl: './especielistcomponent.css',
 })
 export class Especielistcomponent implements OnInit {
 
-  displayedColumns: string[] = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6'];
+  displayedColumns: string[] = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7'];
   dataSource: EspecieDTO[] = [];
   mensaje: string = '';
 

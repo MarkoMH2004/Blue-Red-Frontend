@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.card-container {
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+}
+
+.card-header-custom {
+  justify-content: center;
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.card-title-custom {
+  color: #3f51b5;
+  font-weight: bold;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.checkbox-container {
+  margin: 15px 0 25px 0;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+}
+
+.mensaje-exito {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+  color: green;
+}

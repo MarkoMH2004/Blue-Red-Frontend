@@ -1,56 +1,45 @@
 .container {
-  max-width: 500px;
-  margin: 40px auto;
-  padding: 24px 32px;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-h2 {
-  text-align: center;
-  color: #3f51b5;
-  margin-bottom: 24px;
-}
-
-form {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
 }
 
-mat-form-field {
+.card-container {
   width: 100%;
+  max-width: 500px;
+  padding: 20px;
 }
 
-.example-full-width {
+.card-header-custom {
+  justify-content: center;
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.card-title-custom {
+  color: #3f51b5;
+  font-weight: bold;
+}
+
+.full-width {
   width: 100%;
+  margin-bottom: 10px;
 }
 
-.example-section {
-  margin: 8px 0 16px 0;
+.checkbox-container {
+  margin: 15px 0 25px 0;
 }
 
-button[matButton] {
-  align-self: center;
-  padding: 8px 32px;
-  margin-top: 8px;
-  background-color: #d7263d;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 15px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+.submit-btn {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
 }
 
-button[matButton]:hover {
-  background-color: #1f7ab8;
-}
-
-p {
+.mensaje-exito {
+  margin-top: 15px;
   text-align: center;
-  margin-top: 16px;
-  color: #d32f2f;
-  font-weight: 500;
+  font-weight: bold;
+  color: green;
 }
