@@ -14,5 +14,10 @@
       <button mat-menu-item routerLink="/lotes-captura/listar">Mis capturas</button>
       <button mat-menu-item routerLink="/lotes-captura/insertar">Registrar lote</button>
     </mat-menu>
+
+    <button matButton [matMenuTriggerFor]="menuValidacion" style="color: aliceblue">Validaciones</button>
+    <mat-menu #menuValidacion="matMenu">
+      <button mat-menu-item routerLink="/validaciones/listar">Listar</button>
+    </mat-menu>
   </mat-toolbar>
 </div>
