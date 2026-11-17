@@ -1,89 +1,138 @@
-:host {
-  display: block;
-  padding: 25px;
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f7;
-  min-height: 80vh;
-  box-sizing: border-box;
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-h2 {
-  text-align: center;
-  color: #4762c5;
-  font-size: 28px;
-  font-weight: bold;
-  margin: 10px 0 25px;
+.card-container {
+  margin-bottom: 25px;
+  padding: 20px;
+  background-color: #ffffff !important;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(15, 27, 42, 0.05);
+}
+
+.filter-form {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.filter-field {
+  flex: 1;
+  min-width: 200px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+/* Cabecera de la tarjeta del listado */
+.header-list-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+/* Botón de acción principal (Nueva Especie) en Rojo Coral */
+.btn-nuevo {
+  background-color: #D7263D !important;
+  color: #ffffff !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-right: 30px;
+}
+
+/* Botón Consultar */
+button[color="primary"] {
+  background-color: #0B3C5D !important;
+  color: #ffffff !important;
+}
+
+/* Tabla y Estilos de la guía */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 10px;
+  border: 1px solid #E2E8F0;
+  border-radius: 4px;
 }
 
 table {
   width: 100%;
-  border-collapse: collapse;
-  background-color: white;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+  background-color: #ffffff;
 }
 
-th[mat-header-cell] {
-  background-color: #cfddfa;
-  color: #212126;
-  font-size: 14px;
-  font-weight: 700;
-  padding: 14px 16px;
-  text-align: center;
+/* Fondo gris claro/azulado suave para la cabecera de la tabla (como en el mockup) */
+th.mat-header-cell {
+  background-color: #F8FAFC !important;
+  color: #0B3C5D !important;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border-bottom: 3px solid #414b8c;
-  white-space: nowrap;
+  font-size: 13px;
+  border-bottom: 2px solid #E2E8F0 !important;
 }
 
-td[mat-cell] {
-  color: #333333;
-  font-size: 14px;
-  padding: 14px 16px;
+td.mat-cell {
+  font-family: 'Inter', sans-serif;
+  color: #0F1B2A;
+  border-bottom: 1px solid #F1F5F9 !important;
+  padding: 12px 8px;
+}
+
+/* Nombre científico en cursiva como en el mockup de referencia */
+.nombre-cientifico {
+  font-style: italic;
+  color: #475569;
+}
+
+/* Estilo para las etiquetas de Veda (Sí/No) */
+.badge-veda-si {
+  background-color: #F1F5F9;
+  color: #64748B;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.badge-veda-no {
+  background-color: #F1F5F9;
+  color: #64748B;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Forzar diseño rectangular en los botones de la pantalla */
+button, 
+.mdc-button, 
+.mat-mdc-button-base {
+  border-radius: 0px !important;
+}
+
+.mensaje-error {
+  color: #B3261E;
   text-align: center;
-  border-bottom: 1px solid #e0e0e0;
+  font-weight: bold;
+  margin: 15px 0;
 }
 
-tr[mat-row]:nth-child(even) {
-  background-color: #cfddfa;
-}
-
-tr[mat-row]:hover {
-  background-color: #87c4ea;
-  transition: background-color 0.2s ease;
-}
-
-p {
+.no-records {
   text-align: center;
-  margin: 30px auto;
-  padding: 18px;
-  max-width: 500px;
-  background-color: white;
-  color: #31368a;
-  font-size: 16px;
-  font-weight: 600;
-  border-radius: 8px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  margin-top: 20px;
+  color: #0B3C5D;
 }
 
-@media (max-width: 600px) {
-  :host { padding: 12px; }
-  h2 { font-size: 23px; }
-  th[mat-header-cell],
-  td[mat-cell] {
-    padding: 10px 6px;
-    font-size: 12px;
-  }
-}
-
-.btn-eliminar {
-  color: red;
-  border: none;
-  box-shadow: none;
-  background: transparent;
-}
-
-.btn-eliminar:hover {
-  background-color: #ffebee;
+mat-paginator {
+  margin-top: 15px;
+  background: transparent !important;
 }
