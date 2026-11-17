@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="encabezado">
+    <h2>Iniciar sesión (prueba)</h2>
+    <p class="descripcion">
+      Acceso temporal para probar el reconocimiento de especies. No es el login definitivo del
+      proyecto.
+    </p>
+  </div>
+
+  <div class="formulario">
+    <form [formGroup]="formLogin" (ngSubmit)="iniciarSesion()">
+      <mat-form-field appearance="outline">
+        <mat-label>Correo</mat-label>
+        <input matInput type="email" formControlName="correo" autocomplete="username" />
+        <mat-error>Ingrese un correo válido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Contraseña</mat-label>
+        <input matInput type="password" formControlName="contrasena" autocomplete="current-password" />
+        <mat-error>Ingrese su contraseña</mat-error>
+      </mat-form-field>
+
+      @if (mensaje) {
+        <p class="mensaje-error">{{ mensaje }}</p>
+      }
+
+      <button matButton type="submit" class="btn-ingresar" [disabled]="cargando">
+        Ingresar
+      </button>
+    </form>
+  </div>
+</div>
