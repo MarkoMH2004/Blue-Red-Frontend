@@ -180,7 +180,7 @@ export class Lcupdatecomponent implements OnInit, AfterViewInit {
       idLoteCaptura: this.formLoteCaptura.value.ID,
       idUsuario: this.idUsuarioSesion, //por mientras
       idEspecie: this.formLoteCaptura.value.idEspecie,
-      fechaCaptura: this.formLoteCaptura.value.fechcaptura,
+      fechaCaptura: this.formLoteCaptura.value.fechacaptura,
       cantidadPeces: this.formLoteCaptura.value.cantidad,
       pesoTotal: this.formLoteCaptura.value.peso,
       latitud: this.formLoteCaptura.value.latitud,
@@ -192,20 +192,7 @@ export class Lcupdatecomponent implements OnInit, AfterViewInit {
 
     this.lcS.update(dto).subscribe({
       next: () => {
-        this.mensaje = 'Se actualizó correctamente';
-        this.cdr.detectChanges();
-        this.formLoteCaptura.reset({
-          idLoteCaptura:'',
-          
-          fechaCaptura: new Date(),
-          cantidadPeces: '',
-          pesoTotal: '',
-          latitud: '',
-          longitud: '',
-          precio: '',
-          imagenReferencia: ''
-        });
-        this.cdr.detectChanges();
+        this.router.navigate(['/lotes-captura/listar']);
       },
 
       error: (error) => {
