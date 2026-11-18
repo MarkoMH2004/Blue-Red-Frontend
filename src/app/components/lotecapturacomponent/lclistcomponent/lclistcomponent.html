@@ -1,6 +1,6 @@
 <div class="container">
   <div class="encabezado">
-    <div class="titulo">
+    <div class="titulos">
       <h2>Mis capturas</h2>
       <p class="descripcion">
         Revisa tus lotes registrados y el estado de su validación y certificación.
@@ -9,23 +9,68 @@
     <button matButton type="button" class="btn-nuevo" routerLink="/lotes-captura/insertar">
       + Registrar nuevo lote
     </button>
-
   </div>
-  <div class="bloque">
-    @if (dataSource.data.length > 0) {
-      <h3>Historial de capturas</h3>
+
+  <div class="bloqueA">
+    <h3>Filtros de búsqueda</h3>
+
+    <form [formGroup]="form" class="filter-form">
+      <!-- ID de Especie con validación -->
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>ID del lote de captura</mat-label>
+        <input matInput type="number" formControlName="idLoteCaptura" placeholder="Ingresar ID" />
+        @if (form.get('idLoteCaptura')?.hasError('min')) {
+          <mat-error>El ID debe ser mayor o igual a 1</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Estado -->
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Estado</mat-label>
+        <mat-select formControlName="estado">
+          <mat-option [value]="'Pendiente'">Pendiente</mat-option>
+          <mat-option [value]="'Aceptado'">Aceptado</mat-option>
+          <mat-option [value]="'Rechazado'">Rechazado</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Especie -->
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Especie</mat-label>
+        <mat-select formControlName="idEspecie">
+          @for (e of especies; track e.idEspecie) {
+            <mat-option [value]="e.idEspecie">{{ e.nombreComun }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <div class="acciones">
+        <button matButton type="button" class="btn-limpiar" (click)="limpiar()">Limpiar</button>
+        <button matButton type="button" class="btn-consultar" (click)="consultar()">
+          <mat-icon>search</mat-icon> Consultar
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="bloqueB">
+    <h3>Historial de capturas</h3>
+
+    <!--Parte de filtraje de la tabla-->
+
+    @if (dataSource.filteredData.length > 0) {
       <!--Muestre la tabla-->
       <table mat-table [dataSource]="dataSource" class="mat-shadow-2">
         <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
 
-        <!-- Position Column -->
+        <!-- ID -->
         <ng-container matColumnDef="CID">
           <th mat-header-cell *matHeaderCellDef>ID</th>
           <td mat-cell *matCellDef="let element">{{ element.idLoteCaptura }}</td>
         </ng-container>
 
-        <!-- Name Column -->
+        <!-- Especie-->
         <ng-container matColumnDef="CESPECIE">
           <th mat-header-cell *matHeaderCellDef>Especie</th>
           <td mat-cell *matCellDef="let element">{{ nombreEspecie(element.idEspecie) }}</td>
@@ -38,52 +83,57 @@
 
         <ng-container matColumnDef="CESTADO">
           <th mat-header-cell *matHeaderCellDef>Estado</th>
-          <td mat-cell *matCellDef="let element"><span [class]="claseEstado(element.estado)">{{ element.estado }}</span></td>
-        </ng-container>
-
-        <!-- ICONO ELIMINAR -->
-        <ng-container matColumnDef="CELIMINAR">
-          <th mat-header-cell *matHeaderCellDef>Eliminar</th>
           <td mat-cell *matCellDef="let element">
-            <button
-              matButton
-              (click)="eliminarLotesCaptura(element.idLoteCaptura)"
-              class="btn-eliminar"
-            >
-              <mat-icon>delete</mat-icon>
-            </button>
+            <span [class]="claseEstado(element.estado)">{{ element.estado }}</span>
           </td>
         </ng-container>
 
-        <!-- ICONO EDITAR -->
-        <ng-container matColumnDef="CEDITAR">
-          <th mat-header-cell *matHeaderCellDef>Editar</th>
+        <div class="iconos">
+          <!-- ICONO ELIMINAR -->
+          <ng-container matColumnDef="CELIMINAR">
+            <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+            <td mat-cell *matCellDef="let element">
+              <button
+                matButton
+                (click)="eliminarLotesCaptura(element.idLoteCaptura)"
+                class="btn-eliminar"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
 
-          <td mat-cell *matCellDef="let element">
-            <button
-              mat-button
-              class="btn-editar"
-              [routerLink]="['/lotes-captura/editar', element.idLoteCaptura]"
-            >
-              <mat-icon>edit</mat-icon>
-            </button>
-          </td>
-        </ng-container>
+          <!-- ICONO EDITAR -->
+          <ng-container matColumnDef="CEDITAR">
+            <th mat-header-cell *matHeaderCellDef>Editar</th>
 
-        <!-- ICONO DETALLE -->
-        <ng-container matColumnDef="CDETALLE">
-          <th mat-header-cell *matHeaderCellDef>Detalle</th>
+            <td mat-cell *matCellDef="let element">
+              <button
+                mat-button
+                class="btn-editar"
+                [disabled]="!puedeEditar(element.estado)"
+                [routerLink]="['/lotes-captura/editar', element.idLoteCaptura]"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
 
-          <td mat-cell *matCellDef="let element">
-            <button
-              mat-button
-              class="btn-detalle"
-              [routerLink]="['/lotes-captura/detalle', element.idLoteCaptura]"
-            >
-              <mat-icon>info</mat-icon>
-            </button>
-          </td>
-        </ng-container>
+          <!-- ICONO DETALLE -->
+          <ng-container matColumnDef="CDETALLE">
+            <th mat-header-cell *matHeaderCellDef>Detalle</th>
+
+            <td mat-cell *matCellDef="let element">
+              <button
+                mat-button
+                class="btn-detalle"
+                [routerLink]="['/lotes-captura/detalle', element.idLoteCaptura]"
+              >
+                <mat-icon>info</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+        </div>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
@@ -97,10 +147,15 @@
         aria-label="Select page"
       >
       </mat-paginator>
-
     } @else {
-      <!--mensaje-->
-      <p>No hay especies registradas</p>
+      <p>
+        @if (dataSource.data.length === 0) {
+          <P> No se encontraron lotes de captura </P>
+        } @else {
+          <!--mensaje-->
+          <p>No se encontraron resultados</p>
+        }
+      </p>
     }
   </div>
 </div>

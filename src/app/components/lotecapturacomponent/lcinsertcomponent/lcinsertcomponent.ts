@@ -10,7 +10,7 @@ import { LoteCapturaDTO } from '../../../models/LoteCapturaDTO';
 import { EspecieDTO } from '../../../models/EspecieDTO';
 import { Especieservice } from '../../../services/especieservice';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 
 @Component({
@@ -45,17 +45,18 @@ export class Lcinsertcomponent implements OnInit, AfterViewInit {
     private lcS: Lotecapturaservice,
     private eS: Especieservice,
     private cdr: ChangeDetectorRef,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.formLoteCaptura = this.fb.group({
       idEspecie: ['', Validators.required],
       fechacaptura: [new Date(), Validators.required],
-      cantidad: ['', Validators.required],
-      peso: ['', Validators.required],
-      latitud: ['', Validators.required],
-      longitud: ['', Validators.required],
-      precio: ['', Validators.required],
+      cantidad: ['', [Validators.required , Validators.min(1)] ],
+      peso: ['', [Validators.required , Validators.min(1)] ],
+      latitud: ['', [Validators.required , Validators.min(1)] ],
+      longitud: ['', [Validators.required , Validators.min(1)] ],
+      precio: ['', [Validators.required , Validators.min(1)] ],
       imagenReferencia: ['', Validators.required],
     });
 
@@ -154,20 +155,7 @@ export class Lcinsertcomponent implements OnInit, AfterViewInit {
 
     this.lcS.insert(dto).subscribe({
       next: () => {
-        this.mensaje = 'Lote de captura registrado exitosamente.';
-        this.nombreImagen = '';
-        this.formLoteCaptura.reset({
-          idLoteCaptura:'',
-
-          fechaCaptura: new Date(),
-          cantidadPeces: '',
-          pesoTotal: '',
-          latitud: '',
-          longitud: '',
-          precio: '',
-          imagenReferencia: '',
-        });
-        this.cdr.detectChanges();
+        this.router.navigate(['/lotes-captura/listar']);
       },
 
       error: (error) => {

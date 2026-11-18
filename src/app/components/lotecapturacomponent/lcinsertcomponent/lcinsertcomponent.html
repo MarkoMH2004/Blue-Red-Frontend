@@ -2,7 +2,8 @@
   <div class="encabezado">
     <h2>Registrar lote de captura</h2>
     <p class="descripcion">
-      Completa los datos de tu captura, su ubicación y el precio del lote, y adjunta una imagen de referencia.
+      Completa los datos de tu captura, su ubicación y el precio del lote, y adjunta una imagen de
+      referencia.
     </p>
   </div>
 
@@ -25,7 +26,7 @@
         <mat-form-field appearance="outline">
           <mat-label>Fecha de captura</mat-label>
           <input matInput [matDatepicker]="picker1" formControlName="fechacaptura" />
-          
+
           <mat-datepicker-toggle matIconSuffix [for]="picker1"> </mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
@@ -34,14 +35,24 @@
         <mat-form-field appearance="outline">
           <mat-label>Cantidad de peces</mat-label>
           <input matInput type="number" placeholder="Ej. 50" formControlName="cantidad" />
-          <mat-error>Ingrese la cantidad de peces</mat-error>
+
+          @if (formLoteCaptura.get('cantidad')?.hasError('min')) {
+            <mat-error>La cantidad debe ser mayor a 0</mat-error>
+          } @else if (formLoteCaptura.get('cantidad')?.hasError('required')) {
+            <mat-error>Ingrese la cantidad de peces</mat-error>
+          }
         </mat-form-field>
 
         <!-- Peso -->
         <mat-form-field appearance="outline">
           <mat-label>Peso total</mat-label>
           <input matInput type="number" placeholder="Ej. 100" formControlName="peso" />
-          <mat-error>Ingrese el peso total</mat-error>
+          
+          @if (formLoteCaptura.get('peso')?.hasError('min')) {
+            <mat-error>El peso debe ser mayor a 0</mat-error>
+          } @else if (formLoteCaptura.get('cantidad')?.hasError('required')) {
+            <mat-error>Ingrese el peso total</mat-error>
+          }
         </mat-form-field>
       </div>
 
@@ -55,14 +66,20 @@
         <mat-form-field appearance="outline">
           <mat-label>Latitud</mat-label>
           <input matInput type="number" placeholder="Ej. 10.5" formControlName="latitud" />
-          <mat-error>Ingrese la latitud</mat-error>
+          
+          @if (formLoteCaptura.get('cantidad')?.hasError('required')) {
+            <mat-error>Ingrese la latitud</mat-error>
+          }
         </mat-form-field>
 
         <!-- Longitud -->
         <mat-form-field appearance="outline">
           <mat-label>Longitud</mat-label>
           <input matInput type="number" placeholder="Ej. -70.5" formControlName="longitud" />
-          <mat-error>Ingrese la longitud</mat-error>
+          
+          @if (formLoteCaptura.get('cantidad')?.hasError('required')) {
+            <mat-error>Ingrese la longitud</mat-error>
+          }
         </mat-form-field>
       </div>
 
@@ -70,37 +87,42 @@
         <h3>Información adicional</h3>
 
         <!-- Imagen -->
-         <div class="grupo-imagen">
-        <div class="campo-imagen">
-          <input
-            #archivo
-            type="file"
-            accept="image/*"
-            hidden
-            (change)="seleccionarImagen($event)"
-          />
-          <button matButton type="button" (click)="archivo.click()">
-            <mat-icon>upload</mat-icon> Adjuntar imagen
-          </button>
+        <div class="grupo-imagen">
+          <div class="campo-imagen">
+            <input
+              #archivo
+              type="file"
+              accept="image/*"
+              hidden
+              (change)="seleccionarImagen($event)"
+            />
+            <button matButton type="button" (click)="archivo.click()">
+              <mat-icon>upload</mat-icon> Adjuntar imagen
+            </button>
 
-          @if (nombreImagen) {
-            <span class="nombre-archivo">{{ nombreImagen }}</span>
+            @if (nombreImagen) {
+              <span class="nombre-archivo">{{ nombreImagen }}</span>
+            }
+          </div>
+
+          @if (
+            formLoteCaptura.get('imagenReferencia')?.invalid &&
+            formLoteCaptura.get('imagenReferencia')?.touched
+          ) {
+            <span class="error-imagen">Adjunte una imagen referencial</span>
           }
-        </div>
-        
-        @if (
-          formLoteCaptura.get('imagenReferencia')?.invalid &&
-          formLoteCaptura.get('imagenReferencia')?.touched
-        ) {
-          <span class="error-imagen">Adjunte una imagen referencial</span>
-        }
         </div>
 
         <!-- Precio -->
         <mat-form-field appearance="outline">
           <mat-label>Precio del lote</mat-label>
           <input matInput type="number" placeholder="Ej. 10.5" formControlName="precio" />
-          <mat-error>Ingrese el precio por kilogramo</mat-error>
+          
+          @if (formLoteCaptura.get('precio')?.hasError('min')) {
+            <mat-error>El precio debe ser mayor a 0</mat-error>
+          } @else if (formLoteCaptura.get('cantidad')?.hasError('required')) {
+            <mat-error>Ingrese el precio por kilogramo</mat-error>
+          }
         </mat-form-field>
       </div>
 

@@ -44,6 +44,14 @@ h2 {
  margin: 10px 0 25px;
 }
 
+.descripcion {
+  all: unset;
+  display: block;
+  color: #6b6b76;
+  font-size: 13px;
+}
+
+
 
 h3 {
  grid-column: 1 / -1; /*toma toda la linea asi los inputs de abajo estan alineados*/
