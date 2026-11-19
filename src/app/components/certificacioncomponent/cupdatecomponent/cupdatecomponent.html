@@ -1,0 +1,87 @@
+
+<section class="pagina">
+  <h1>ACTUALIZAR CERTIFICACIÓN</h1>
+  <p>Edita los datos de la certificación {{ idCertificacion }}.</p>
+
+  <div class="tarjeta">
+    <form [formGroup]="formulario" (ngSubmit)="actualizar()">
+
+      <mat-form-field appearance="outline" class="campo">
+        <mat-label>ID de certificación</mat-label>
+        <input matInput [value]="idCertificacion" readonly />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="campo">
+        <mat-label>Validación asociada *</mat-label>
+        <mat-select formControlName="idValidacion">
+          <mat-option
+            *ngFor="let v of validaciones"
+            [value]="v.idValidacion"
+          >
+            Validación {{ v.idValidacion }} — {{ v.resultado }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formulario.get('idValidacion')?.hasError('required')">
+          Selecciona una validación existente.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="campo">
+        <mat-label>Código del certificado *</mat-label>
+        <input
+          matInput
+          formControlName="codigoCertificado"
+          maxlength="45"
+        />
+        <mat-error *ngIf="formulario.get('codigoCertificado')?.invalid">
+          El código es obligatorio (máximo 45 caracteres).
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="campo">
+        <mat-label>Fecha de emisión *</mat-label>
+        <input
+          matInput
+          type="date"
+          formControlName="fechaEmision"
+        />
+        <mat-error *ngIf="formulario.get('fechaEmision')?.hasError('required')">
+          Selecciona una fecha.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="campo">
+        <mat-label>Estado del certificado</mat-label>
+        <input
+          matInput
+          formControlName="estadoCertificado"
+          maxlength="45"
+        />
+      </mat-form-field>
+
+      <p *ngIf="cargandoValidaciones">
+        Cargando validaciones...
+      </p>
+
+      <p *ngIf="mensaje" class="mensaje" role="alert">
+        {{ mensaje }}
+      </p>
+
+      <div class="acciones">
+        <a mat-stroked-button routerLink="/certificaciones/listar">
+          Cancelar
+        </a>
+
+        <button
+          mat-flat-button
+          class="boton-principal"
+          type="submit"
+          [disabled]="cargando || cargandoValidaciones || validaciones.length === 0"
+        >
+          {{ cargando ? 'Guardando...' : 'Guardar cambios' }}
+        </button>
+      </div>
+
+    </form>
+  </div>
+</section>
