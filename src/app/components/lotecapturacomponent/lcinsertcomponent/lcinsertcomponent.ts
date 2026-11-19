@@ -12,6 +12,7 @@ import { Especieservice } from '../../../services/especieservice';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   imports: [
@@ -45,7 +46,8 @@ export class Lcinsertcomponent implements OnInit, AfterViewInit {
     private lcS: Lotecapturaservice,
     private eS: Especieservice,
     private cdr: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar //servicio
   ) {}
 
   ngOnInit(): void {
@@ -54,8 +56,8 @@ export class Lcinsertcomponent implements OnInit, AfterViewInit {
       fechacaptura: [new Date(), Validators.required],
       cantidad: ['', [Validators.required , Validators.min(1)] ],
       peso: ['', [Validators.required , Validators.min(1)] ],
-      latitud: ['', [Validators.required , Validators.min(1)] ],
-      longitud: ['', [Validators.required , Validators.min(1)] ],
+      latitud: ['', Validators.required],
+      longitud: ['', Validators.required],
       precio: ['', [Validators.required , Validators.min(1)] ],
       imagenReferencia: ['', Validators.required],
     });
@@ -156,6 +158,13 @@ export class Lcinsertcomponent implements OnInit, AfterViewInit {
     this.lcS.insert(dto).subscribe({
       next: () => {
         this.router.navigate(['/lotes-captura/listar']);
+        this.snackBar.open('Registrado con éxito', '✖',{ //mensajito de confirmacion de registro
+          duration:5000, //5 segundos luego puf desaparece
+          horizontalPosition: 'center',
+          verticalPosition:'bottom',
+          panelClass: ['snack-ok']
+
+        });
       },
 
       error: (error) => {
