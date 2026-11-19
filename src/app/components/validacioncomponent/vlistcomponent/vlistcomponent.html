@@ -16,8 +16,8 @@
         </ng-container>
 
         <ng-container matColumnDef="C2">
-          <th mat-header-cell *matHeaderCellDef>ID lote de captura</th>
-          <td mat-cell *matCellDef="let element">{{ element.idLoteCaptura }}</td>
+          <th mat-header-cell *matHeaderCellDef>Lote de captura</th>
+          <td mat-cell *matCellDef="let element">{{ descripcionLote(element.idLoteCaptura) }}</td>
         </ng-container>
 
         <ng-container matColumnDef="C3">
