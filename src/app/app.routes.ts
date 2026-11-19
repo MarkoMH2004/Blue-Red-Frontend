@@ -1,3 +1,4 @@
+
 import { Routes } from '@angular/router';
 import { Homecomponent } from './components/homecomponent/homecomponent';
 import { Especiecomponent } from './components/especiecomponent/especiecomponent';
@@ -14,6 +15,12 @@ import { Vlistcomponent } from './components/validacioncomponent/vlistcomponent/
 import { Vreconocimientocomponent } from './components/validacioncomponent/vreconocimientocomponent/vreconocimientocomponent';
 import { Vbuscarcomponent } from './components/validacioncomponent/vbuscarcomponent/vbuscarcomponent';
 import { Loginpruebacomponent } from './components/loginpruebacomponent/loginpruebacomponent';
+
+import { Certificacioncomponent } from './components/certificacioncomponent/certificacioncomponent';
+import { Clistcomponent } from './components/certificacioncomponent/clistcomponent/clistcomponent';
+import { Cinsertcomponent } from './components/certificacioncomponent/cinsertcomponent/cinsertcomponent';
+import { Cupdatecomponent } from './components/certificacioncomponent/cupdatecomponent/cupdatecomponent';
+
 export const routes: Routes = [
   {
     path: '',
@@ -93,6 +100,29 @@ export const routes: Routes = [
       {
         path: 'buscar',
         component: Vbuscarcomponent,
+      },
+    ],
+  },
+  {
+    path: 'certificaciones',
+    component: Certificacioncomponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'listar',
+        pathMatch: 'full',
+      },
+      {
+        path: 'listar',
+        component: Clistcomponent,
+      },
+      {
+        path: 'insertar',
+        component: Cinsertcomponent,
+      },
+      {
+        path: 'editar/:id',
+        component: Cupdatecomponent,
       },
     ],
   },
