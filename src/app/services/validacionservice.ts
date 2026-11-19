@@ -39,4 +39,11 @@ export class Validacionservice {
       headers: { Authorization: `Bearer ${this.lS.getToken()}` },
     });
   }
+
+  // Búsqueda de una validación por su ID (HU52)
+  listId(id: number): Observable<ValidacionDTO> {
+    return this.http.get<ValidacionDTO>(`${this.apiURL}/${id}`, {
+      headers: { Authorization: `Bearer ${this.lS.getToken()}` },
+    });
+  }
 }

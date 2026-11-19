@@ -12,6 +12,7 @@ import { Lcdetallecomponent } from './components/lotecapturacomponent/lcdetallec
 import { Validacioncomponent } from './components/validacioncomponent/validacioncomponent';
 import { Vlistcomponent } from './components/validacioncomponent/vlistcomponent/vlistcomponent';
 import { Vreconocimientocomponent } from './components/validacioncomponent/vreconocimientocomponent/vreconocimientocomponent';
+import { Vbuscarcomponent } from './components/validacioncomponent/vbuscarcomponent/vbuscarcomponent';
 import { Loginpruebacomponent } from './components/loginpruebacomponent/loginpruebacomponent';
 export const routes: Routes = [
   {
@@ -88,6 +89,10 @@ export const routes: Routes = [
       {
         path: 'reconocer-especie',
         component: Vreconocimientocomponent,
+      },
+      {
+        path: 'buscar',
+        component: Vbuscarcomponent,
       },
     ],
   },
