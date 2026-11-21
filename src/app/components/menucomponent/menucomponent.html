@@ -89,6 +89,24 @@
       </button>
     </mat-menu>
 
+    <button
+      matButton
+      [matMenuTriggerFor]="menuDocumentoVenta"
+      style="color: aliceblue"
+    >
+      Documentos de venta
+    </button>
+
+    <mat-menu #menuDocumentoVenta="matMenu">
+      <button mat-menu-item routerLink="/documentos-venta/listar">
+        Listar / Consultar
+      </button>
+
+      <button mat-menu-item routerLink="/documentos-venta/insertar">
+        Registrar
+      </button>
+    </mat-menu>
+    
   </mat-toolbar>
 </div>
 
