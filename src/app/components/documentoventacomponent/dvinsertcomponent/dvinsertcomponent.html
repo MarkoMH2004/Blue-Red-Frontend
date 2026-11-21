@@ -1,44 +1,76 @@
-<h2>Registrar documento de venta</h2>
-
-<form [formGroup]="formDocumentoVenta" (ngSubmit)="registrarDocumentoVenta()">
-  <!-- Bloque A: datos del documento -->
-  <mat-form-field appearance="outline">
-    <mat-label>Tipo de documento</mat-label>
-    <mat-select formControlName="tipoDocumento">
-      <mat-option value="Factura">Factura</mat-option>
-      <mat-option value="Boleta">Boleta</mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <!-- Bloque B: detalles de compra -->
-  <div formArrayName="detalles">
-    @for (d of detalles.controls; track $index) {
-      <div [formGroupName]="$index">
-        <mat-form-field appearance="outline">
-          <mat-label>ID del lote de captura</mat-label>
-          <input matInput type="number" formControlName="idLoteCaptura" />
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Peso comprado</mat-label>
-          <input matInput type="number" formControlName="pesoComprado" />
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Subtotal</mat-label>
-          <input matInput type="number" formControlName="subtotal" />
-        </mat-form-field>
-        <button mat-icon-button type="button" (click)="quitarDetalle($index)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-    }
+<div class="container">
+  <div class="encabezado">
+    <h2>Registrar documento de venta</h2>
+    <p class="descripcion">
+      Selecciona el tipo de documento y agrega los lotes de captura que se compran. El monto
+      total se calcula con la suma de los subtotales.
+    </p>
   </div>
 
-  <button mat-button type="button" (click)="agregarDetalle()">+ Agregar otro detalle</button>
+  <form [formGroup]="formDocumentoVenta" (ngSubmit)="registrarDocumentoVenta()">
+    <!-- Bloque A: datos del documento -->
+    <div class="bloque">
+      <h3>Datos del documento</h3>
+      <mat-form-field appearance="outline">
+        <mat-label>Tipo de documento</mat-label>
+        <mat-select formControlName="tipoDocumento">
+          <mat-option value="Factura">Factura</mat-option>
+          <mat-option value="Boleta">Boleta</mat-option>
+        </mat-select>
+        <mat-error>Seleccione el tipo de documento</mat-error>
+      </mat-form-field>
+    </div>
 
-  <p>Monto total: S/ {{ montoTotal }}</p>
+    <!-- Bloque B: detalles de compra -->
+    <div class="bloque">
+      <h3>Detalles de compra</h3>
 
-  <button mat-button type="button" routerLink="/documentos-venta">Cancelar</button>
-  <button mat-flat-button type="submit">Registrar documento</button>
+      <div formArrayName="detalles">
+        @for (d of detalles.controls; track $index) {
+          <div class="fila-detalle" [formGroupName]="$index">
+            <mat-form-field appearance="outline">
+              <mat-label>ID del lote de captura</mat-label>
+              <input matInput type="number" formControlName="idLoteCaptura" />
+              <mat-error>Ingrese el ID del lote</mat-error>
+            </mat-form-field>
 
-  <p>{{ mensaje }}</p>
-</form>
+            <mat-form-field appearance="outline">
+              <mat-label>Peso comprado</mat-label>
+              <input matInput type="number" formControlName="pesoComprado" />
+              <mat-error>Ingrese el peso comprado</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Subtotal (S/)</mat-label>
+              <input matInput type="number" formControlName="subtotal" />
+              <mat-error>Ingrese el subtotal</mat-error>
+            </mat-form-field>
+
+            <button
+              mat-icon-button
+              type="button"
+              aria-label="Quitar detalle"
+              (click)="quitarDetalle($index)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        }
+      </div>
+
+      <button mat-button type="button" (click)="agregarDetalle()">+ Agregar otro detalle</button>
+    </div>
+
+    <div class="pie">
+      <p class="monto-total">Monto total: S/ {{ montoTotal }}</p>
+      <div class="botones">
+        <button mat-button type="button" routerLink="/documentos-venta/listar">Cancelar</button>
+        <button mat-flat-button type="submit">Registrar documento</button>
+      </div>
+    </div>
+
+    @if (mensaje) {
+      <p class="mensaje">{{ mensaje }}</p>
+    }
+  </form>
+</div>
