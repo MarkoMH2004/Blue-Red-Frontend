@@ -23,7 +23,7 @@ import { Cupdatecomponent } from './components/certificacioncomponent/cupdatecom
 import { Documentoventacomponent } from './components/documentoventacomponent/documentoventacomponent';
 import { Dvlistcomponent } from './components/documentoventacomponent/dvlistcomponent/dvlistcomponent';
 import { Dvinsertcomponent } from './components/documentoventacomponent/dvinsertcomponent/dvinsertcomponent';
-
+import { Dvdetallecomponent } from './components/documentoventacomponent/dvdetallecomponent/dvdetallecomponent';
 export const routes: Routes = [
   {
     path: '',
@@ -145,6 +145,10 @@ export const routes: Routes = [
       {
         path: 'insertar',
         component: Dvinsertcomponent,
+      },
+            {
+        path: 'detalle/:id',
+        component: Dvdetallecomponent,
       },
     ],
   },
