@@ -20,7 +20,10 @@ import { Certificacioncomponent } from './components/certificacioncomponent/cert
 import { Clistcomponent } from './components/certificacioncomponent/clistcomponent/clistcomponent';
 import { Cinsertcomponent } from './components/certificacioncomponent/cinsertcomponent/cinsertcomponent';
 import { Cupdatecomponent } from './components/certificacioncomponent/cupdatecomponent/cupdatecomponent';
-
+import { Documentoventacomponent } from './components/documentoventacomponent/documentoventacomponent';
+import { Dvlistcomponent } from './components/documentoventacomponent/dvlistcomponent/dvlistcomponent';
+import { Dvinsertcomponent } from './components/documentoventacomponent/dvinsertcomponent/dvinsertcomponent';
+import { Dvdetallecomponent } from './components/documentoventacomponent/dvdetallecomponent/dvdetallecomponent';
 export const routes: Routes = [
   {
     path: '',
@@ -126,4 +129,28 @@ export const routes: Routes = [
       },
     ],
   },
+    {
+    path: 'documentos-venta',
+    component: Documentoventacomponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'listar',
+        pathMatch: 'full',
+      },
+      {
+        path: 'listar',
+        component: Dvlistcomponent,
+      },
+      {
+        path: 'insertar',
+        component: Dvinsertcomponent,
+      },
+            {
+        path: 'detalle/:id',
+        component: Dvdetallecomponent,
+      },
+    ],
+  },
+  
 ];
