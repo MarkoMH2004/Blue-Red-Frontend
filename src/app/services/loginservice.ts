@@ -1,73 +1,89 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { LoginDTO } from '../models/LoginDTO';
+import { LoginRequestDTO } from '../models/LoginRequestDTO';
 import { LoginResponseDTO } from '../models/LoginResponseDTO';
 
-// TEMPORAL: login de prueba. No es el sistema definitivo de autenticación del grupo.
 @Injectable({
   providedIn: 'root',
 })
 export class Loginservice {
-  private apiURL = `${environment.base}/login`;
-  private claveToken = 'token-prueba';
+  private readonly apiURL = `${environment.base}/login`;
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
-  login(dto: LoginDTO): Observable<LoginResponseDTO> {
-    return this.http.post<LoginResponseDTO>(this.apiURL, dto);
-  }
+  login(credentials: LoginRequestDTO): Observable<LoginResponseDTO> {
+    return this.http.post<LoginResponseDTO>(this.apiURL, credentials).pipe(
+      tap((response) => {
+        if (!response?.token) {
+          throw new Error('La respuesta de login no contiene un token.');
+        }
 
-  guardarToken(token: string): void {
-    sessionStorage.setItem(this.claveToken, token);
+        if (this.isBrowser) {
+          sessionStorage.setItem('token', response.token);
+          sessionStorage.setItem('correo', response.correo ?? '');
+          sessionStorage.setItem('roles', JSON.stringify(response.roles ?? []));
+        }
+      })
+    );
   }
 
   getToken(): string | null {
-    return sessionStorage.getItem(this.claveToken);
-  }
+    if (!this.isBrowser) {
+      return null;
+    }
 
-  cerrarSesion(): void {
-    sessionStorage.removeItem(this.claveToken);
-  }
-
-  // Roles del usuario leídos del claim "roles" del JWT (texto separado por comas, p. ej. "ROLE_ADMIN")
-  getRoles(): string[] {
-    const token = this.getToken();
+    const token = sessionStorage.getItem('token');
     if (!token) {
+      return null;
+    }
+
+    if (this.isExpired(token)) {
+      this.logout();
+      return null;
+    }
+
+    return token;
+  }
+
+  isAuthenticated(): boolean {
+    return this.getToken() !== null;
+  }
+
+  getCorreo(): string {
+    if (!this.isBrowser || !this.isAuthenticated()) {
+      return '';
+    }
+
+    return sessionStorage.getItem('correo') ?? '';
+  }
+
+  getRoles(): string[] {
+    if (!this.isBrowser || !this.isAuthenticated()) {
+      return [];
+    }
+
+    const value = sessionStorage.getItem('roles');
+    if (!value) {
       return [];
     }
 
     try {
-      const payloadPart = token.split('.')[1];
-      if (!payloadPart) {
-        return [];
-      }
+      const roles: unknown = JSON.parse(value);
 
-      const base64 = payloadPart.replace(/-/g, '+').replace(/_/g, '/');
-      const payload: unknown = JSON.parse(
-        atob(base64.padEnd(Math.ceil(base64.length / 4) * 4, '=')),
-      );
-
-      if (payload === null || typeof payload !== 'object') {
-        return [];
+      if (Array.isArray(roles) && roles.every((role) => typeof role === 'string')) {
+        return roles;
       }
-
-      const { exp, roles } = payload as { exp?: unknown; roles?: unknown };
-      if (typeof exp !== 'number' || !Number.isFinite(exp) || exp * 1000 <= Date.now()) {
-        return [];
-      }
-      if (typeof roles !== 'string') {
-        return [];
-      }
-
-      return roles
-        .split(',')
-        .map((role) => role.trim())
-        .filter((role) => role !== '');
     } catch {
+      sessionStorage.removeItem('roles');
       return [];
     }
+
+    sessionStorage.removeItem('roles');
+    return [];
   }
 
   hasAnyRole(allowedRoles: readonly string[]): boolean {
@@ -76,5 +92,36 @@ export class Loginservice {
 
     const allowed = new Set(allowedRoles.map(normalize));
     return this.getRoles().some((role) => allowed.has(normalize(role)));
+  }
+
+  logout(): void {
+    if (this.isBrowser) {
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('correo');
+      sessionStorage.removeItem('roles');
+    }
+  }
+
+  private isExpired(token: string): boolean {
+    try {
+      const payloadPart = token.split('.')[1];
+      if (!payloadPart) {
+        return true;
+      }
+
+      const base64 = payloadPart.replace(/-/g, '+').replace(/_/g, '/');
+      const payload: unknown = JSON.parse(
+        atob(base64.padEnd(Math.ceil(base64.length / 4) * 4, '='))
+      );
+
+      if (payload === null || typeof payload !== 'object' || !('exp' in payload)) {
+        return true;
+      }
+
+      const exp = payload.exp;
+      return typeof exp !== 'number' || !Number.isFinite(exp) || exp * 1000 <= Date.now();
+    } catch {
+      return true;
+    }
   }
 }

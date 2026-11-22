@@ -1,15 +1,16 @@
-
 <div class="container">
   <mat-toolbar>
 
     <button
       matIconButton
       class="example-icon"
-      aria-label="Example icon-button with menu icon"
+      routerLink="/inicio"
+      aria-label="Ir al inicio"
     >
       <mat-icon>home</mat-icon>
     </button>
 
+    <!-- ESPECIE -->
     <button
       matButton
       [matMenuTriggerFor]="menuEspecie"
@@ -28,6 +29,7 @@
       </button>
     </mat-menu>
 
+    <!-- LOTE DE CAPTURA -->
     <button
       matButton
       [matMenuTriggerFor]="menuLote"
@@ -46,6 +48,7 @@
       </button>
     </mat-menu>
 
+    <!-- VALIDACIONES (unificado: incluye Buscar de tu compañero + Reconocer IA de ambos) -->
     <button
       matButton
       [matMenuTriggerFor]="menuValidacion"
@@ -63,7 +66,7 @@
         Buscar
       </button>
 
-      <button mat-menu-item routerLink="/validaciones/registrar">
+       <button mat-menu-item routerLink="/validaciones/registrar">
         Registrar
       </button>
 
@@ -75,6 +78,7 @@
       </button>
     </mat-menu>
 
+    <!-- CERTIFICACIONES (solo de tu compañero) -->
     <button
       matButton
       [matMenuTriggerFor]="menuCertificacion"
@@ -93,6 +97,7 @@
       </button>
     </mat-menu>
 
+    <!-- DOCUMENTOS DE VENTA (solo de tu compañero) -->
     <button
       matButton
       [matMenuTriggerFor]="menuDocumentoVenta"
@@ -110,7 +115,45 @@
         Registrar
       </button>
     </mat-menu>
-    
+
+    <!-- REPORTES (solo tuyo) -->
+    <button
+      matButton
+      [matMenuTriggerFor]="menuReport"
+      style="color: aliceblue"
+    >
+      Reportes
+    </button>
+
+    <mat-menu #menuReport="matMenu">
+      <button mat-menu-item routerLink="/reportes/veda">
+        Reporte01
+      </button>
+    </mat-menu>
+
+    <!-- EMPUJA TODO LO SIGUIENTE A LA DERECHA -->
+    <span class="spacer"></span>
+
+    @if (auth.isAuthenticated()) {
+      <span class="user-correo">{{ auth.getCorreo() }}</span>
+      <button
+        matButton
+        type="button"
+        class="btn-sesion"
+        (click)="cerrarSesion()"
+      >
+        Cerrar sesión
+      </button>
+    } @else {
+      <button
+        matButton
+        type="button"
+        class="btn-sesion"
+        routerLink="/login"
+      >
+        Iniciar sesión
+      </button>
+    }
+
   </mat-toolbar>
 </div>
-

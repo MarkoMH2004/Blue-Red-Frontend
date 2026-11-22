@@ -12,7 +12,7 @@ export class Certificacioncomponent {
   constructor(private loginservice: Loginservice, private router: Router) {}
 
   cerrarSesion(): void {
-    this.loginservice.cerrarSesion();
+    this.loginservice.logout();
     this.router.navigate(['/']);
   }
 }
