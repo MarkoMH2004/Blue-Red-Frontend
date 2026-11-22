@@ -46,4 +46,11 @@ export class Validacionservice {
       headers: { Authorization: `Bearer ${this.lS.getToken()}` },
     });
   }
+
+  // Eliminación de una validación por su ID (HU51)
+  deleteValidacion(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiURL}/${id}`, {
+      headers: { Authorization: `Bearer ${this.lS.getToken()}` },
+    });
+  }
 }

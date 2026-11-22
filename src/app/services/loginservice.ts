@@ -30,4 +30,51 @@ export class Loginservice {
   cerrarSesion(): void {
     sessionStorage.removeItem(this.claveToken);
   }
+
+  // Roles del usuario leídos del claim "roles" del JWT (texto separado por comas, p. ej. "ROLE_ADMIN")
+  getRoles(): string[] {
+    const token = this.getToken();
+    if (!token) {
+      return [];
+    }
+
+    try {
+      const payloadPart = token.split('.')[1];
+      if (!payloadPart) {
+        return [];
+      }
+
+      const base64 = payloadPart.replace(/-/g, '+').replace(/_/g, '/');
+      const payload: unknown = JSON.parse(
+        atob(base64.padEnd(Math.ceil(base64.length / 4) * 4, '=')),
+      );
+
+      if (payload === null || typeof payload !== 'object') {
+        return [];
+      }
+
+      const { exp, roles } = payload as { exp?: unknown; roles?: unknown };
+      if (typeof exp !== 'number' || !Number.isFinite(exp) || exp * 1000 <= Date.now()) {
+        return [];
+      }
+      if (typeof roles !== 'string') {
+        return [];
+      }
+
+      return roles
+        .split(',')
+        .map((role) => role.trim())
+        .filter((role) => role !== '');
+    } catch {
+      return [];
+    }
+  }
+
+  hasAnyRole(allowedRoles: readonly string[]): boolean {
+    const normalize = (role: string) =>
+      role.startsWith('ROLE_') ? role.slice('ROLE_'.length) : role;
+
+    const allowed = new Set(allowedRoles.map(normalize));
+    return this.getRoles().some((role) => allowed.has(normalize(role)));
+  }
 }

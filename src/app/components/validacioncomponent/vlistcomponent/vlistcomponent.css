@@ -101,3 +101,17 @@ td[mat-cell] {
   text-align: center;
   font-weight: bold;
 }
+
+.mensaje-exito {
+  color: #2e7d32;
+  text-align: center;
+  font-weight: bold;
+}
+
+.btn-eliminar {
+  color: #1f7ab8;
+}
+
+.btn-eliminar:hover {
+  color: #d7263d;
+}
