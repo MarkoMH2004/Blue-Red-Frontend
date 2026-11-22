@@ -4,6 +4,11 @@
       <h2>Validaciones</h2>
       <p class="descripcion">Revisa los resultados de los lotes de captura evaluados.</p>
     </div>
+    @if (esAdmin) {
+      <button mat-raised-button color="primary" routerLink="/validaciones/registrar">
+        <mat-icon>add</mat-icon> Registrar validación
+      </button>
+    }
   </div>
   <div class="bloque">
     @if (mensajeEliminar) {
