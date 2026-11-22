@@ -17,6 +17,7 @@
     @if (mensaje) {
       <p class="mensaje-error">{{ mensaje }}</p>
     } @else if (dataSource.length > 0) {
+      <div class="tabla-responsive">
       <table mat-table [dataSource]="dataSource" class="mat-shadow-2">
         <ng-container matColumnDef="C1">
           <th mat-header-cell *matHeaderCellDef>ID</th>
@@ -74,6 +75,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
+      </div>
     } @else {
       <p>Aún no hay validaciones registradas</p>
     }
