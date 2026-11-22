@@ -5,8 +5,10 @@
 .encabezado {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 16px;
+  padding-top: 24px;
   padding-bottom: 30px;
   margin-bottom: 20px;
   /*border-bottom: 1px solid #e2e2e6;*/
@@ -100,4 +102,18 @@ td[mat-cell] {
   color: #d32f2f;
   text-align: center;
   font-weight: bold;
+}
+
+.mensaje-exito {
+  color: #2e7d32;
+  text-align: center;
+  font-weight: bold;
+}
+
+.btn-eliminar {
+  color: #1f7ab8;
+}
+
+.btn-eliminar:hover {
+  color: #d7263d;
 }

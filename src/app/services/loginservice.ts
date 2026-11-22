@@ -13,7 +13,7 @@ export class Loginservice {
   private readonly apiURL = `${environment.base}/login`;
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
-  constructor(private readonly http: HttpClient) { }
+  constructor(private readonly http: HttpClient) {}
 
   login(credentials: LoginRequestDTO): Observable<LoginResponseDTO> {
     return this.http.post<LoginResponseDTO>(this.apiURL, credentials).pipe(

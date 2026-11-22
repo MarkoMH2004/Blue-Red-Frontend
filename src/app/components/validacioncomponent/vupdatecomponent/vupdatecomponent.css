@@ -1,0 +1,59 @@
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.encabezado {
+  padding-bottom: 30px;
+  margin-bottom: 20px;
+}
+h2 {
+  text-align: left;
+  color: #0b3c5d;
+  font-size: 28px;
+  font-weight: bold;
+  margin: 10px 0 25px;
+}
+h3 {
+  color: #0b3c5d;
+  font-size: 16px;
+  margin: 0 0 6px;
+}
+.descripcion {
+  all: unset;
+  display: block;
+  color: #6b6b76;
+  font-size: 13px;
+}
+.formulario {
+  background: #ffffff;
+  border: 1px solid #e2e2e6;
+  border-radius: 12px;
+  padding: 35px 40px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 24px;
+}
+.dato,
+.acciones {
+  grid-column: 1 / -1;
+}
+.valor {
+  font-weight: bold;
+  color: #1f7ab8;
+}
+.acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+.btn-cancelar {
+  color: #6b6b76;
+}
+.mensaje {
+  color: #d32f2f;
+  text-align: center;
+  font-weight: bold;
+}

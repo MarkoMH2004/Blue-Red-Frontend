@@ -4,8 +4,16 @@
       <h2>Validaciones</h2>
       <p class="descripcion">Revisa los resultados de los lotes de captura evaluados.</p>
     </div>
+    @if (esAdmin) {
+      <button mat-raised-button color="primary" routerLink="/validaciones/registrar">
+        <mat-icon>add</mat-icon> Registrar validación
+      </button>
+    }
   </div>
   <div class="bloque">
+    @if (mensajeEliminar) {
+      <p [class]="eliminacionExitosa ? 'mensaje-exito' : 'mensaje-error'">{{ mensajeEliminar }}</p>
+    }
     @if (mensaje) {
       <p class="mensaje-error">{{ mensaje }}</p>
     } @else if (dataSource.length > 0) {
@@ -43,6 +51,24 @@
         <ng-container matColumnDef="C7">
           <th mat-header-cell *matHeaderCellDef>Fecha de validación</th>
           <td mat-cell *matCellDef="let element">{{ element.fechaValidacion }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="CEDITAR">
+          <th mat-header-cell *matHeaderCellDef>Editar</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button class="btn-eliminar" [routerLink]="['/validaciones/editar', element.idValidacion]">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="CELIMINAR">
+          <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button class="btn-eliminar" (click)="confirmarEliminar(element.idValidacion)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

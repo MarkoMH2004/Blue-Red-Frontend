@@ -28,6 +28,8 @@ import { roleGuard } from './core/guards/role-guard';
 import { Logincomponent } from './components/logincomponent/logincomponent';
 import { combineLatest } from 'rxjs';
 import { Component } from '@angular/core';
+import { Vupdatecomponent } from './components/validacioncomponent/vupdatecomponent/vupdatecomponent';
+import { Vinsertcomponent } from './components/validacioncomponent/vinsertcomponent/vinsertcomponent';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
@@ -68,6 +70,14 @@ export const routes: Routes = [
       { path: 'listar', component: Vlistcomponent },
       { path: 'reconocer-especie', component: Vreconocimientocomponent },
       { path: 'buscar', component: Vbuscarcomponent },
+      {
+        path: 'editar/:id',
+        component: Vupdatecomponent,
+      },
+      {
+        path: 'registrar',
+        component: Vinsertcomponent,
+      },
     ],
   },
   {
