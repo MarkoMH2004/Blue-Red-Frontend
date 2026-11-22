@@ -13,3 +13,33 @@ h1, h2, h3, mat-card-title {
   text-transform: uppercase;
   color: #0B3C5D !important; /* Azul Océano para títulos */
 }
+
+.snack-ok {
+  --mat-snack-bar-container-color: #D1FAE5;
+  --mat-snack-bar-supporting-text-color: #065F46;
+  --mat-snack-bar-button-color: #065F46;
+  --mat-snack-bar-container-shape: 16px;
+}
+
+
+.snack-aviso {
+  --mat-snack-bar-container-color: #FEF3C7;
+  --mat-snack-bar-supporting-text-color: #92400E;
+  --mat-snack-bar-button-color: #92400E;
+  --mat-snack-bar-container-shape: 16px;
+}
+.snack-eliminar {
+  --mat-snack-bar-container-color: #E5E7EB;
+  --mat-snack-bar-supporting-text-color: #374151;
+  --mat-snack-bar-button-color: #374151;
+  --mat-snack-bar-container-shape: 16px;
+}
+
+
+.snack-edicion {
+  --mat-snack-bar-container-color: #DBEAFE;
+  --mat-snack-bar-supporting-text-color: #1E40AF;
+  --mat-snack-bar-button-color: #1E40AF;
+  --mat-snack-bar-container-shape: 16px;
+}
+

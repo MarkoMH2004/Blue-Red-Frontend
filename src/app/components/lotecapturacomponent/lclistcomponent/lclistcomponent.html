@@ -111,8 +111,9 @@
               <button
                 mat-button
                 class="btn-editar"
-                [disabled]="!puedeEditar(element.estado)"
-                [routerLink]="['/lotes-captura/editar', element.idLoteCaptura]"
+                //clase inactivo para que el boton se vea apagado auqnue si se pueda presionar
+                [class.inactivo]="!puedeEditar(element.estado)" 
+                (click)="editar(element)"
               >
                 <mat-icon>edit</mat-icon>
               </button>
@@ -150,6 +151,7 @@
     } @else {
       <p>
         @if (dataSource.data.length === 0) {
+          //¿no hay nada porque no tienes lotes, o porque el filtro los descartó todos?
           <P> No se encontraron lotes de captura </P>
         } @else {
           <!--mensaje-->
@@ -159,3 +161,29 @@
     }
   </div>
 </div>
+
+<!-- CUADROS DE DIALOGO -->
+
+<!-- Diálogo confirmar eliminación -->
+<ng-template #dialogoConfirmar>
+  <h2 mat-dialog-title class="dialog-titulo">Eliminar lote de captura</h2>
+  <mat-dialog-content>
+    ¿Seguro que deseas eliminar el lote con ID {{ idPorEliminar }}? Esta acción no se puede
+    deshacer.
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button matButton [mat-dialog-close]="false">Cancelar</button>
+    <button matButton="filled" [mat-dialog-close]="true" cdkFocusInitial>Eliminar</button>
+  </mat-dialog-actions>
+</ng-template>
+
+<!-- Diálogo en caso no se pueda eliminar -->
+<ng-template #dialogoNoSePuede>
+  <h2 mat-dialog-title class="dialog-titulo">No se puede eliminar</h2>
+  <mat-dialog-content>
+    Este lote tiene una validación o una venta asociada, por lo que no puede eliminarse.
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button matButton="filled" mat-dialog-close>Entendido</button>
+  </mat-dialog-actions>
+</ng-template>

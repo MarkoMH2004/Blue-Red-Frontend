@@ -1,25 +1,112 @@
+
 <div class="container">
   <mat-toolbar>
-    <button matIconButton class="example-icon" aria-label="Example icon-button with menu icon">
+
+    <button
+      matIconButton
+      class="example-icon"
+      aria-label="Example icon-button with menu icon"
+    >
       <mat-icon>home</mat-icon>
     </button>
-    <button matButton [matMenuTriggerFor]="menuEspecie" style="color: aliceblue">Especie</button>
+
+    <button
+      matButton
+      [matMenuTriggerFor]="menuEspecie"
+      style="color: aliceblue"
+    >
+      Especie
+    </button>
+
     <mat-menu #menuEspecie="matMenu">
-      <button mat-menu-item routerLink="/especies/listar">Listar</button>
-      <button mat-menu-item routerLink="/especies/insertar">Registrar</button>
+      <button mat-menu-item routerLink="/especies/listar">
+        Listar
+      </button>
+
+      <button mat-menu-item routerLink="/especies/insertar">
+        Registrar
+      </button>
     </mat-menu>
 
-    <button matButton [matMenuTriggerFor]="menuLote" style="color: aliceblue">Lote de captura</button>
+    <button
+      matButton
+      [matMenuTriggerFor]="menuLote"
+      style="color: aliceblue"
+    >
+      Lote de captura
+    </button>
+
     <mat-menu #menuLote="matMenu">
-      <button mat-menu-item routerLink="/lotes-captura/listar">Mis capturas</button>
-      <button mat-menu-item routerLink="/lotes-captura/insertar">Registrar lote</button>
+      <button mat-menu-item routerLink="/lotes-captura/listar">
+        Mis capturas
+      </button>
+
+      <button mat-menu-item routerLink="/lotes-captura/insertar">
+        Registrar lote
+      </button>
     </mat-menu>
 
-    <button matButton [matMenuTriggerFor]="menuValidacion" style="color: aliceblue">Validaciones</button>
+    <button
+      matButton
+      [matMenuTriggerFor]="menuValidacion"
+      style="color: aliceblue"
+    >
+      Validaciones
+    </button>
+
     <mat-menu #menuValidacion="matMenu">
-      <button mat-menu-item routerLink="/validaciones/listar">Listar</button>
-      <button mat-menu-item routerLink="/validaciones/buscar">Buscar</button>
-      <button mat-menu-item routerLink="/validaciones/reconocer-especie">Reconocer especie con IA</button>
+      <button mat-menu-item routerLink="/validaciones/listar">
+        Listar
+      </button>
+
+      <button mat-menu-item routerLink="/validaciones/buscar">
+        Buscar
+      </button>
+
+      <button
+        mat-menu-item
+        routerLink="/validaciones/reconocer-especie"
+      >
+        Reconocer especie con IA
+      </button>
     </mat-menu>
+
+    <button
+      matButton
+      [matMenuTriggerFor]="menuCertificacion"
+      style="color: aliceblue"
+    >
+      Certificaciones
+    </button>
+
+    <mat-menu #menuCertificacion="matMenu">
+      <button mat-menu-item routerLink="/certificaciones/listar">
+        Listar
+      </button>
+
+      <button mat-menu-item routerLink="/certificaciones/insertar">
+        Registrar
+      </button>
+    </mat-menu>
+
+    <button
+      matButton
+      [matMenuTriggerFor]="menuDocumentoVenta"
+      style="color: aliceblue"
+    >
+      Documentos de venta
+    </button>
+
+    <mat-menu #menuDocumentoVenta="matMenu">
+      <button mat-menu-item routerLink="/documentos-venta/listar">
+        Listar / Consultar
+      </button>
+
+      <button mat-menu-item routerLink="/documentos-venta/insertar">
+        Registrar
+      </button>
+    </mat-menu>
+    
   </mat-toolbar>
 </div>
+

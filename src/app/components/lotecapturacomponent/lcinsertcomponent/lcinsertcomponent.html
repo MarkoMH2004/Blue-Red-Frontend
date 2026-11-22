@@ -67,7 +67,7 @@
           <mat-label>Latitud</mat-label>
           <input matInput type="number" placeholder="Ej. 10.5" formControlName="latitud" />
           
-          @if (formLoteCaptura.get('cantidad')?.hasError('required')) {
+          @if (formLoteCaptura.get('latitud')?.hasError('required')) {
             <mat-error>Ingrese la latitud</mat-error>
           }
         </mat-form-field>
@@ -77,7 +77,7 @@
           <mat-label>Longitud</mat-label>
           <input matInput type="number" placeholder="Ej. -70.5" formControlName="longitud" />
           
-          @if (formLoteCaptura.get('cantidad')?.hasError('required')) {
+          @if (formLoteCaptura.get('longitud')?.hasError('required')) {
             <mat-error>Ingrese la longitud</mat-error>
           }
         </mat-form-field>
