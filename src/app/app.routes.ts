@@ -13,6 +13,8 @@ import { Validacioncomponent } from './components/validacioncomponent/validacion
 import { Vlistcomponent } from './components/validacioncomponent/vlistcomponent/vlistcomponent';
 import { Vreconocimientocomponent } from './components/validacioncomponent/vreconocimientocomponent/vreconocimientocomponent';
 import { Loginpruebacomponent } from './components/loginpruebacomponent/loginpruebacomponent';
+import { Reportecomponent } from './components/reportecomponent/reportecomponent';
+import { Reportevedacomponent } from './components/reportecomponent/reportevedacomponent/reportevedacomponent';
 export const routes: Routes = [
   {
     path: '',
@@ -91,4 +93,19 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'reportes',
+    component: Reportecomponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'veda',
+        pathMatch: 'full',
+      },
+      {
+        path: 'veda',
+        component: Reportevedacomponent
+      }
+    ]
+  }
 ];

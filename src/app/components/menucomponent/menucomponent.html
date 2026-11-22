@@ -3,22 +3,28 @@
     <button matIconButton class="example-icon" aria-label="Example icon-button with menu icon">
       <mat-icon>home</mat-icon>
     </button>
-    <button matButton [matMenuTriggerFor]="menuEspecie" style="color: aliceblue">Especie</button>
+
+    <button matButton [matMenuTriggerFor]="menuEspecie" style="color: aliceblue;">Especie</button>
     <mat-menu #menuEspecie="matMenu">
       <button mat-menu-item routerLink="/especies/listar">Listar</button>
       <button mat-menu-item routerLink="/especies/insertar">Registrar</button>
     </mat-menu>
 
-    <button matButton [matMenuTriggerFor]="menuLote" style="color: aliceblue">Lote de captura</button>
+    <button matButton [matMenuTriggerFor]="menuLote" style="color: aliceblue;">Lote de captura</button>
     <mat-menu #menuLote="matMenu">
       <button mat-menu-item routerLink="/lotes-captura/listar">Mis capturas</button>
       <button mat-menu-item routerLink="/lotes-captura/insertar">Registrar lote</button>
     </mat-menu>
 
-    <button matButton [matMenuTriggerFor]="menuValidacion" style="color: aliceblue">Validaciones</button>
+    <button matButton [matMenuTriggerFor]="menuValidacion" style="color: aliceblue;">Validaciones</button>
     <mat-menu #menuValidacion="matMenu">
       <button mat-menu-item routerLink="/validaciones/listar">Listar</button>
       <button mat-menu-item routerLink="/validaciones/reconocer-especie">Reconocer especie con IA</button>
+    </mat-menu>
+
+    <button matButton [matMenuTriggerFor]="menuReport" style="color: aliceblue;">Reportes</button>
+    <mat-menu #menuReport="matMenu">
+      <button mat-menu-item routerLink="/reportes/veda">Reporte01</button>
     </mat-menu>
   </mat-toolbar>
 </div>
