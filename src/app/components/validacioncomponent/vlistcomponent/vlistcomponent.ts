@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ValidacionDTO } from '../../../models/ValidacionDTO';
 import { Validacionservice } from '../../../services/validacionservice';
+import { Loginservice } from '../../../services/loginservice';
 import { LoteCapturaDTO } from '../../../models/LoteCapturaDTO';
 import { EspecieDTO } from '../../../models/EspecieDTO';
 
@@ -30,7 +31,16 @@ export class Vconfirmareliminar {}
   styleUrl: './vlistcomponent.css',
 })
 export class Vlistcomponent implements OnInit {
-  displayedColumns: string[] = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'CELIMINAR'];
+  private baseColumns: string[] = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7'];
+
+  // La columna Eliminar solo se muestra a ADMIN
+  get displayedColumns(): string[] {
+    return this.esAdmin ? [...this.baseColumns, 'CELIMINAR'] : this.baseColumns;
+  }
+
+  get esAdmin(): boolean {
+    return this.lS.hasAnyRole(['ADMIN']);
+  }
   dataSource: ValidacionDTO[] = [];
   lotes: LoteCapturaDTO[] = [];
   especies: EspecieDTO[] = [];
@@ -40,6 +50,7 @@ export class Vlistcomponent implements OnInit {
 
   constructor(
     private vS: Validacionservice,
+    private lS: Loginservice,
     private cdr: ChangeDetectorRef,
     private dialog: MatDialog,
   ) {}
