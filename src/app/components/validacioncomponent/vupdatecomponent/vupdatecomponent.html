@@ -1,0 +1,84 @@
+<div class="container">
+  <div class="encabezado">
+    <div class="titulo">
+      <h2>Actualizar validación</h2>
+      <p class="descripcion">Modifica los datos de la validación. El lote de captura asociado no cambia.</p>
+    </div>
+  </div>
+
+  <div class="formulario">
+    @if (formValidacion) {
+      <form [formGroup]="formValidacion" (ngSubmit)="actualizarValidacion()">
+        <div class="dato">
+          <h3>ID de la validación</h3>
+          <span class="valor">{{ formValidacion.value.ID }}</span>
+        </div>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Especie detectada</mat-label>
+          <input matInput formControlName="especieDetectada" />
+          <mat-error>Ingrese la especie detectada</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Cantidad analizada</mat-label>
+          <input matInput type="number" formControlName="cantidadAnalizada" />
+          <mat-error>Ingrese una cantidad válida (0 o mayor)</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Longitud mínima detectada</mat-label>
+          <input matInput type="number" formControlName="longitudMinimaDetectada" />
+          <mat-error>Ingrese una longitud válida (0 o mayor)</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Porcentaje de confianza</mat-label>
+          <input matInput type="number" formControlName="porcentajeConfianza" />
+          <mat-error>Ingrese un porcentaje entre 0 y 100</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Porcentaje de cumplimiento</mat-label>
+          <input matInput type="number" formControlName="porcentajeCumplimiento" />
+          <mat-error>Ingrese un porcentaje entre 0 y 100</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Objeto de referencia detectado</mat-label>
+          <input matInput formControlName="objetoReferenciaDetectado" />
+          <mat-error>Ingrese el objeto de referencia detectado</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Resultado</mat-label>
+          <mat-select formControlName="resultado">
+            @for (r of resultados; track r) {
+              <mat-option [value]="r">{{ r }}</mat-option>
+            }
+          </mat-select>
+          <mat-error>Seleccione el resultado</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha de validación</mat-label>
+          <input matInput [matDatepicker]="picker1" formControlName="fechaValidacion" />
+          <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+          <mat-error>Seleccione la fecha de validación</mat-error>
+        </mat-form-field>
+
+        <div class="acciones">
+          <button matButton type="button" class="btn-cancelar" routerLink="/validaciones/listar">
+            Cancelar
+          </button>
+          <button matButton type="submit">Actualizar validación</button>
+        </div>
+      </form>
+    }
+
+    @if (mensaje) {
+      <p class="mensaje">{{ mensaje }}</p>
+    }
+  </div>
+</div>

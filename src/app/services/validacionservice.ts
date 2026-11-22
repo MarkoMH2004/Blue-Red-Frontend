@@ -47,6 +47,13 @@ export class Validacionservice {
     });
   }
 
+  // Actualización de una validación existente (HU50)
+  update(dto: ValidacionDTO): Observable<ValidacionDTO> {
+    return this.http.put<ValidacionDTO>(`${this.apiURL}/${dto.idValidacion}`, dto, {
+      headers: { Authorization: `Bearer ${this.lS.getToken()}` },
+    });
+  }
+
   // Eliminación de una validación por su ID (HU51)
   deleteValidacion(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiURL}/${id}`, {

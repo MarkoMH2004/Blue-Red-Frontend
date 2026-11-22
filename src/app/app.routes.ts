@@ -14,6 +14,7 @@ import { Validacioncomponent } from './components/validacioncomponent/validacion
 import { Vlistcomponent } from './components/validacioncomponent/vlistcomponent/vlistcomponent';
 import { Vreconocimientocomponent } from './components/validacioncomponent/vreconocimientocomponent/vreconocimientocomponent';
 import { Vbuscarcomponent } from './components/validacioncomponent/vbuscarcomponent/vbuscarcomponent';
+import { Vupdatecomponent } from './components/validacioncomponent/vupdatecomponent/vupdatecomponent';
 import { Loginpruebacomponent } from './components/loginpruebacomponent/loginpruebacomponent';
 
 import { Certificacioncomponent } from './components/certificacioncomponent/certificacioncomponent';
@@ -104,6 +105,10 @@ export const routes: Routes = [
       {
         path: 'buscar',
         component: Vbuscarcomponent,
+      },
+      {
+        path: 'editar/:id',
+        component: Vupdatecomponent,
       },
     ],
   },
