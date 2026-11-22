@@ -1,0 +1,86 @@
+<div class="container">
+  <div class="encabezado">
+    <h2>Editar documento de venta</h2>
+    <p class="descripcion">
+      Modifica los datos del documento y sus detalles de compra. El monto total se recalcula
+      con la suma de los subtotales.
+    </p>
+  </div>
+
+  @if (mensaje) {
+    <p class="mensaje-error">{{ mensaje }}</p>
+  }
+
+  @if (cargado) {
+    <form [formGroup]="formDocumentoVenta" (ngSubmit)="actualizarDocumentoVenta()">
+      <!-- Bloque A: datos del documento -->
+      <div class="bloque">
+        <h3>Datos del documento (ID {{ idDocumento }})</h3>
+        <div class="fila-detalle">
+          <mat-form-field appearance="outline">
+            <mat-label>Tipo de documento</mat-label>
+            <mat-select formControlName="tipoDocumento">
+              <mat-option value="Factura">Factura</mat-option>
+              <mat-option value="Boleta">Boleta</mat-option>
+            </mat-select>
+            <mat-error>Seleccione el tipo de documento</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Fecha de emisión</mat-label>
+            <input matInput type="date" formControlName="fechaEmision" />
+            <mat-error>Ingrese la fecha de emisión</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Bloque B: detalles de compra -->
+      <div class="bloque">
+        <h3>Detalles de compra</h3>
+
+        <div formArrayName="detalles">
+          @for (d of detalles.controls; track $index) {
+            <div class="fila-detalle" [formGroupName]="$index">
+              <mat-form-field appearance="outline">
+                <mat-label>ID del lote de captura</mat-label>
+                <input matInput type="number" formControlName="idLoteCaptura" />
+                <mat-error>Ingrese el ID del lote</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Peso comprado</mat-label>
+                <input matInput type="number" formControlName="pesoComprado" />
+                <mat-error>Ingrese el peso comprado</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Subtotal (S/)</mat-label>
+                <input matInput type="number" formControlName="subtotal" />
+                <mat-error>Ingrese el subtotal</mat-error>
+              </mat-form-field>
+
+              <button
+                mat-icon-button
+                type="button"
+                aria-label="Quitar detalle"
+                (click)="quitarDetalle($index)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          }
+        </div>
+
+        <button mat-button type="button" (click)="agregarDetalle()">+ Agregar otro detalle</button>
+      </div>
+
+      <div class="pie">
+        <p class="monto-total">Monto total: S/ {{ montoTotal }}</p>
+        <div class="botones">
+          <button mat-button type="button" routerLink="/documentos-venta/listar">Cancelar</button>
+          <button mat-flat-button type="submit" [disabled]="cargando">Guardar cambios</button>
+        </div>
+      </div>
+    </form>
+  }
+</div>

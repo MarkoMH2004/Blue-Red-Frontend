@@ -4,9 +4,19 @@
       <h2>Detalle del documento de venta</h2>
       <p class="descripcion">Consulta la información registrada de este documento y sus compras.</p>
     </div>
-    <button mat-raised-button color="primary" type="button" routerLink="/documentos-venta/listar">
-      <mat-icon>arrow_back</mat-icon> Volver al listado
-    </button>
+    <div class="acciones">
+      <button mat-raised-button type="button" routerLink="/documentos-venta/listar">
+        <mat-icon>arrow_back</mat-icon> Volver al listado
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        [routerLink]="['/documentos-venta/editar', idDocumento]"
+      >
+        <mat-icon>edit</mat-icon> Editar
+      </button>
+    </div>
   </div>
 
   @if (mensaje) {

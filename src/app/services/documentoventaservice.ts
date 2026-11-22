@@ -35,4 +35,7 @@ export class Documentoventaservice {
   listId(id: number): Observable<DocumentoVentaDTO> {
     return this.http.get<DocumentoVentaDTO>(`${this.apiURL}/${id}`, this.opciones());
   }
+  update(dv: DocumentoVentaDTO): Observable<DocumentoVentaDTO> {
+    return this.http.put<DocumentoVentaDTO>(this.apiURL, dv, this.opciones());
+  }
 }

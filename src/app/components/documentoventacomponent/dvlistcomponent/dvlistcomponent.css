@@ -127,3 +127,6 @@ td[mat-cell] {
   color: #92400e;
   text-align: center;
 }
+td button + button {
+  margin-left: 8px;
+}
