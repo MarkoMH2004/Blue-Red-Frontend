@@ -1,0 +1,48 @@
+
+.pagina {
+  max-width: 850px;
+  margin: 0 auto;
+  color: #0b3c5d;
+}
+
+h1 {
+  font: 700 28px Poppins, Arial, sans-serif;
+  color: #0b3c5d;
+  margin: 0;
+}
+
+p {
+  color: #41556b;
+}
+
+.tarjeta {
+  background: white;
+  border-radius: 10px;
+  padding: 32px;
+  margin-top: 24px;
+  box-shadow: 0 3px 10px #0f1b2a12;
+}
+
+.campo {
+  display: block;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.acciones {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.boton-principal {
+  background: #d7263d !important;
+  color: white !important;
+}
+
+.mensaje {
+  color: #b3261e;
+  font-weight: 600;
+}

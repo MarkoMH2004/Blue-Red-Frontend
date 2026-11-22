@@ -12,6 +12,7 @@ import { Lotecapturaservice } from '../../../services/lotecapturaservice';
 import { Especieservice } from '../../../services/especieservice';
 import { LoteCapturaDTO } from '../../../models/LoteCapturaDTO';
 import { isPlatformBrowser } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   imports: [
@@ -49,6 +50,7 @@ export class Lcupdatecomponent implements OnInit, AfterViewInit {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private route: ActivatedRoute,
+    private snackBar: MatSnackBar //servicio
   ) {}
 
   ngOnInit(): void {
@@ -193,6 +195,12 @@ export class Lcupdatecomponent implements OnInit, AfterViewInit {
     this.lcS.update(dto).subscribe({
       next: () => {
         this.router.navigate(['/lotes-captura/listar']);
+        this.snackBar.open('Actualizado correctamente', '✖',{ //mensajito de confirmacion 
+          duration:5000, //5 segundos luego puf desaparece
+          horizontalPosition: 'center',
+          verticalPosition:'bottom',
+          panelClass: ['snack-edicion']
+        });
       },
 
       error: (error) => {

@@ -1,0 +1,28 @@
+<div>
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <img src="/logo.jpg" alt="Logo" />
+    <h1>Iniciar sesión</h1>
+
+    <label for="correo">Correo</label>
+    <input id="correo" type="email" formControlName="correo" autocomplete="email" />
+
+    @if (form.controls.correo.touched && form.controls.correo.invalid) {
+    <p class="field-error">*Ingresa tu correo.</p>
+    }
+
+    <label for="contrasena">Contraseña</label>
+    <input id="contrasena" type="password" formControlName="contrasena" autocomplete="current-password" />
+
+    @if (form.controls.contrasena.touched && form.controls.contrasena.invalid) {
+    <p class="field-error">*Ingresa tu contraseña.</p>
+    }
+
+    @if (errorMessage) {
+    <p class="error" role="alert">{{ errorMessage }}</p>
+    }
+
+    <button type="submit" [disabled]="form.invalid || submitting" style="background-color:#0aae4e">
+      {{ submitting ? 'Ingresando…' : 'Ingresar' }}
+    </button>
+  </form>
+</div>

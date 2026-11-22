@@ -1,0 +1,98 @@
+
+<section class="pagina">
+  <h1>REGISTRAR CERTIFICACIÓN</h1>
+  <p>Selecciona una validación existente y completa los datos del certificado.</p>
+
+  <div class="tarjeta">
+    <form [formGroup]="formulario" (ngSubmit)="registrar()">
+
+      <mat-form-field appearance="outline" class="campo">
+        <mat-label>Validación asociada *</mat-label>
+
+        <mat-select formControlName="idValidacion">
+          <mat-option
+            *ngFor="let v of validaciones"
+            [value]="v.idValidacion"
+          >
+            Validación {{ v.idValidacion }} — {{ v.resultado }}
+          </mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="formulario.get('idValidacion')?.hasError('required')">
+          Selecciona una validación existente.
+        </mat-error>
+      </mat-form-field>
+
+      <p class="ayuda" *ngIf="cargandoValidaciones">
+        Cargando validaciones...
+      </p>
+
+      <p
+        class="ayuda"
+        *ngIf="!cargandoValidaciones && validaciones.length === 0"
+      >
+        No hay validaciones disponibles. Para registrar una certificación, primero debe existir una validación.
+      </p>
+
+      <mat-form-field appearance="outline" class="campo">
+        <mat-label>Código del certificado *</mat-label>
+
+        <input
+          matInput
+          formControlName="codigoCertificado"
+          maxlength="45"
+          placeholder="Ej. CERT-001"
+        />
+
+        <mat-error *ngIf="formulario.get('codigoCertificado')?.invalid">
+          Ingresa un código obligatorio de máximo 45 caracteres.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="campo">
+        <mat-label>Fecha de emisión *</mat-label>
+
+        <input
+          matInput
+          type="date"
+          formControlName="fechaEmision"
+        />
+
+        <mat-error *ngIf="formulario.get('fechaEmision')?.hasError('required')">
+          Selecciona una fecha.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="campo">
+        <mat-label>Estado del certificado</mat-label>
+
+        <input
+          matInput
+          formControlName="estadoCertificado"
+          maxlength="45"
+          placeholder="Estado"
+        />
+      </mat-form-field>
+
+      <p *ngIf="mensaje" class="mensaje" role="alert">
+        {{ mensaje }}
+      </p>
+
+      <div class="acciones">
+        <a mat-stroked-button routerLink="/certificaciones/listar">
+          Cancelar
+        </a>
+
+        <button
+          mat-flat-button
+          class="boton-principal"
+          type="submit"
+          [disabled]="cargando || cargandoValidaciones || validaciones.length === 0"
+        >
+          {{ cargando ? 'Registrando...' : 'Registrar certificación' }}
+        </button>
+      </div>
+
+    </form>
+  </div>
+</section>

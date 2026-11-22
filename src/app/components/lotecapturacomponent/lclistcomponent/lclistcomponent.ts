@@ -1,7 +1,7 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LoteCapturaDTO } from '../../../models/LoteCapturaDTO';
 import { Lotecapturaservice } from '../../../services/lotecapturaservice';
 import { EspecieDTO } from '../../../models/EspecieDTO';
@@ -11,6 +11,8 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   imports: [
@@ -22,6 +24,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
+    MatDialogModule,
   ],
   selector: 'app-lclistcomponent',
   styleUrl: './lclistcomponent.css',
@@ -41,18 +44,27 @@ export class Lclistcomponent implements OnInit {
   especies: EspecieDTO[] = [];
   form: any;
   mensaje: string = '';
+  idPorEliminar: number = 0;
 
+  //para el paginador
   @ViewChild(MatPaginator) set paginator(p: MatPaginator) {
     if (p) {
       this.dataSource.paginator = p;
     }
   }
 
+  //para el dialogo
+  @ViewChild('dialogoConfirmar') dialogoConfirmar!: TemplateRef<any>;
+  @ViewChild('dialogoNoSePuede') dialogoNoSePuede!: TemplateRef<any>;
+
   constructor(
     private lcS: Lotecapturaservice,
     private eS: Especieservice,
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
+    private dialog: MatDialog,
+    private router: Router,
+    private snackBar: MatSnackBar, //servicio
   ) {}
 
   ngOnInit(): void {
@@ -146,19 +158,49 @@ export class Lclistcomponent implements OnInit {
   }
 
   eliminarLotesCaptura(id: number) {
-    this.lcS.deleteLoteCaptura(id).subscribe({
-      next: () => {
-        this.obtenerLotesCaptura();
-        this.cdr.detectChanges();
-      },
-      error: (err) => {
-        console.log('Error al eliminar el registro de lote de captura');
-        this.cdr.detectChanges();
-      },
-    });
+    this.idPorEliminar = id;
+    this.dialog
+      .open(this.dialogoConfirmar)
+      .afterClosed()
+      .subscribe((confirmado) => {
+        if (!confirmado) return;
+
+        this.lcS.deleteLoteCaptura(id).subscribe({
+          next: () => {
+            this.obtenerLotesCaptura();
+            
+            this.snackBar.open('Eliminado con éxito', '✖', {
+              duration: 5000, //5 segundos luego puf desaparece
+              horizontalPosition: 'center',
+              verticalPosition: 'bottom',
+              panelClass: ['snack-eliminar'],
+            });
+            this.cdr.detectChanges();
+          },
+          error: (err) => {
+            console.log('Error al eliminar el registro de lote de captura');
+            this.dialog.open(this.dialogoNoSePuede);
+            this.cdr.detectChanges();
+          },
+        });
+      });
   }
 
+  //este metodo verifica si tiene estado pendiente para que de paso a editar
   puedeEditar(estado: string): boolean {
-  return estado?.toLowerCase().startsWith('pendiente');
-}
+    return estado?.toLowerCase().startsWith('pendiente');
+  }
+
+  editar(dto: LoteCapturaDTO) {
+    if (!this.puedeEditar(dto.estado)) {
+      this.snackBar.open('Solo se pueden editar lotes con estado "Pendiente"', '✖', {
+        duration: 5000, //5 segundos luego puf desaparece
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom',
+        panelClass: ['snack-aviso'],
+      });
+      return;
+    }
+    this.router.navigate(['/lotes-captura/editar', dto.idLoteCaptura]);
+  }
 }

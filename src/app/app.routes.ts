@@ -3,7 +3,7 @@ import { Homecomponent } from './components/homecomponent/homecomponent';
 import { Especiecomponent } from './components/especiecomponent/especiecomponent';
 import { Especielistcomponent } from './components/especiecomponent/especielistcomponent/especielistcomponent';
 import { Especieinsertcomponent } from './components/especiecomponent/especieinsertcomponent/especieinsertcomponent';
-import {Especieupdatecomponent} from './components/especiecomponent/especieupdatecomponent/especieupdatecomponent';
+import { Especieupdatecomponent } from './components/especiecomponent/especieupdatecomponent/especieupdatecomponent';
 import { Lotecapturacomponent } from './components/lotecapturacomponent/lotecapturacomponent';
 import { Lclistcomponent } from './components/lotecapturacomponent/lclistcomponent/lclistcomponent';
 import { Lcinsertcomponent } from './components/lotecapturacomponent/lcinsertcomponent/lcinsertcomponent';
@@ -12,100 +12,97 @@ import { Lcdetallecomponent } from './components/lotecapturacomponent/lcdetallec
 import { Validacioncomponent } from './components/validacioncomponent/validacioncomponent';
 import { Vlistcomponent } from './components/validacioncomponent/vlistcomponent/vlistcomponent';
 import { Vreconocimientocomponent } from './components/validacioncomponent/vreconocimientocomponent/vreconocimientocomponent';
-import { Loginpruebacomponent } from './components/loginpruebacomponent/loginpruebacomponent';
+import { Vbuscarcomponent } from './components/validacioncomponent/vbuscarcomponent/vbuscarcomponent';
 import { Reportecomponent } from './components/reportecomponent/reportecomponent';
 import { Reportevedacomponent } from './components/reportecomponent/reportevedacomponent/reportevedacomponent';
+import { Certificacioncomponent } from './components/certificacioncomponent/certificacioncomponent';
+import { Clistcomponent } from './components/certificacioncomponent/clistcomponent/clistcomponent';
+import { Cinsertcomponent } from './components/certificacioncomponent/cinsertcomponent/cinsertcomponent';
+import { Cupdatecomponent } from './components/certificacioncomponent/cupdatecomponent/cupdatecomponent';
+import { Documentoventacomponent } from './components/documentoventacomponent/documentoventacomponent';
+import { Dvlistcomponent } from './components/documentoventacomponent/dvlistcomponent/dvlistcomponent';
+import { Dvinsertcomponent } from './components/documentoventacomponent/dvinsertcomponent/dvinsertcomponent';
+import { Dvdetallecomponent } from './components/documentoventacomponent/dvdetallecomponent/dvdetallecomponent';
+import { authGuard } from './core/guards/auth-guard';
+import { roleGuard } from './core/guards/role-guard';
+import { Logincomponent } from './components/logincomponent/logincomponent';
+import { combineLatest } from 'rxjs';
+import { Component } from '@angular/core';
+
 export const routes: Routes = [
-  {
-    path: '',
-    component: Homecomponent,
-  },
+  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+  { path: 'login', component: Logincomponent },
+  { path: 'inicio', component: Homecomponent },
   {
     path: 'especies',
     component: Especiecomponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMIN', 'PESCADOR', 'RESTAURANTE', 'GUEST'] },
     children: [
-      {
-        path: '',
-        redirectTo: 'listar',
-        pathMatch: 'full',
-      },
-      {
-        path: 'listar',
-        component: Especielistcomponent,
-      },
-      {
-        path: 'insertar',
-        component: Especieinsertcomponent,
-      },
-      {
-        path: 'edicion/:id',
-        component: Especieupdatecomponent,
-      },
+      { path: '', redirectTo: 'listar', pathMatch: 'full' },
+      { path: 'listar', component: Especielistcomponent },
+      { path: 'insertar', component: Especieinsertcomponent },
+      { path: 'edicion/:id', component: Especieupdatecomponent },
     ],
   },
   {
     path: 'lotes-captura',
     component: Lotecapturacomponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMIN', 'PESCADOR', 'RESTAURANTE', 'GUEST'] },
     children: [
-      {
-        path: '',
-        redirectTo: 'listar',
-        pathMatch: 'full',
-      },
-      {
-        path: 'listar',
-        component: Lclistcomponent,
-      },
-      {
-        path: 'insertar',
-        component: Lcinsertcomponent,
-      },
-      {
-        path: 'editar/:id',
-        component: Lcupdatecomponent,
-      },
-      {
-        path: 'detalle/:id',
-        component: Lcdetallecomponent,
-      }
+      { path: '', redirectTo: 'listar', pathMatch: 'full' },
+      { path: 'listar', component: Lclistcomponent },
+      { path: 'insertar', component: Lcinsertcomponent },
+      { path: 'editar/:id', component: Lcupdatecomponent },
+      { path: 'detalle/:id', component: Lcdetallecomponent },
     ],
-  },
-  {
-    path: 'login-prueba',
-    component: Loginpruebacomponent,
   },
   {
     path: 'validaciones',
     component: Validacioncomponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMIN', 'PESCADOR', 'RESTAURANTE', 'GUEST'] },
     children: [
-      {
-        path: '',
-        redirectTo: 'listar',
-        pathMatch: 'full',
-      },
-      {
-        path: 'listar',
-        component: Vlistcomponent,
-      },
-      {
-        path: 'reconocer-especie',
-        component: Vreconocimientocomponent,
-      },
+      { path: '', redirectTo: 'listar', pathMatch: 'full' },
+      { path: 'listar', component: Vlistcomponent },
+      { path: 'reconocer-especie', component: Vreconocimientocomponent },
+      { path: 'buscar', component: Vbuscarcomponent },
     ],
   },
   {
     path: 'reportes',
     component: Reportecomponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMIN', 'PESCADOR', 'RESTAURANTE', 'GUEST'] },
     children: [
-      {
-        path: '',
-        redirectTo: 'veda',
-        pathMatch: 'full',
-      },
-      {
-        path: 'veda',
-        component: Reportevedacomponent
-      }
-    ]
-  }
+      { path: '', redirectTo: 'veda', pathMatch: 'full' },
+      { path: 'veda', component: Reportevedacomponent },
+    ],
+  },
+  {
+    path: 'certificaciones',
+    component: Certificacioncomponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMIN', 'PESCADOR', 'RESTAURANTE', 'GUEST'] },
+    children: [
+      { path: '', redirectTo: 'listar', pathMatch: 'full' },
+      { path: 'listar', component: Clistcomponent },
+      { path: 'insertar', component: Cinsertcomponent },
+      { path: 'editar/:id', component: Cupdatecomponent },
+    ],
+  },
+  {
+    path: 'documentos-venta',
+    component: Documentoventacomponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMIN', 'PESCADOR', 'RESTAURANTE', 'GUEST'] },
+    children: [
+      { path: '', redirectTo: 'listar', pathMatch: 'full' },
+      { path: 'listar', component: Dvlistcomponent },
+      { path: 'insertar', component: Dvinsertcomponent },
+      { path: 'detalle/:id', component: Dvdetallecomponent },
+    ],
+  },
+  { path: '**', redirectTo: 'inicio' },
 ];
