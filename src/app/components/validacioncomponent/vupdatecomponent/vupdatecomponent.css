@@ -1,8 +1,18 @@
+/* Contenedor del componente (mismo criterio que el resto del módulo) */
+:host {
+  display: block;
+  padding: 25px;
+  font-family: Arial, sans-serif;
+  flex: 1 0 auto;
+  box-sizing: border-box;
+}
+
 .container {
   max-width: 1400px;
   margin: 0 auto;
 }
 .encabezado {
+  padding-top: 24px;
   padding-bottom: 30px;
   margin-bottom: 20px;
 }
@@ -56,4 +66,19 @@ form {
   color: #d32f2f;
   text-align: center;
   font-weight: bold;
+}
+
+/* Formularios: ancho acotado y una sola columna en pantallas pequeñas */
+.formulario {
+  max-width: 1000px;
+}
+
+@media (max-width: 700px) {
+  .formulario {
+    padding: 24px 18px;
+  }
+
+  form {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

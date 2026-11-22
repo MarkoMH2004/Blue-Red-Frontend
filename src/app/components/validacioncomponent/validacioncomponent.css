@@ -1,0 +1,8 @@
+/* Contenedor del módulo: barra de navegación + pantalla activa.
+   El fondo celeste (el mismo del body en styles.css) cubre toda la altura visible. */
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #D6EBF7;
+}
