@@ -1,0 +1,256 @@
+<section class="register-page">
+  <div class="register-visual">
+    <img
+      src="/pesca-artesanal.jpg"
+      alt="Pesca artesanal y trazabilidad con BlueRed"
+      class="visual-image"
+    />
+  </div>
+
+  <div class="register-panel">
+    <form
+      class="register-form"
+      [formGroup]="form"
+      (ngSubmit)="submit()"
+      novalidate
+    >
+      <img src="/logo.jpg" alt="Logo BlueRed" class="brand-logo" />
+
+      <h1 class="register-title">Crear cuenta</h1>
+      <p class="register-subtitle">
+        Regístrate en BlueRed para gestionar y consultar la trazabilidad pesquera.
+      </p>
+
+      <!-- TIPO DE USUARIO -->
+      <div class="form-card">
+        <label class="field-label" for="tipoUsuario">Tipo de usuario</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-select
+            id="tipoUsuario"
+            formControlName="idRol"
+            placeholder="Seleccionar tipo de usuario"
+          >
+            @for (tipo of tiposUsuario; track tipo.idRol) {
+              <mat-option [value]="tipo.idRol">{{ tipo.label }}</mat-option>
+            }
+          </mat-select>
+          @if (form.controls.idRol.touched && form.controls.idRol.hasError('required')) {
+            <mat-error>*Selecciona un tipo de usuario.</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <!-- DATOS PERSONALES -->
+      <div class="form-card">
+        <div class="section-header">
+          <span class="section-dot"></span>
+          <span class="section-title">DATOS PERSONALES</span>
+        </div>
+
+        <div class="two-cols">
+          <div class="col-group">
+            <label class="field-label" for="nombre">Nombre</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input
+                id="nombre"
+                matInput
+                type="text"
+                formControlName="nombre"
+                placeholder="Ej. Juan"
+              />
+              @if (form.controls.nombre.touched && form.controls.nombre.hasError('required')) {
+                <mat-error>*Ingresa tu nombre.</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="col-group">
+            <label class="field-label" for="apellido">Apellido</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input
+                id="apellido"
+                matInput
+                type="text"
+                formControlName="apellido"
+                placeholder="Ej. Pérez"
+              />
+              @if (form.controls.apellido.touched && form.controls.apellido.hasError('required')) {
+                <mat-error>*Ingresa tu apellido.</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="two-cols">
+          <div class="col-group">
+            <label class="field-label" for="correo">Correo electrónico</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input
+                id="correo"
+                matInput
+                type="email"
+                formControlName="correo"
+                autocomplete="email"
+                placeholder="ejemplo@correo.com"
+              />
+              @if (form.controls.correo.touched && form.controls.correo.hasError('required')) {
+                <mat-error>*Ingresa tu correo.</mat-error>
+              } @else if (form.controls.correo.touched && form.controls.correo.hasError('email')) {
+                <mat-error>*Correo no válido.</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="col-group">
+            <label class="field-label" for="telefono">Teléfono</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input
+                id="telefono"
+                matInput
+                type="tel"
+                formControlName="telefono"
+                placeholder="+51 987 654 321"
+              />
+              @if (form.controls.telefono.touched && form.controls.telefono.hasError('required')) {
+                <mat-error>*Ingresa tu teléfono.</mat-error>
+              } @else if (form.controls.telefono.touched && form.controls.telefono.hasError('pattern')) {
+                <mat-error>*Teléfono no válido.</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-group">
+          <label class="field-label" for="dni">
+            DNI <span class="required-asterisk">*</span>
+          </label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input
+              id="dni"
+              matInput
+              type="text"
+              maxlength="8"
+              formControlName="dni"
+              placeholder="Número de DNI (8 dígitos)"
+            />
+            @if (form.controls.dni.touched && form.controls.dni.hasError('required')) {
+              <mat-error>*Ingresa tu DNI.</mat-error>
+            } @else if (form.controls.dni.touched && form.controls.dni.hasError('pattern')) {
+              <mat-error>*El DNI debe tener 8 dígitos.</mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- DATOS ADICIONALES -->
+      @if (rolSeleccionado() === 'PESCADOR' || rolSeleccionado() === 'RESTAURANTE') {
+        <div class="form-card">
+          <div class="section-header">
+            <span class="section-dot"></span>
+            <span class="section-title">DATOS ADICIONALES</span>
+          </div>
+
+          <div class="two-cols">
+            @if (rolSeleccionado() === 'PESCADOR') {
+              <div class="col-group">
+                <label class="field-label" for="numeroLicencia">Número de licencia</label>
+                <mat-form-field appearance="outline" class="full-width">
+                  <input
+                    id="numeroLicencia"
+                    matInput
+                    type="text"
+                    formControlName="numeroLicencia"
+                    placeholder="Ej. LIC-ARTE-2026-089"
+                  />
+                  @if (form.controls.numeroLicencia.touched && form.controls.numeroLicencia.hasError('required')) {
+                    <mat-error>*Ingresa tu número de licencia.</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+            }
+
+            @if (rolSeleccionado() === 'RESTAURANTE') {
+              <div class="col-group">
+                <label class="field-label" for="ruc">RUC</label>
+                <mat-form-field appearance="outline" class="full-width">
+                  <input
+                    id="ruc"
+                    matInput
+                    type="text"
+                    maxlength="11"
+                    formControlName="ruc"
+                    placeholder="11 dígitos (Ej. 20123456789)"
+                  />
+                  @if (form.controls.ruc.touched && form.controls.ruc.hasError('required')) {
+                    <mat-error>*Ingresa el RUC del restaurante.</mat-error>
+                  } @else if (form.controls.ruc.touched && form.controls.ruc.hasError('pattern')) {
+                    <mat-error>*El RUC debe tener 11 dígitos.</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- SEGURIDAD -->
+      <div class="form-card">
+        <div class="section-header">
+          <span class="section-dot"></span>
+          <span class="section-title">SEGURIDAD</span>
+        </div>
+
+        <div class="col-group">
+          <label class="field-label" for="contrasena">Contraseña</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input
+              id="contrasena"
+              matInput
+              [type]="hidePassword() ? 'password' : 'text'"
+              formControlName="contrasena"
+              autocomplete="new-password"
+              placeholder="••••••••••••"
+            />
+            <button
+              matIconButton
+              matSuffix
+              type="button"
+              (click)="togglePasswordVisibility($event)"
+              [attr.aria-label]="hidePassword() ? 'Mostrar contraseña' : 'Ocultar contraseña'"
+              [attr.aria-pressed]="!hidePassword()"
+            >
+              <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            @if (form.controls.contrasena.touched && form.controls.contrasena.hasError('required')) {
+              <mat-error>*Ingresa una contraseña.</mat-error>
+            } @else if (form.controls.contrasena.touched && form.controls.contrasena.hasError('minlength')) {
+              <mat-error>*Mínimo 6 caracteres.</mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+
+      @if (errorMessage) {
+        <p class="error-banner" role="alert">{{ errorMessage }}</p>
+      }
+
+      @if (successMessage) {
+        <p class="success-banner" role="status">{{ successMessage }}</p>
+      }
+
+      <button
+        mat-flat-button
+        type="submit"
+        class="submit-btn"
+        [disabled]="form.invalid || submitting"
+      >
+        {{ submitting ? 'CREANDO CUENTA…' : 'CREAR CUENTA' }}
+      </button>
+
+      <div class="login-footer">
+        <span>¿Ya tienes una cuenta?</span>
+        <a routerLink="/login" class="login-link">Iniciar sesión</a>
+      </div>
+    </form>
+  </div>
+</section>

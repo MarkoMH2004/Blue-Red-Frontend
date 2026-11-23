@@ -1,28 +1,85 @@
-<div>
-  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
-    <img src="/logo.jpg" alt="Logo" />
-    <h1>Iniciar sesión</h1>
+<section class="login-page">
+  <div class="login-visual">
+    <img
+      src="/pesca-artesanal.jpg"
+      alt="Pesca artesanal y trazabilidad con BlueRed"
+      class="visual-image"
+    />
+  </div>
 
-    <label for="correo">Correo</label>
-    <input id="correo" type="email" formControlName="correo" autocomplete="email" />
+  <div class="login-panel">
+    <form
+      class="login-form"
+      [formGroup]="form"
+      (ngSubmit)="submit()"
+      novalidate
+    >
+      <img src="/logo.jpg" alt="Logo BlueRed" class="brand-logo" />
 
-    @if (form.controls.correo.touched && form.controls.correo.invalid) {
-    <p class="field-error">*Ingresa tu correo.</p>
-    }
+      <h1 class="login-title">Iniciar sesión</h1>
+      <p class="login-subtitle">
+        Bienvenido a BlueRed. Ingresa con tu cuenta para gestionar tus operaciones.
+      </p>
 
-    <label for="contrasena">Contraseña</label>
-    <input id="contrasena" type="password" formControlName="contrasena" autocomplete="current-password" />
+      <label class="field-label" for="correo">CORREO ELECTRÓNICO</label>
+      <mat-form-field appearance="outline" class="full-width">
+        <input
+          id="correo"
+          matInput
+          type="email"
+          formControlName="correo"
+          autocomplete="email"
+          placeholder="ejemplo@correo.com"
+        />
+        @if (form.controls.correo.touched && form.controls.correo.hasError('required')) {
+          <mat-error>*Ingresa tu correo electrónico.</mat-error>
+        } @else if (form.controls.correo.touched && form.controls.correo.hasError('email')) {
+          <mat-error>*Ingresa un correo electrónico válido.</mat-error>
+        }
+      </mat-form-field>
 
-    @if (form.controls.contrasena.touched && form.controls.contrasena.invalid) {
-    <p class="field-error">*Ingresa tu contraseña.</p>
-    }
+      <label class="field-label" for="contrasena">CONTRASEÑA</label>
+      <mat-form-field appearance="outline" class="full-width">
+        <input
+          id="contrasena"
+          matInput
+          [type]="hidePassword() ? 'password' : 'text'"
+          formControlName="contrasena"
+          autocomplete="current-password"
+          placeholder="••••••••••••"
+        />
+        <button
+          matIconButton
+          matSuffix
+          type="button"
+          (click)="togglePasswordVisibility($event)"
+          [attr.aria-label]="hidePassword() ? 'Mostrar contraseña' : 'Ocultar contraseña'"
+          [attr.aria-pressed]="!hidePassword()"
+        >
+          <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        @if (form.controls.contrasena.touched && form.controls.contrasena.hasError('required')) {
+          <mat-error>*Ingresa tu contraseña.</mat-error>
+        }
+      </mat-form-field>
 
-    @if (errorMessage) {
-    <p class="error" role="alert">{{ errorMessage }}</p>
-    }
+      @if (errorMessage) {
+        <p class="error-banner" role="alert">{{ errorMessage }}</p>
+      }
 
-    <button type="submit" [disabled]="form.invalid || submitting" style="background-color:#0aae4e">
-      {{ submitting ? 'Ingresando…' : 'Ingresar' }}
-    </button>
-  </form>
-</div>
+      <button
+        mat-flat-button
+        type="submit"
+        class="submit-btn"
+        [disabled]="form.invalid || submitting"
+      >
+        {{ submitting ? 'INICIANDO SESIÓN…' : 'INICIAR SESIÓN' }}
+      </button>
+
+      <div class="register-footer">
+        <span>¿No tienes una cuenta?</span>
+        <a routerLink="/registro" class="register-link">Regístrate</a>
+      </div>
+    </form>
+  </div>
+</section>

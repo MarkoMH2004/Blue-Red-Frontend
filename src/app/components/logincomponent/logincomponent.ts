@@ -1,13 +1,24 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { Loginservice } from '../../services/loginservice';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  imports: [ReactiveFormsModule],
   selector: 'app-logincomponent',
-  styleUrl: './logincomponent.css',
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+  ],
   templateUrl: './logincomponent.html',
+  styleUrl: './logincomponent.css',
 })
 export class Logincomponent {
   private readonly fb = inject(FormBuilder);
@@ -20,8 +31,14 @@ export class Logincomponent {
     contrasena: ['', Validators.required],
   });
 
+  readonly hidePassword = signal(true);
   errorMessage = '';
   submitting = false;
+
+  togglePasswordVisibility(event: MouseEvent): void {
+    event.preventDefault();
+    this.hidePassword.update((value) => !value);
+  }
 
   submit(): void {
     if (this.form.invalid || this.submitting) {
@@ -46,7 +63,8 @@ export class Logincomponent {
       },
       error: () => {
         this.submitting = false;
-        this.errorMessage = 'No se pudo iniciar sesión. Verifica tus credenciales e inténtalo nuevamente.';
+        this.errorMessage =
+          'No se pudo iniciar sesión. Verifica tus credenciales e inténtalo nuevamente.';
       },
     });
   }

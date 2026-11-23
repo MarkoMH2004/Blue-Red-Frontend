@@ -30,11 +30,13 @@ import { combineLatest } from 'rxjs';
 import { Component } from '@angular/core';
 import { Vupdatecomponent } from './components/validacioncomponent/vupdatecomponent/vupdatecomponent';
 import { Vinsertcomponent } from './components/validacioncomponent/vinsertcomponent/vinsertcomponent';
+import { Registrocomponent } from './components/registrocomponent/registrocomponent';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
   { path: 'login', component: Logincomponent },
   { path: 'inicio', component: Homecomponent },
+  { path: 'registro', component: Registrocomponent },
   {
     path: 'especies',
     component: Especiecomponent,
@@ -113,6 +115,7 @@ export const routes: Routes = [
       { path: 'insertar', component: Dvinsertcomponent },
       { path: 'detalle/:id', component: Dvdetallecomponent },
     ],
+    
   },
   { path: '**', redirectTo: 'inicio' },
 ];
