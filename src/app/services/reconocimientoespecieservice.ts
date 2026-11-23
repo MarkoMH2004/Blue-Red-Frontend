@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ReconocimientoEspecieDTO } from '../models/ReconocimientoEspecieDTO';
-import { Loginservice } from './loginservice';
 
 @Injectable({
   providedIn: 'root',
@@ -11,16 +10,11 @@ import { Loginservice } from './loginservice';
 export class Reconocimientoespecieservice {
   private apiURL = `${environment.base}/api/reconocimiento-especie`;
 
-  constructor(
-    private http: HttpClient,
-    private lS: Loginservice,
-  ) {}
+  constructor(private http: HttpClient) { }
 
   reconocer(imagen: File): Observable<ReconocimientoEspecieDTO> {
     const formData = new FormData();
     formData.append('imagen', imagen);
-    return this.http.post<ReconocimientoEspecieDTO>(this.apiURL, formData, {
-      headers: { Authorization: `Bearer ${this.lS.getToken()}` },
-    });
+    return this.http.post<ReconocimientoEspecieDTO>(this.apiURL, formData);
   }
 }

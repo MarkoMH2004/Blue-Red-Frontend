@@ -8,7 +8,7 @@
   <div class="bloque">
     @if (sinSesion) {
       <p class="aviso-sesion">
-        No hay una sesión iniciada. <a routerLink="/login-prueba">Iniciar sesión (prueba)</a>
+        No hay una sesión iniciada. <a routerLink="/login">Iniciar sesión</a>
       </p>
     }
     <input type="file" accept="image/jpeg,image/png" (change)="seleccionarImagen($event)" />
