@@ -5,6 +5,7 @@ import { Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { LoginRequestDTO } from '../models/LoginRequestDTO';
 import { LoginResponseDTO } from '../models/LoginResponseDTO';
+import { UsuarioRegisterDTO } from '../models/UsuarioRegisterDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,10 @@ import { LoginResponseDTO } from '../models/LoginResponseDTO';
 export class Loginservice {
   private readonly apiURL = `${environment.base}/login`;
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  
+register(payload: UsuarioRegisterDTO): Observable<unknown> {
+  return this.http.post(`${environment.base}/api/usuarios`, payload);
+}
 
   constructor(private readonly http: HttpClient) {}
 
