@@ -23,6 +23,7 @@ import { Documentoventacomponent } from './components/documentoventacomponent/do
 import { Dvlistcomponent } from './components/documentoventacomponent/dvlistcomponent/dvlistcomponent';
 import { Dvinsertcomponent } from './components/documentoventacomponent/dvinsertcomponent/dvinsertcomponent';
 import { Dvdetallecomponent } from './components/documentoventacomponent/dvdetallecomponent/dvdetallecomponent';
+import { Dvupdatecomponent } from './components/documentoventacomponent/dvupdatecomponent/dvupdatecomponent';
 import { authGuard } from './core/guards/auth-guard';
 import { roleGuard } from './core/guards/role-guard';
 import { Logincomponent } from './components/logincomponent/logincomponent';
@@ -114,6 +115,7 @@ export const routes: Routes = [
       { path: 'listar', component: Dvlistcomponent },
       { path: 'insertar', component: Dvinsertcomponent },
       { path: 'detalle/:id', component: Dvdetallecomponent },
+      { path: 'editar/:id', component: Dvupdatecomponent },
     ],
     
   },
