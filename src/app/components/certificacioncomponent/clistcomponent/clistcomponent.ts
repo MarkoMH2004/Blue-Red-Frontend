@@ -1,3 +1,4 @@
+
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -30,9 +31,17 @@ export class Clistcomponent implements OnInit {
     private cdr: ChangeDetectorRef,
   ) {}
 
-  ngOnInit(): void { this.listar(); }
+  ngOnInit(): void {
+    this.listar();
+  }
 
-  tieneSesion(): boolean { return !!this.loginservice.getToken(); }
+  tieneSesion(): boolean {
+    return !!this.loginservice.getToken();
+  }
+
+  esAdministrador(): boolean {
+    return this.loginservice.hasAnyRole(['ADMIN']);
+  }
 
   listar(): void {
     this.cargando = true;
@@ -58,12 +67,15 @@ export class Clistcomponent implements OnInit {
       this.listar();
       return;
     }
+
     if (this.idBuscado.invalid || !Number.isInteger(this.idBuscado.value)) {
       this.mensaje = 'Ingresa un ID entero mayor que cero.';
       return;
     }
+
     this.cargando = true;
     this.mensaje = '';
+
     this.certificacionservice.listId(this.idBuscado.value).subscribe({
       next: dato => {
         this.dataSource = [dato];
@@ -81,15 +93,22 @@ export class Clistcomponent implements OnInit {
     });
   }
 
-  verDetalle(dato: CertificacionDTO): void { this.detalle = dato; }
+  verDetalle(dato: CertificacionDTO): void {
+    this.detalle = dato;
+  }
 
   eliminar(dato: CertificacionDTO): void {
     if (!window.confirm(`¿Deseas eliminar la certificación ${dato.idCertificacion}?`)) return;
+
     this.certificacionservice.delete(dato.idCertificacion).subscribe({
       next: () => {
         this.mensaje = 'Certificación eliminada correctamente.';
         this.dataSource = this.dataSource.filter(item => item.idCertificacion !== dato.idCertificacion);
-        if (this.detalle?.idCertificacion === dato.idCertificacion) this.detalle = null;
+
+        if (this.detalle?.idCertificacion === dato.idCertificacion) {
+          this.detalle = null;
+        }
+
         this.cdr.detectChanges();
       },
       error: error => {
@@ -100,8 +119,14 @@ export class Clistcomponent implements OnInit {
   }
 
   private errorDeApi(error: any, defecto: string): string {
-    if (error.status === 401 || error.status === 403) return 'Debes iniciar sesión con un usuario que tenga permisos para gestionar certificaciones.';
-    if (error.status === 0) return 'No hay conexión con el backend en localhost:8080.';
+    if (error.status === 401 || error.status === 403) {
+      return 'Debes iniciar sesión con un usuario que tenga permisos para gestionar certificaciones.';
+    }
+
+    if (error.status === 0) {
+      return 'No hay conexión con el backend en localhost:8080.';
+    }
+
     return error.error?.message || defecto;
   }
 }

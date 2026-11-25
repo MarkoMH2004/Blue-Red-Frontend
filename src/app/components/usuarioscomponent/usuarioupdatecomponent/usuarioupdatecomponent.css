@@ -1,0 +1,65 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.card-container {
+  width: 100%;
+  max-width: 540px;
+  padding: 24px;
+  background-color: #ffffff !important;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(15, 27, 42, 0.05);
+}
+
+.card-header-custom {
+  justify-content: center;
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.card-title-custom {
+  color: #0b3c5d;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.actions-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.submit-btn {
+  flex: 1;
+  background-color: #0b3c5d !important;
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+button,
+.mdc-button,
+.mat-mdc-button-base {
+  border-radius: 0px !important;
+}
+
+.mensaje-exito {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+  color: #087443;
+}
+
+.mensaje-error {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+  color: #b3261e;
+}

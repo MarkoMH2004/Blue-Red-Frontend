@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="encabezado">
+    <h2>Registrar detalle de venta</h2>
+    <p class="descripcion">
+      Agrega una compra de un lote de captura a un documento de venta que ya existe. El monto total
+      del documento se actualiza con este subtotal.
+    </p>
+  </div>
+
+  <form [formGroup]="formDetalleVenta" (ngSubmit)="registrarDetalleVenta()">
+    <div class="bloque">
+      <h3>Datos del detalle</h3>
+      <div class="fila-detalle">
+        <mat-form-field appearance="outline">
+          <mat-label>ID del documento de venta</mat-label>
+          <input matInput type="number" formControlName="idDocumentoVenta" />
+          <mat-error>Ingrese el ID del documento</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>ID del lote de captura</mat-label>
+          <input matInput type="number" formControlName="idLoteCaptura" />
+          <mat-error>Ingrese el ID del lote</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Peso comprado (kg)</mat-label>
+          <input matInput type="number" formControlName="pesoComprado" />
+          <mat-error>Ingrese un peso mayor a 0</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Subtotal (S/)</mat-label>
+          <input matInput type="number" formControlName="subtotal" />
+          <mat-error>Ingrese un subtotal mayor a 0</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="pie">
+      <span></span>
+      <div class="botones">
+        <button mat-button type="button" routerLink="/detalles-venta/listar">Cancelar</button>
+        <button mat-flat-button type="submit">Registrar detalle</button>
+      </div>
+    </div>
+
+    @if (mensaje) {
+      <p class="mensaje" [style.color]="exito ? '#0b3c5d' : '#b3261e'">{{ mensaje }}</p>
+    }
+  </form>
+</div>

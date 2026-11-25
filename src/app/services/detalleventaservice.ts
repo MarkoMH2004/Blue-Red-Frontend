@@ -24,22 +24,35 @@ export class Detalleventaservice {
     return { headers };
   }
 
+  // HU33 - Listar detalles de venta
+  getDetalles(): Observable<DetalleVentaDTO[]> {
+    return this.http.get<DetalleVentaDTO[]>(this.apiURL, this.opciones());
+  }
+
+  // HU38 - Buscar detalle de venta por ID
+  listId(id: number): Observable<DetalleVentaDTO> {
+    return this.http.get<DetalleVentaDTO>(`${this.apiURL}/${id}`, this.opciones());
+  }
+
+  // HU32 - Registrar detalle de venta
   insert(dv: DetalleVentaDTO): Observable<DetalleVentaDTO> {
     return this.http.post<DetalleVentaDTO>(this.apiURL, dv, this.opciones());
   }
 
+  // HU35 - Actualizar detalle de venta
   update(dv: DetalleVentaDTO): Observable<DetalleVentaDTO> {
     return this.http.put<DetalleVentaDTO>(this.apiURL, dv, this.opciones());
   }
 
+  // HU36 - Eliminar detalle de venta
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiURL}/${id}`, this.opciones());
   }
 
   // el backend no tiene endpoint por documento: se traen todos y se filtran aquí
   getDetallesPorDocumento(idDocumento: number): Observable<DetalleVentaDTO[]> {
-    return this.http
-      .get<DetalleVentaDTO[]>(this.apiURL, this.opciones())
-      .pipe(map((lista) => lista.filter((d) => d.idDocumentoVenta === idDocumento)));
+    return this.getDetalles().pipe(
+      map((lista) => lista.filter((d) => d.idDocumentoVenta === idDocumento)),
+    );
   }
 }
