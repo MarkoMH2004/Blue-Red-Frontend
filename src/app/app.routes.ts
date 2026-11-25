@@ -36,6 +36,9 @@ import { Component } from '@angular/core';
 import { Vupdatecomponent } from './components/validacioncomponent/vupdatecomponent/vupdatecomponent';
 import { Vinsertcomponent } from './components/validacioncomponent/vinsertcomponent/vinsertcomponent';
 import { Registrocomponent } from './components/registrocomponent/registrocomponent';
+import { Usuarioscomponent } from './components/usuarioscomponent/usuarioscomponent';
+import { Usuariolistcomponent } from './components/usuarioscomponent/usuariolistcomponent/usuariolistcomponent';
+import { Usuarioupdatecomponent } from './components/usuarioscomponent/usuarioupdatecomponent/usuarioupdatecomponent';
 import { Menuxusuariocomponent } from './components/menuxusuariocomponent/menuxusuariocomponent';
 
 export const routes: Routes = [
@@ -44,6 +47,17 @@ export const routes: Routes = [
   { path: 'inicio', component: Homecomponent },
   { path: 'registro', component: Registrocomponent },
   
+  {
+  path: 'usuarios',
+  component: Usuarioscomponent,
+  canActivate: [authGuard, roleGuard],
+  data: { roles: ['ADMIN', 'PESCADOR', 'RESTAURANTE', 'GUEST'] },
+  children: [
+    { path: 'listar', component: Usuariolistcomponent },
+    { path: 'edicion/:id', component: Usuarioupdatecomponent },
+    { path: '', redirectTo: 'listar', pathMatch: 'full' },
+  ],
+},
   {
     path: 'especies',
     component: Especiecomponent,

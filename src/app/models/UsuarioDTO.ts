@@ -5,6 +5,9 @@ export class UsuarioDTO {
   correo: string = '';
   telefono: string = '';
   dni: string = '';
+  contrasena?: string ='';
+  numeroLicencia: string ='';
   ruc: string = '';
   idRol: number = 0;
+
 }

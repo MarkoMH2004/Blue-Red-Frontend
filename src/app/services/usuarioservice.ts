@@ -16,4 +16,17 @@ export class Usuarioservice {
   listId(id: number): Observable<UsuarioDTO> {
     return this.http.get<UsuarioDTO>(`${this.apiURL}/${id}`);
   }
+
+  getUsuarios(): Observable<UsuarioDTO[]> {
+    return this.http.get<UsuarioDTO[]>(this.apiURL);
+  }
+
+  updateUsuario(usuario: UsuarioDTO): Observable<UsuarioDTO> {
+    return this.http.put<UsuarioDTO>(this.apiURL, usuario);
+  }
+
+  deleteUsuario(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiURL}/${id}`);
+  }
+
 }
