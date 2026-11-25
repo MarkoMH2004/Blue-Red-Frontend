@@ -20,11 +20,13 @@ import { Loginservice } from '../../services/loginservice';
   styleUrl: './menucomponent.css',
 })
 export class Menucomponent {
-  readonly auth = inject(Loginservice);
+
+  private readonly auth = inject(Loginservice);
   private readonly router = inject(Router);
 
   cerrarSesion(): void {
     this.auth.logout();
     void this.router.navigate(['/inicio']);
   }
+
 }

@@ -6,9 +6,11 @@
         Revisa tus lotes registrados y el estado de su validación y certificación.
       </p>
     </div>
+    @if(esPescador){
     <button matButton type="button" class="btn-nuevo" routerLink="/lotes-captura/insertar">
       + Registrar nuevo lote
     </button>
+  }
   </div>
 
   <div class="bloqueA">
@@ -68,6 +70,12 @@
         <ng-container matColumnDef="CID">
           <th mat-header-cell *matHeaderCellDef>ID</th>
           <td mat-cell *matCellDef="let element">{{ element.idLoteCaptura }}</td>
+        </ng-container>
+
+        <!-- ID USUARIO (SOLO PARA ADMIN)-->
+         <ng-container matColumnDef="CUSUARIO">
+          <th mat-header-cell *matHeaderCellDef>ID Usuario</th>
+          <td mat-cell *matCellDef="let element">{{ element.idUsuario }}</td>
         </ng-container>
 
         <!-- Especie-->
@@ -151,7 +159,7 @@
     } @else {
       <p>
         @if (dataSource.data.length === 0) {
-          //¿no hay nada porque no tienes lotes, o porque el filtro los descartó todos?
+         
           <P> No se encontraron lotes de captura </P>
         } @else {
           <!--mensaje-->

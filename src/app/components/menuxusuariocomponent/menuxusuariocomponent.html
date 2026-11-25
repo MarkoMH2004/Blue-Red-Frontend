@@ -1,0 +1,104 @@
+<!-- BARRA SUPERIOR -->
+<mat-toolbar class="barra">
+  <a routerLink="/inicio" class="logo"> <mat-icon>home</mat-icon> BlueRed </a>
+
+  <!-- EMPUJA TODO LO SIGUIENTE A LA DERECHA -->
+  <span class="spacer"></span>
+  <span class="user-correo">{{ auth.getCorreo() }}</span>
+  <button matButton type="button" class="btn-sesion" (click)="cerrarSesion()">Cerrar sesión</button>
+</mat-toolbar>
+
+<mat-sidenav-container class="cuerpo">
+  <!-- MENÚ LATERAL -->
+  <mat-sidenav mode="side" opened class="sidebar">
+    <mat-accordion multi>
+      <span class="menu-title">MENÚ</span>
+
+      <!-- INICIO POR MIENTRAS -->
+      <mmat-nav-list>
+        <a mat-list-item routerLink="/especies/listar" routerLinkActive="active" class="item-simple">Inicio</a>
+      </mmat-nav-list>
+
+      <mat-expansion-panel class="mat-elevation-z0">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Especie</mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/especies/listar" routerLinkActive="active">Listar</a>
+          <a mat-list-item routerLink="/especies/insertar" routerLinkActive="active">Registrar</a>
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel class="mat-elevation-z0">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Lote de captura</mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/lotes-captura/listar" routerLinkActive="active"
+            >Mis capturas</a
+          >
+          @if (esPescador) {
+            <a mat-list-item routerLink="/lotes-captura/insertar" routerLinkActive="active"
+              >Registrar lote</a
+            >
+          }
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel class="mat-elevation-z0">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Validaciones</mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/validaciones/listar" routerLinkActive="active">Listar</a>
+          <a mat-list-item routerLink="/validaciones/buscar" routerLinkActive="active">Buscar</a>
+          <a mat-list-item routerLink="/validaciones/registrar" routerLinkActive="active"
+            >Registrar</a
+          >
+          <a mat-list-item routerLink="/validaciones/reconocer-especie" routerLinkActive="active"
+            >Reconocer especie con IA</a
+          >
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel class="mat-elevation-z0">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Certificaciones</mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/certificaciones/listar" routerLinkActive="active">Listar</a>
+          <a mat-list-item routerLink="/certificaciones/insertar" routerLinkActive="active"
+            >Registrar</a
+          >
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel class="mat-elevation-z0">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Documentos de venta</mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/documentos-venta/listar" routerLinkActive="active"
+            >Consultar</a
+          >
+          <a mat-list-item routerLink="/documentos-venta/insertar" routerLinkActive="active"
+            >Registrar</a
+          >
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel class="mat-elevation-z0">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Reportes</mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/reportes/veda" routerLinkActive="active">Reporte01</a>
+        </mat-nav-list>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="contenido">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
