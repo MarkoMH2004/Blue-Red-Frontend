@@ -1,0 +1,132 @@
+:host {
+  display: block;
+  padding: 25px;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding-bottom: 30px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  text-align: left;
+  color: #0b3c5d;
+  font-size: 28px;
+  font-weight: bold;
+  margin: 10px 0 25px;
+}
+
+h3 {
+  text-align: left;
+  color: #0b3c5d;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 0 16px;
+}
+
+h4 {
+  color: #0b3c5d;
+  font-size: 15px;
+  margin: 8px 0 12px;
+}
+
+.descripcion {
+  all: unset;
+  display: block;
+  color: #6b6b76;
+  font-size: 13px;
+}
+
+.bloque {
+  background: #ffffff;
+  border: 1px solid #e2e2e6;
+  border-radius: 12px;
+  padding: 35px 40px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.bloque-listado {
+  margin-top: 24px;
+}
+
+.busqueda {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+mat-form-field {
+  width: 280px;
+  max-width: 100%;
+}
+
+.vista-detalle {
+  margin-top: 8px;
+}
+
+.datos-documento {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  background: #f5f9fc;
+  border: 1px solid #d9d9df;
+  border-radius: 7px;
+  color: #333333;
+  font-size: 14px;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  background-color: white;
+  border: 1px solid #d9d9df;
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+th[mat-header-cell] {
+  background-color: #1f7ab8;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 14px 16px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+td[mat-cell] {
+  color: #333333;
+  font-size: 14px;
+  padding: 14px 16px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.mensaje-error {
+  color: #d32f2f;
+  text-align: center;
+  font-weight: bold;
+}
+
+.mensaje-aviso {
+  color: #92400e;
+  text-align: center;
+}
+td button + button {
+  margin-left: 8px;
+}
