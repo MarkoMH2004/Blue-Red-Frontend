@@ -6,6 +6,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { Documentoventaservice } from '../../../services/documentoventaservice';
+import { Loginservice } from '../../../services/loginservice';
 import { DocumentoVentaDTO } from '../../../models/DocumentoVentaDTO';
 
 @Component({
@@ -24,16 +25,21 @@ import { DocumentoVentaDTO } from '../../../models/DocumentoVentaDTO';
 export class Dvinsertcomponent implements OnInit {
   formDocumentoVenta: any;
   mensaje: string = '';
-  idUsuarioSesion = 1; //por mientras: debe ser un usuario con rol restaurante
+  esAdmin: boolean = false; //el admin elige a qué restaurante se le registra la compra
 
   constructor(
     private fb: FormBuilder,
     private dvS: Documentoventaservice,
+    private lS: Loginservice,
     private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
+    this.esAdmin = this.lS.hasAnyRole(['ADMIN']);
+
     this.formDocumentoVenta = this.fb.group({
+      //Restaurante: se toma de la sesión; el admin lo escribe a mano
+      idUsuario: [this.esAdmin ? '' : this.lS.getIdUsuario(), Validators.required],
       tipoDocumento: ['', Validators.required],
       detalles: this.fb.array([this.crearDetalle()]), //empieza con un detalle
     });
@@ -58,7 +64,12 @@ export class Dvinsertcomponent implements OnInit {
   }
 
   quitarDetalle(i: number): void {
-    if (this.detalles.length > 1) this.detalles.removeAt(i); //siempre debe quedar al menos uno
+    if (this.detalles.length > 1) {
+      this.detalles.removeAt(i);
+    } else {
+      //con una sola fila no se elimina: se limpia para dejarla en blanco
+      this.detalles.at(i).reset({ idLoteCaptura: '', pesoComprado: '', subtotal: '' });
+    }
   }
 
   //"Monto total" del wireframe: suma de todos los subtotales
@@ -76,23 +87,26 @@ export class Dvinsertcomponent implements OnInit {
     //el backend recibe el documento con sus detalles en un solo envío
     const doc: DocumentoVentaDTO = {
       idDocumentoVenta: 0,
-      idUsuario: this.idUsuarioSesion,
+      idUsuario: Number(this.formDocumentoVenta.value.idUsuario),
       fechaEmision: new Date().toISOString().split('T')[0], //el servidor pone la fecha de hoy
       montoTotal: this.montoTotal, //el servidor lo recalcula con los subtotales
       tipoDocumento: this.formDocumentoVenta.value.tipoDocumento,
       detalles: this.detalles.controls.map((d) => ({
         idDetalleVenta: 0,
         idDocumentoVenta: 0,
-        idLoteCaptura: d.value.idLoteCaptura,
-        pesoComprado: d.value.pesoComprado,
-        subtotal: d.value.subtotal,
+        idLoteCaptura: Number(d.value.idLoteCaptura),
+        pesoComprado: Number(d.value.pesoComprado),
+        subtotal: Number(d.value.subtotal),
       })),
     };
 
     this.dvS.insert(doc).subscribe({
       next: () => {
         this.mensaje = 'Documento de venta registrado exitosamente.';
-        this.formDocumentoVenta.reset({ tipoDocumento: '' });
+        this.formDocumentoVenta.reset({
+          idUsuario: this.esAdmin ? '' : this.lS.getIdUsuario(),
+          tipoDocumento: '',
+        });
         this.detalles.clear();
         this.agregarDetalle();
         this.cdr.detectChanges();

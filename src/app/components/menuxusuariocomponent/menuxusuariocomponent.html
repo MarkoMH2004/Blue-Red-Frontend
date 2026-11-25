@@ -87,6 +87,22 @@
         </mat-nav-list>
       </mat-expansion-panel>
 
+      @if (esAdmin || esRestaurante) {
+        <mat-expansion-panel class="mat-elevation-z0">
+          <mat-expansion-panel-header>
+            <mat-panel-title>Detalles de venta</mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-nav-list>
+            <a mat-list-item routerLink="/detalles-venta/listar" routerLinkActive="active"
+              >Consultar</a
+            >
+            <a mat-list-item routerLink="/detalles-venta/insertar" routerLinkActive="active"
+              >Registrar</a
+            >
+          </mat-nav-list>
+        </mat-expansion-panel>
+      }
+
       <mat-expansion-panel class="mat-elevation-z0">
         <mat-expansion-panel-header>
           <mat-panel-title>Reportes</mat-panel-title>

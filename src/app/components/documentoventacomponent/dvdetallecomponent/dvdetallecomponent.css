@@ -1,128 +1,247 @@
-:host {
-  display: block;
-  padding: 25px;
-  box-sizing: border-box;
-}
-
-.container {
-  max-width: 1400px;
+.cp-container {
+  padding: 20px;
+  max-width: 820px;
   margin: 0 auto;
 }
 
-.encabezado {
+.cp-acciones {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 16px;
-  padding-bottom: 30px;
-  margin-bottom: 20px;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
 }
 
-h2 {
-  text-align: left;
-  color: #0b3c5d;
-  font-size: 28px;
-  font-weight: bold;
-  margin: 10px 0 25px;
+.cp-error {
+  color: #b3261e;
+  font-weight: 500;
 }
 
-h3 {
-  text-align: left;
-  color: #0b3c5d;
-  font-size: 20px;
-  font-weight: bold;
-  margin: 0 0 16px;
+.cp-aviso {
+  color: #555;
+  font-style: italic;
+  padding: 8px 0;
 }
 
-.descripcion {
-  all: unset;
-  display: block;
-  color: #6b6b76;
+/* hoja tipo comprobante */
+.cp-hoja {
+  background: #fff;
+  border: 1px solid #cfd8dc;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  padding: 28px 30px;
+  color: #1c1c1c;
   font-size: 13px;
 }
 
-.bloque {
-  background: #ffffff;
-  border: 1px solid #e2e2e6;
-  border-radius: 12px;
-  padding: 35px 40px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-}
-
-.bloque-detalles {
-  margin-top: 24px;
-}
-
-.datos {
+.cp-cabecera {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px 30px;
+  grid-template-columns: 130px 1fr 270px;
+  gap: 18px;
+  align-items: center;
+  margin-bottom: 14px;
 }
 
-.dato {
+.cp-logo {
+  background: #0b3c5d;
+  color: #fff;
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 1.1;
+  letter-spacing: 3px;
+  text-align: center;
+  padding: 22px 8px;
+  border-radius: 4px;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.cp-empresa {
+  text-align: center;
+}
+
+.cp-empresa h1 {
+  margin: 0 0 4px;
+  font-size: 26px;
+  letter-spacing: 2px;
+  color: #0b3c5d;
+}
+
+.cp-empresa p {
+  margin: 2px 0;
+}
+
+.cp-negrita {
+  font-weight: 700;
+}
+
+.cp-caja-numero {
+  border: 2px solid #0b3c5d;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  text-align: center;
+  padding: 14px 10px;
+  gap: 10px;
 }
 
-.etiqueta {
-  color: #6b6b76;
-  font-size: 13px;
-}
-
-.valor {
-  color: #0f1b2a;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-table {
-  width: 100%;
-  border-collapse: separate;
-  background-color: white;
-  border: 1px solid #d9d9df;
-  border-radius: 7px;
-  overflow: hidden;
-}
-
-th[mat-header-cell] {
-  background-color: #1f7ab8;
-  color: #ffffff;
-  font-size: 14px;
+.cp-ruc {
   font-weight: 700;
-  padding: 14px 16px;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  white-space: nowrap;
+  letter-spacing: 1px;
+  font-size: 15px;
 }
 
-td[mat-cell] {
-  color: #333333;
-  font-size: 14px;
-  padding: 14px 16px;
-  text-align: center;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.resumen {
-  margin: 16px 0 0;
-  text-align: right;
+.cp-tipo {
+  font-weight: 800;
   color: #0b3c5d;
-  font-weight: bold;
+  font-size: 16px;
 }
 
-.mensaje-error {
-  color: #d32f2f;
-  text-align: center;
-  font-weight: bold;
+.cp-numero {
+  font-weight: 700;
+  font-size: 16px;
 }
 
-.mensaje-aviso {
-  color: #92400e;
-  text-align: center;
+.cp-cliente {
+  border: 1px solid #0b3c5d;
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-bottom: 8px;
 }
-.acciones {
+
+.cp-fila {
   display: flex;
-  gap: 12px;
+  gap: 6px;
+  padding: 2px 0;
+}
+
+.cp-etiqueta {
+  display: inline-block;
+  min-width: 90px;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.cp-meta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid #0b3c5d;
+  margin-bottom: 0;
+}
+
+.cp-meta > div {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 10px;
+  border-right: 1px solid #0b3c5d;
+}
+
+.cp-meta > div:last-child {
+  border-right: none;
+}
+
+.cp-meta .cp-etiqueta {
+  min-width: 0;
+  font-size: 11px;
+}
+
+.cp-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #0b3c5d;
+  border-top: none;
+}
+
+.cp-tabla th {
+  border: 1px solid #0b3c5d;
+  padding: 7px 8px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.cp-tabla td {
+  border-left: 1px solid #0b3c5d;
+  border-right: 1px solid #0b3c5d;
+  padding: 6px 8px;
+}
+
+.cp-tabla .cant {
+  width: 80px;
+  text-align: right;
+}
+
+.cp-tabla .um {
+  width: 50px;
+  text-align: center;
+}
+
+.cp-tabla .num {
+  width: 110px;
+  text-align: right;
+}
+
+.cp-tabla tr.relleno td {
+  height: 26px;
+}
+
+.cp-son {
+  margin: 10px 0 0;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.cp-totales {
+  margin: 14px 0 0 auto;
+  width: 300px;
+}
+
+.cp-totales > div {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 0;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.cp-totales .cp-total {
+  border-top: 1px solid #0b3c5d;
+  font-size: 15px;
+}
+
+.cp-pie {
+  margin-top: 22px;
+  padding-top: 8px;
+  border-top: 1px solid #b0bec5;
+  text-align: center;
+  font-size: 11px;
+  color: #546e7a;
+}
+
+/* al imprimir / guardar como PDF solo se ve la hoja */
+@media print {
+  .no-imprimir,
+  .barra,
+  .sidebar,
+  mat-toolbar,
+  mat-sidenav {
+    display: none !important;
+  }
+
+  .mat-drawer-content,
+  .cuerpo,
+  .contenido {
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  .cp-container {
+    padding: 0;
+    max-width: 100%;
+  }
+
+  .cp-hoja {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
 }

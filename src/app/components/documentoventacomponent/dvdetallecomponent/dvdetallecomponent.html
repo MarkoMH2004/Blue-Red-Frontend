@@ -1,88 +1,137 @@
-<div class="container">
-  <div class="encabezado">
-    <div class="titulo">
-      <h2>Detalle del documento de venta</h2>
-      <p class="descripcion">Consulta la información registrada de este documento y sus compras.</p>
-    </div>
-    <div class="acciones">
-      <button mat-raised-button type="button" routerLink="/documentos-venta/listar">
-        <mat-icon>arrow_back</mat-icon> Volver al listado
-      </button>
-      <button
-        mat-raised-button
-        color="primary"
-        type="button"
-        [routerLink]="['/documentos-venta/editar', idDocumento]"
-      >
-        <mat-icon>edit</mat-icon> Editar
-      </button>
-    </div>
+<div class="cp-container">
+  <div class="cp-acciones no-imprimir">
+    <button mat-raised-button type="button" routerLink="/documentos-venta/listar">
+      <mat-icon>arrow_back</mat-icon> Volver al listado
+    </button>
+    <button
+      mat-raised-button
+      type="button"
+      [routerLink]="['/documentos-venta/editar', idDocumento]"
+    >
+      <mat-icon>edit</mat-icon> Editar
+    </button>
+    <button mat-raised-button color="primary" type="button" (click)="imprimir()">
+      <mat-icon>picture_as_pdf</mat-icon> Imprimir / Guardar PDF
+    </button>
   </div>
 
   @if (mensaje) {
-    <p class="mensaje-error">{{ mensaje }}</p>
+    <p class="cp-error">{{ mensaje }}</p>
   }
 
   @if (documento) {
-    <div class="bloque">
-      <h3>Datos del documento</h3>
-      <div class="datos">
-        <div class="dato">
-          <span class="etiqueta">ID del documento</span>
-          <span class="valor">{{ documento.idDocumentoVenta }}</span>
+    <div class="cp-hoja">
+      <div class="cp-cabecera">
+        <div class="cp-logo">BLUE<br />RED</div>
+        <div class="cp-empresa">
+          <h1>{{ emisor.nombre }}</h1>
+          <p class="cp-negrita">{{ emisor.razonSocial }}</p>
+          <p>{{ emisor.direccion }}</p>
+          <p><b>Email:</b> {{ emisor.correo }}</p>
         </div>
-        <div class="dato">
-          <span class="etiqueta">ID usuario</span>
-          <span class="valor">{{ documento.idUsuario }}</span>
-        </div>
-        <div class="dato">
-          <span class="etiqueta">Fecha de emisión</span>
-          <span class="valor">{{ documento.fechaEmision }}</span>
-        </div>
-        <div class="dato">
-          <span class="etiqueta">Tipo de documento</span>
-          <span class="valor">{{ documento.tipoDocumento }}</span>
-        </div>
-        <div class="dato">
-          <span class="etiqueta">Monto total</span>
-          <span class="valor">S/ {{ documento.montoTotal | number: '1.2-2' }}</span>
+        <div class="cp-caja-numero">
+          <span class="cp-ruc">R.U.C. {{ emisor.ruc }}</span>
+          <span class="cp-tipo">{{ tituloComprobante }}</span>
+          <span class="cp-numero">N° {{ numeroComprobante }}</span>
         </div>
       </div>
-    </div>
 
-    <div class="bloque bloque-detalles">
-      <h3>Detalles de compra</h3>
+      <div class="cp-cliente">
+        <div class="cp-fila">
+          <span class="cp-etiqueta">{{ esFactura ? 'Razón social' : 'Cliente' }}</span>
+          <span>
+            :
+            @if (cliente) {
+              {{ cliente.nombre }} {{ cliente.apellido }}
+            } @else {
+              Usuario N° {{ documento.idUsuario }}
+            }
+          </span>
+        </div>
+        <div class="cp-fila">
+          <span class="cp-etiqueta">{{ etiquetaIdentidad }}</span>
+          <span>: {{ valorIdentidad }}</span>
+        </div>
+        <div class="cp-fila">
+          <span class="cp-etiqueta">Correo</span>
+          <span>: {{ cliente?.correo || '---' }}</span>
+        </div>
+      </div>
+
+      <div class="cp-meta">
+        <div>
+          <span class="cp-etiqueta">Fecha emisión</span>
+          <span>{{ documento.fechaEmision }}</span>
+        </div>
+        <div>
+          <span class="cp-etiqueta">Tipo de documento</span>
+          <span>{{ documento.tipoDocumento }}</span>
+        </div>
+        <div>
+          <span class="cp-etiqueta">Cond. de pago</span>
+          <span>CONTADO</span>
+        </div>
+        <div>
+          <span class="cp-etiqueta">Moneda</span>
+          <span>SOLES (PEN)</span>
+        </div>
+      </div>
 
       @if (mensajeDetalles) {
-        <p class="mensaje-aviso">{{ mensajeDetalles }}</p>
-      } @else if (detalles.length > 0) {
-        <table mat-table [dataSource]="detalles" class="mat-shadow-2">
-          <ng-container matColumnDef="D1">
-            <th mat-header-cell *matHeaderCellDef>ID detalle</th>
-            <td mat-cell *matCellDef="let element">{{ element.idDetalleVenta }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="D2">
-            <th mat-header-cell *matHeaderCellDef>ID lote de captura</th>
-            <td mat-cell *matCellDef="let element">{{ element.idLoteCaptura }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="D3">
-            <th mat-header-cell *matHeaderCellDef>Peso comprado</th>
-            <td mat-cell *matCellDef="let element">{{ element.pesoComprado }} kg</td>
-          </ng-container>
-
-          <ng-container matColumnDef="D4">
-            <th mat-header-cell *matHeaderCellDef>Subtotal</th>
-            <td mat-cell *matCellDef="let element">S/ {{ element.subtotal | number: '1.2-2' }}</td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="columnasDetalle"></tr>
-          <tr mat-row *matRowDef="let row; columns: columnasDetalle"></tr>
-        </table>
-
-        <p class="resumen">Peso total comprado: {{ pesoTotalComprado }} kg</p>
+        <p class="cp-aviso">{{ mensajeDetalles }}</p>
       }
+
+      <table class="cp-tabla">
+        <thead>
+          <tr>
+            <th class="cant">Cantidad</th>
+            <th class="um">U.M</th>
+            <th>Descripción</th>
+            <th class="num">Precio unit.</th>
+            <th class="num">Importe (inc. IGV)</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (l of lineas; track $index) {
+            <tr>
+              <td class="cant">{{ l.cantidad | number: '1.2-2' }}</td>
+              <td class="um">KG</td>
+              <td>{{ l.descripcion }}</td>
+              <td class="num">{{ l.precioUnitario | number: '1.2-2' }}</td>
+              <td class="num">{{ l.importe | number: '1.2-2' }}</td>
+            </tr>
+          }
+          @for (f of filasRelleno; track f) {
+            <tr class="relleno">
+              <td class="cant">&nbsp;</td>
+              <td class="um"></td>
+              <td></td>
+              <td class="num"></td>
+              <td class="num"></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <div class="cp-totales">
+        <div>
+          <span>OP. GRAVADA (S/)</span>
+          <span>{{ opGravada | number: '1.2-2' }}</span>
+        </div>
+        <div>
+          <span>TOTAL IGV (S/)</span>
+          <span>{{ igv | number: '1.2-2' }}</span>
+        </div>
+        <div class="cp-total">
+          <span>IMPORTE TOTAL (S/)</span>
+          <span>{{ documento.montoTotal | number: '1.2-2' }}</span>
+        </div>
+      </div>
+
+      <p class="cp-pie">
+        Representación impresa de {{ tituloComprobante }} · Blue Red – Plataforma de
+        comercialización de recursos pesqueros
+      </p>
     </div>
   }
 </div>

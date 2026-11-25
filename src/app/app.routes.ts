@@ -24,6 +24,10 @@ import { Dvlistcomponent } from './components/documentoventacomponent/dvlistcomp
 import { Dvinsertcomponent } from './components/documentoventacomponent/dvinsertcomponent/dvinsertcomponent';
 import { Dvdetallecomponent } from './components/documentoventacomponent/dvdetallecomponent/dvdetallecomponent';
 import { Dvupdatecomponent } from './components/documentoventacomponent/dvupdatecomponent/dvupdatecomponent';
+import { Detalleventacomponent } from './components/detalleventacomponent/detalleventacomponent';
+import { Dtlistcomponent } from './components/detalleventacomponent/dtlistcomponent/dtlistcomponent';
+import { Dtinsertcomponent } from './components/detalleventacomponent/dtinsertcomponent/dtinsertcomponent';
+import { Dtupdatecomponent } from './components/detalleventacomponent/dtupdatecomponent/dtupdatecomponent';
 import { authGuard } from './core/guards/auth-guard';
 import { roleGuard } from './core/guards/role-guard';
 import { Logincomponent } from './components/logincomponent/logincomponent';
@@ -120,6 +124,18 @@ export const routes: Routes = [
       { path: 'editar/:id', component: Dvupdatecomponent },
     ],
     
+  },
+  {
+    path: 'detalles-venta',
+    component: Detalleventacomponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMIN', 'RESTAURANTE'] },
+    children: [
+      { path: '', redirectTo: 'listar', pathMatch: 'full' },
+      { path: 'listar', component: Dtlistcomponent },
+      { path: 'insertar', component: Dtinsertcomponent },
+      { path: 'editar/:id', component: Dtupdatecomponent },
+    ],
   },
   { path: '**', redirectTo: 'inicio' },
 ];

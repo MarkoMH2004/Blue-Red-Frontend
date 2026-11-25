@@ -11,6 +11,16 @@
     <!-- Bloque A: datos del documento -->
     <div class="bloque">
       <h3>Datos del documento</h3>
+
+      @if (esAdmin) {
+        <mat-form-field appearance="outline">
+          <mat-label>ID usuario (Restaurante)</mat-label>
+          <input matInput type="number" formControlName="idUsuario" />
+          <mat-hint>Debe ser un usuario con rol Restaurante</mat-hint>
+          <mat-error>Ingrese el ID del restaurante</mat-error>
+        </mat-form-field>
+      }
+
       <mat-form-field appearance="outline">
         <mat-label>Tipo de documento</mat-label>
         <mat-select formControlName="tipoDocumento">
