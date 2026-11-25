@@ -24,7 +24,7 @@ import { DocumentoVentaDTO } from '../../../models/DocumentoVentaDTO';
 export class Dvinsertcomponent implements OnInit {
   formDocumentoVenta: any;
   mensaje: string = '';
-  idUsuarioSesion = 7; //por mientras: debe ser un usuario con rol restaurante
+  idUsuarioSesion = 1; //por mientras: debe ser un usuario con rol restaurante
 
   constructor(
     private fb: FormBuilder,
