@@ -32,12 +32,14 @@ import { Component } from '@angular/core';
 import { Vupdatecomponent } from './components/validacioncomponent/vupdatecomponent/vupdatecomponent';
 import { Vinsertcomponent } from './components/validacioncomponent/vinsertcomponent/vinsertcomponent';
 import { Registrocomponent } from './components/registrocomponent/registrocomponent';
+import { Menuxusuariocomponent } from './components/menuxusuariocomponent/menuxusuariocomponent';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
   { path: 'login', component: Logincomponent },
   { path: 'inicio', component: Homecomponent },
   { path: 'registro', component: Registrocomponent },
+  
   {
     path: 'especies',
     component: Especiecomponent,

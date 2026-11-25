@@ -7,6 +7,7 @@ import { Especieservice } from '../../../services/especieservice';
 import { LoteCapturaDTO } from '../../../models/LoteCapturaDTO';
 import { MatIconModule } from '@angular/material/icon';
 import { DatePipe } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   imports: [MatButtonModule, RouterLink, MatIconModule, DatePipe],
@@ -25,7 +26,8 @@ export class Lcdetallecomponent implements OnInit {
     private eS: Especieservice,
     private cdr: ChangeDetectorRef,
     private router: Router,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute, 
+    private snackBar: MatSnackBar, //servicio
   ) {}
 
   ngOnInit(): void {
@@ -72,10 +74,6 @@ export class Lcdetallecomponent implements OnInit {
     return this.especies.find((e) => e.idEspecie === id)?.nombreComun ?? '';
   }
 
-  // El botón Editar solo se muestra si el lote está pendiente de validación
-  get puedeEditar(): boolean {
-    return !!this.lote?.estado?.toLowerCase().startsWith('pendiente');
-  }
 
   // Clase CSS según el estado, para pintar la etiqueta de color
   claseEstado(): string {
@@ -84,5 +82,22 @@ export class Lcdetallecomponent implements OnInit {
     if (e.startsWith('aceptado')) return 'estado aceptado';
     if (e.startsWith('rechazado')) return 'estado rechazado';
     return 'estado';
+  }
+
+   puedeEditar(estado: string): boolean {
+    return estado?.toLowerCase().startsWith('pendiente');
+  }
+
+  editar(dto: LoteCapturaDTO) {
+    if (!this.puedeEditar(dto.estado)) {
+      this.snackBar.open('Solo se pueden editar lotes con estado "Pendiente"', '✖', {
+        duration: 5000, //5 segundos luego puf desaparece
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom',
+        panelClass: ['snack-aviso'],
+      });
+      return;
+    }
+    this.router.navigate(['/lotes-captura/editar', dto.idLoteCaptura]);
   }
 }
