@@ -240,14 +240,14 @@ td[mat-cell] {
 
 /* Efecto al pasar el cursor */
 
-tr[mat-row]:hover {
+/*tr[mat-row]:hover {
 
  background-color: #ffc4cc;
 
  transition: background-color 0.2s ease;
 
 
-}
+}*/
 
 
 
@@ -317,20 +317,17 @@ p {
 .btn-detalle {
 
   color: #1f7ab8;
-  border: none;
-  background: transparent;
+
   cursor: pointer;
 }
-
+ 
 
 
 .btn-eliminar:hover,
 .btn-editar:hover,
 .btn-detalle:hover  {
 
-  background-color: #d7263d;
-  color: #ffffff;
-  
+  color: #d7263d;
 
 }
 

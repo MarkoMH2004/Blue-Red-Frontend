@@ -16,7 +16,5 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([authInterceptor])
     ),
     provideCharts(withDefaultRegisterables()),
-
-
   ]
 };

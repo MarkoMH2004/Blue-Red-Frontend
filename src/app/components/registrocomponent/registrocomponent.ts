@@ -37,9 +37,9 @@ export class Registrocomponent implements OnInit {
 
   // Solo roles permitidos en registro público (sin ADMIN); ajusta los idRol a tu BD
   readonly tiposUsuario: readonly TipoUsuarioOption[] = [
-    { label: 'Pescador', codigo: 'PESCADOR', idRol: 2 },
-    { label: 'Restaurante', codigo: 'RESTAURANTE', idRol: 3 },
-    { label: 'Invitado (Guest)', codigo: 'GUEST', idRol: 4 },
+    { label: 'Pescador', codigo: 'PESCADOR', idRol: 3 },
+    { label: 'Restaurante', codigo: 'RESTAURANTE', idRol: 2 },
+    { label: 'Invitado (Guest)', codigo: 'GUEST', idRol: 1 },
   ];
 
   readonly form = this.fb.nonNullable.group({
