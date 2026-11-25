@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Loginservice } from '../../../services/loginservice';
 
 @Component({
   imports: [
@@ -65,6 +66,7 @@ export class Lclistcomponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private snackBar: MatSnackBar, //servicio
+    private auth :Loginservice
   ) {}
 
   ngOnInit(): void {
@@ -74,6 +76,11 @@ export class Lclistcomponent implements OnInit {
       estado: [''],
       idEspecie: [''],
     });
+
+    //EN CASO SI SE REGISTRA ADMIN APARECE UNA NUEVA COLUMNA
+    if(this.esAdmin){
+      this.displayedColumns.splice(1,0,'CUSUARIO') //justo despues de CID
+    }
 
     //LOGICA DEL FILTRADO
     this.dataSource.filterPredicate = (lote: LoteCapturaDTO) => {
@@ -88,6 +95,8 @@ export class Lclistcomponent implements OnInit {
 
     this.obtenerLotesCaptura();
     this.obtenerEspecies();
+
+    
   }
 
   //BOTON CONSULTAR EN EL HISTORIAL
@@ -139,7 +148,14 @@ export class Lclistcomponent implements OnInit {
   obtenerLotesCaptura() {
     this.lcS.getLoteCaptura().subscribe({
       next: (data) => {
-        this.dataSource.data = data;
+
+        const idUsuario = this.auth.getIdUsuario();
+
+        const lotes =this.esAdmin 
+        ? data //si es admin muestra todos
+        : data.filter((lote)=> lote.idUsuario === idUsuario) //si no, muestra solo lo que le corresponda
+
+        this.dataSource.data = lotes;
         this.cdr.detectChanges();
       },
       error: (err) => {
@@ -149,7 +165,7 @@ export class Lclistcomponent implements OnInit {
     });
   }
 
-  claseEstado(estado: string): string {
+  claseEstado(estado: string): string { 
     const e = estado?.toLowerCase() ?? '';
     if (e.startsWith('pendiente')) return 'estado pendiente';
     if (e.startsWith('aceptado')) return 'estado aceptado';
@@ -202,5 +218,13 @@ export class Lclistcomponent implements OnInit {
       return;
     }
     this.router.navigate(['/lotes-captura/editar', dto.idLoteCaptura]);
+  }
+
+  get esPescador(): boolean {
+    return this.auth.hasAnyRole(['PESCADOR']);
+  }
+
+  get esAdmin(): boolean {
+    return this.auth.hasAnyRole(['ADMIN']);
   }
 }

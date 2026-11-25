@@ -31,6 +31,7 @@ register(payload: UsuarioRegisterDTO): Observable<unknown> {
           sessionStorage.setItem('token', response.token);
           sessionStorage.setItem('correo', response.correo ?? '');
           sessionStorage.setItem('roles', JSON.stringify(response.roles ?? []));
+          sessionStorage.setItem('idUsuario',String(response.idUsuario ?? ''));
         }
       })
     );
@@ -64,6 +65,14 @@ register(payload: UsuarioRegisterDTO): Observable<unknown> {
     }
 
     return sessionStorage.getItem('correo') ?? '';
+  }
+
+  getIdUsuario(): number {
+    if (!this.isBrowser || !this.isAuthenticated()) {
+      return 0; //si no esta en el navegador o en un sesion valida te da 0 que equivale a no hay usuario
+    }
+
+    return Number(sessionStorage.getItem('idUsuario')); //convierte a numero el id del usuario guardado al hacer login
   }
 
   getRoles(): string[] {
@@ -104,6 +113,7 @@ register(payload: UsuarioRegisterDTO): Observable<unknown> {
       sessionStorage.removeItem('token');
       sessionStorage.removeItem('correo');
       sessionStorage.removeItem('roles');
+      sessionStorage.removeItem('idUsuario');
     }
   }
 
