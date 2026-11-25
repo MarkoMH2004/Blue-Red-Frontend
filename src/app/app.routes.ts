@@ -13,6 +13,8 @@ import { Validacioncomponent } from './components/validacioncomponent/validacion
 import { Vlistcomponent } from './components/validacioncomponent/vlistcomponent/vlistcomponent';
 import { Vreconocimientocomponent } from './components/validacioncomponent/vreconocimientocomponent/vreconocimientocomponent';
 import { Vbuscarcomponent } from './components/validacioncomponent/vbuscarcomponent/vbuscarcomponent';
+import { Vrechazadascomponent } from './components/validacioncomponent/vrechazadascomponent/vrechazadascomponent';
+import { Vaceptadascomponent } from './components/validacioncomponent/vaceptadascomponent/vaceptadascomponent';
 import { Reportecomponent } from './components/reportecomponent/reportecomponent';
 import { Reportevedacomponent } from './components/reportecomponent/reportevedacomponent/reportevedacomponent';
 import { Certificacioncomponent } from './components/certificacioncomponent/certificacioncomponent';
@@ -93,6 +95,18 @@ export const routes: Routes = [
       { path: 'listar', component: Vlistcomponent },
       { path: 'reconocer-especie', component: Vreconocimientocomponent },
       { path: 'buscar', component: Vbuscarcomponent },
+      {
+        path: 'rechazadas',
+        component: Vrechazadascomponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN', 'PESCADOR'] },
+      },
+      {
+        path: 'aceptadas',
+        component: Vaceptadascomponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN', 'PESCADOR'] },
+      },
       {
         path: 'editar/:id',
         component: Vupdatecomponent,
