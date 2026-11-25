@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Loginservice } from '../../../services/loginservice';
 
 @Component({
   imports: [
@@ -34,7 +35,6 @@ export class Lcinsertcomponent implements OnInit, AfterViewInit {
   mensaje: string = '';
   especies: EspecieDTO[] = [];
   nombreImagen: string = '';
-  idUsuarioSesion = 7;
 
   //mapa
   private platformId= inject(PLATFORM_ID); //guarda el lugar donde se ejecuta la app sea navegador o servidor
@@ -47,7 +47,8 @@ export class Lcinsertcomponent implements OnInit, AfterViewInit {
     private eS: Especieservice,
     private cdr: ChangeDetectorRef,
     private router: Router,
-    private snackBar: MatSnackBar //servicio
+    private snackBar: MatSnackBar, //servicio
+    private loginService: Loginservice
   ) {}
 
   ngOnInit(): void {
@@ -141,9 +142,15 @@ export class Lcinsertcomponent implements OnInit, AfterViewInit {
       return;
     }
 
+    const idUsuario = this.loginService.getIdUsuario() //pide al service del login el id del usuario que inicio sesion
+    if(!idUsuario){
+      this.router.navigate(['/login'])
+      return
+    }
+
     const dto: LoteCapturaDTO = {
       idLoteCaptura: 0,
-      idUsuario: this.idUsuarioSesion, //por mientras
+      idUsuario: idUsuario,
       idEspecie: this.formLoteCaptura.value.idEspecie,
       fechaCaptura: this.formLoteCaptura.value.fechacaptura,
       cantidadPeces: this.formLoteCaptura.value.cantidad,

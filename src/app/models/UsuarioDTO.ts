@@ -1,12 +1,13 @@
-export interface UsuarioDTO {
-  idUsuario?: number;
-  nombre: string;
-  apellido: string;
-  correo: string;
-  telefono: string;
-  dni: string;
-  idRol: number;
-  contrasena?: string;
-  numeroLicencia?: string;
-  ruc?: string;
+export class UsuarioDTO {
+  idUsuario: number = 0;
+  nombre: string = '';
+  apellido: string = '';
+  correo: string = '';
+  telefono: string = '';
+  dni: string = '';
+  contrasena?: string ='';
+  numeroLicencia: string ='';
+  ruc: string = '';
+  idRol: number = 0;
+
 }

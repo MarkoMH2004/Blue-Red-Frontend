@@ -23,6 +23,11 @@ import { Documentoventacomponent } from './components/documentoventacomponent/do
 import { Dvlistcomponent } from './components/documentoventacomponent/dvlistcomponent/dvlistcomponent';
 import { Dvinsertcomponent } from './components/documentoventacomponent/dvinsertcomponent/dvinsertcomponent';
 import { Dvdetallecomponent } from './components/documentoventacomponent/dvdetallecomponent/dvdetallecomponent';
+import { Dvupdatecomponent } from './components/documentoventacomponent/dvupdatecomponent/dvupdatecomponent';
+import { Detalleventacomponent } from './components/detalleventacomponent/detalleventacomponent';
+import { Dtlistcomponent } from './components/detalleventacomponent/dtlistcomponent/dtlistcomponent';
+import { Dtinsertcomponent } from './components/detalleventacomponent/dtinsertcomponent/dtinsertcomponent';
+import { Dtupdatecomponent } from './components/detalleventacomponent/dtupdatecomponent/dtupdatecomponent';
 import { authGuard } from './core/guards/auth-guard';
 import { roleGuard } from './core/guards/role-guard';
 import { Logincomponent } from './components/logincomponent/logincomponent';
@@ -34,13 +39,14 @@ import { Registrocomponent } from './components/registrocomponent/registrocompon
 import { Usuarioscomponent } from './components/usuarioscomponent/usuarioscomponent';
 import { Usuariolistcomponent } from './components/usuarioscomponent/usuariolistcomponent/usuariolistcomponent';
 import { Usuarioupdatecomponent } from './components/usuarioscomponent/usuarioupdatecomponent/usuarioupdatecomponent';
-
+import { Menuxusuariocomponent } from './components/menuxusuariocomponent/menuxusuariocomponent';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
   { path: 'login', component: Logincomponent },
   { path: 'inicio', component: Homecomponent },
   { path: 'registro', component: Registrocomponent },
+  
   {
   path: 'usuarios',
   component: Usuarioscomponent,
@@ -129,8 +135,21 @@ export const routes: Routes = [
       { path: 'listar', component: Dvlistcomponent },
       { path: 'insertar', component: Dvinsertcomponent },
       { path: 'detalle/:id', component: Dvdetallecomponent },
+      { path: 'editar/:id', component: Dvupdatecomponent },
     ],
     
+  },
+  {
+    path: 'detalles-venta',
+    component: Detalleventacomponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMIN', 'RESTAURANTE'] },
+    children: [
+      { path: '', redirectTo: 'listar', pathMatch: 'full' },
+      { path: 'listar', component: Dtlistcomponent },
+      { path: 'insertar', component: Dtinsertcomponent },
+      { path: 'editar/:id', component: Dtupdatecomponent },
+    ],
   },
   { path: '**', redirectTo: 'inicio' },
 ];

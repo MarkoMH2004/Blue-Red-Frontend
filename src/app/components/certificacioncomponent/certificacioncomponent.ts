@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { Loginservice } from '../../services/loginservice';
+import { Menuxusuariocomponent } from '../menuxusuariocomponent/menuxusuariocomponent';
 
 @Component({
   selector: 'app-certificacioncomponent',
-  imports: [RouterLink, RouterOutlet],
+  imports: [RouterLink, RouterOutlet, Menuxusuariocomponent],
   templateUrl: './certificacioncomponent.html',
   styleUrl: './certificacioncomponent.css',
 })

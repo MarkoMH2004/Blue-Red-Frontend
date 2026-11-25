@@ -15,7 +15,7 @@
       <p [class]="eliminacionExitosa ? 'mensaje-exito' : 'mensaje-error'">{{ mensajeEliminar }}</p>
     }
     @if (mensaje) {
-      <p class="mensaje-error">{{ mensaje }}</p>
+      <p class="mensaje-error">{{ mensaje }}</p>  
     } @else if (dataSource.length > 0) {
       <div class="tabla-responsive">
       <table mat-table [dataSource]="dataSource" class="mat-shadow-2">

@@ -80,6 +80,9 @@
   <!-- Listado de documentos -->
   <div class="bloque bloque-listado">
     <h3>Listado de documentos</h3>
+    @if (mensajeEliminar) {
+      <p [class]="eliminacionExitosa ? 'mensaje-aviso' : 'mensaje-error'">{{ mensajeEliminar }}</p>
+    }
     @if (mensaje) {
       <p class="mensaje-error">{{ mensaje }}</p>
     } @else if (dataSource.length > 0) {
@@ -125,6 +128,9 @@
               [routerLink]="['/documentos-venta/editar', element.idDocumentoVenta]"
             >
               Editar
+            </button>
+            <button mat-stroked-button type="button" (click)="eliminarDocumento(element)">
+              Eliminar
             </button>
           </td>
         </ng-container>

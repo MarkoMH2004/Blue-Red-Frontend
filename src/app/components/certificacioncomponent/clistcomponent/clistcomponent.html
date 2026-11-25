@@ -6,13 +6,18 @@
       <p>Consulta, registra y gestiona las certificaciones de BlueRed.</p>
     </div>
 
+    
     <a
+      *ngIf="esAdministrador()"
       mat-flat-button
       routerLink="/certificaciones/insertar"
       class="boton-principal"
     >
       + Nueva certificación
     </a>
+
+
+    
   </div>
 
   <div class="aviso" *ngIf="!tieneSesion()">
@@ -101,12 +106,15 @@
               Ver
             </button>
 
+            
             <a
+              *ngIf="esAdministrador()"
               mat-button
               [routerLink]="['/certificaciones/editar', c.idCertificacion]"
             >
               Editar
             </a>
+
 
             <button
               mat-button

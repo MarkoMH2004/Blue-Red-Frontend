@@ -8,23 +8,25 @@ import { UsuarioDTO } from '../models/UsuarioDTO';
   providedIn: 'root',
 })
 export class Usuarioservice {
-  private url = `${environment.base}/api/usuarios`;
+  private apiURL = `${environment.base}/api/usuarios`;
 
   constructor(private http: HttpClient) {}
 
-  getUsuarios(): Observable<UsuarioDTO[]> {
-    return this.http.get<UsuarioDTO[]>(this.url);
+  // Datos de un usuario (se usa para mostrar al cliente en el comprobante)
+  listId(id: number): Observable<UsuarioDTO> {
+    return this.http.get<UsuarioDTO>(`${this.apiURL}/${id}`);
   }
 
-  listId(id: number): Observable<UsuarioDTO> {
-    return this.http.get<UsuarioDTO>(`${this.url}/${id}`);
+  getUsuarios(): Observable<UsuarioDTO[]> {
+    return this.http.get<UsuarioDTO[]>(this.apiURL);
   }
 
   updateUsuario(usuario: UsuarioDTO): Observable<UsuarioDTO> {
-    return this.http.put<UsuarioDTO>(this.url, usuario);
+    return this.http.put<UsuarioDTO>(this.apiURL, usuario);
   }
 
   deleteUsuario(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.url}/${id}`);
+    return this.http.delete<void>(`${this.apiURL}/${id}`);
   }
+
 }

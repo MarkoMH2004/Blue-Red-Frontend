@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { Menucomponent } from '../menucomponent/menucomponent';
 import { RouterOutlet } from '@angular/router';
+import { Menuxusuariocomponent } from '../menuxusuariocomponent/menuxusuariocomponent';
 
 @Component({
-  imports: [Menucomponent, RouterOutlet],
+  imports: [Menuxusuariocomponent, RouterOutlet],
   selector: 'app-lotecapturacomponent',
   styleUrl: './lotecapturacomponent.css',
   templateUrl: './lotecapturacomponent.html',

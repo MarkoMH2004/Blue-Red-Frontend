@@ -83,7 +83,12 @@ export class Dvupdatecomponent implements OnInit {
   }
 
   quitarDetalle(i: number): void {
-    if (this.detalles.length > 1) this.detalles.removeAt(i); //siempre debe quedar al menos uno
+    if (this.detalles.length > 1) {
+      this.detalles.removeAt(i);
+    } else {
+      //con una sola fila no se elimina: se limpia para dejarla en blanco
+      this.detalles.at(i).reset({ idDetalleVenta: 0, idLoteCaptura: '', pesoComprado: '', subtotal: '' });
+    }
   }
 
   get montoTotal(): number {
