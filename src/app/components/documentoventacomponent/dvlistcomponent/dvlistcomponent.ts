@@ -30,6 +30,8 @@ export class Dvlistcomponent implements OnInit {
   displayedColumns: string[] = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6'];
   dataSource: DocumentoVentaDTO[] = [];
   mensaje: string = '';
+  mensajeEliminar: string = '';
+  eliminacionExitosa: boolean = false;
 
   // consulta por ID
   idBuscado: string = '';
@@ -113,6 +115,37 @@ export class Dvlistcomponent implements OnInit {
       error: (err) => {
         console.log('Ocurrió un error al listar los detalles', err);
         this.mensajeDetalles = 'No se pudieron cargar los detalles del documento';
+        this.cdr.detectChanges();
+      },
+    });
+  }
+
+  // HU20 - Eliminar documento (también elimina sus detalles)
+  eliminarDocumento(doc: DocumentoVentaDTO): void {
+    const ok = globalThis.confirm(
+      `¿Eliminar el documento #${doc.idDocumentoVenta} y todos sus detalles de compra?`,
+    );
+    if (!ok) return;
+
+    this.mensajeEliminar = '';
+    this.dvS.eliminarConDetalles(doc.idDocumentoVenta).subscribe({
+      next: () => {
+        this.eliminacionExitosa = true;
+        this.mensajeEliminar = 'Documento de venta eliminado correctamente.';
+        if (this.documentoConsultado?.idDocumentoVenta === doc.idDocumentoVenta) {
+          this.documentoConsultado = null;
+          this.detalles = [];
+        }
+        this.obtenerDocumentos();
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error al eliminar el documento de venta', err);
+        this.eliminacionExitosa = false;
+        this.mensajeEliminar =
+          err.status === 403
+            ? 'Su usuario no tiene permisos para eliminar documentos de venta.'
+            : err.error?.message || 'Ocurrió un error al eliminar el documento de venta.';
         this.cdr.detectChanges();
       },
     });
