@@ -67,7 +67,11 @@
   </div>
 
   <div class="bloqueB">
-    <h3>Historial de capturas</h3>
+    @if(esAdmin){
+      <h3>Lista general de capturas</h3>
+    }@else {
+      <h3>Historial de capturas</h3>
+    }
 
     <!--Parte de filtraje de la tabla-->
 
