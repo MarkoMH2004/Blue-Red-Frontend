@@ -16,7 +16,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 6rem;
   overflow: hidden;
 }
 
@@ -33,7 +33,7 @@
   align-items: center;
   justify-content: center;
   padding: 2.5rem 2rem;
-  background: #ffffff;
+  background: #bdced8;
 }
 
 .login-form {
@@ -45,9 +45,9 @@
 
 .brand-logo {
   align-self: flex-start;
-  width: 150px;
+  width: 180px;
   height: auto;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .login-title {
