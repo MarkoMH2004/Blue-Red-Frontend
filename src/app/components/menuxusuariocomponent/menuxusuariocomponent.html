@@ -1,6 +1,9 @@
 <!-- BARRA SUPERIOR -->
 <mat-toolbar class="barra">
-  <span> BlueRed </span>
+  <button class="logo-btn" routerLink="/inicio" aria-label="Ir al inicio">
+      <img src="images/logo-blured.png" alt="Logo BlueRed" class="logo-img" />
+  </button>
+  
 
   <!-- EMPUJA TODO LO SIGUIENTE A LA DERECHA -->
   <span class="spacer"></span>
@@ -38,7 +41,9 @@
         </mat-expansion-panel-header>
         <mat-nav-list>
           <a mat-list-item routerLink="/especies/listar" routerLinkActive="active">Listar</a>
-          <a mat-list-item routerLink="/especies/insertar" routerLinkActive="active">Registrar</a>
+          @if (esAdmin) {
+            <a mat-list-item routerLink="/especies/insertar" routerLinkActive="active">Registrar</a>
+          }
         </mat-nav-list>
       </mat-expansion-panel>
 
@@ -67,29 +72,30 @@
       }
       
 
-      <mat-expansion-panel class="mat-elevation-z0">
-        <mat-expansion-panel-header>
-          <mat-panel-title>Validaciones</mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-nav-list>
-          <a mat-list-item routerLink="/validaciones/listar" routerLinkActive="active">Listar</a>
-          <a mat-list-item routerLink="/validaciones/buscar" routerLinkActive="active">Buscar</a>
-          @if (esAdmin || esPescador) {
+      @if (esAdmin || esPescador) {
+        <mat-expansion-panel class="mat-elevation-z0">
+          <mat-expansion-panel-header>
+            <mat-panel-title>Validaciones</mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-nav-list>
+            @if (esAdmin) {
+              <a mat-list-item routerLink="/validaciones/listar" routerLinkActive="active">Listar</a>
+              <a mat-list-item routerLink="/validaciones/buscar" routerLinkActive="active">Buscar</a>
+            }
             <a mat-list-item routerLink="/validaciones/rechazadas" routerLinkActive="active"
               >Rechazadas</a
             >
             <a mat-list-item routerLink="/validaciones/aceptadas" routerLinkActive="active"
               >Aceptadas</a
             >
-          }
-          <a mat-list-item routerLink="/validaciones/registrar" routerLinkActive="active"
-            >Registrar</a
-          >
-          <a mat-list-item routerLink="/validaciones/reconocer-especie" routerLinkActive="active"
-            >Reconocer especie con IA</a
-          >
-        </mat-nav-list>
-      </mat-expansion-panel>
+            @if (esAdmin) {
+              <a mat-list-item routerLink="/validaciones/registrar" routerLinkActive="active"
+                >Registrar</a
+              >
+            }
+          </mat-nav-list>
+        </mat-expansion-panel>
+      }
 
       <mat-expansion-panel class="mat-elevation-z0">
         <mat-expansion-panel-header>
@@ -132,17 +138,45 @@
           </mat-nav-list>
         </mat-expansion-panel>
       }
-
+      
       <mat-expansion-panel class="mat-elevation-z0">
         <mat-expansion-panel-header>
           <mat-panel-title>Reportes</mat-panel-title>
         </mat-expansion-panel-header>
+
         <mat-nav-list>
-          <a mat-list-item routerLink="/reportes/veda" routerLinkActive="active">Reporte01</a>
+          <a mat-list-item routerLink="/reportes/veda" routerLinkActive="active">
+            Reporte de veda
+          </a>
+          
+          <a mat-list-item routerLink="/reportes/lc-x-especie" routerLinkActive="active">Reporte lote de captura por especie </a>
+
+          @if (esAdmin || esRestaurante) {
+            <a mat-list-item routerLink="/reportes/documentacion" routerLinkActive="active">
+              Documentación del pescador
+            </a>
+          }
+
+
+          <a mat-list-item routerLink="/reportes/talla-minima" routerLinkActive="active">
+            Especies por talla mínima
+          </a>
+
+          @if (esAdmin || esRestaurante) {
+            <a mat-list-item routerLink="/reportes/compras" routerLinkActive="active">
+              Reportes de compras
+            </a>
+          }
         </mat-nav-list>
       </mat-expansion-panel>
+
+
     </mat-accordion>
   </mat-sidenav>
+
+
+
+
 
   <mat-sidenav-content class="contenido">
     <router-outlet></router-outlet>

@@ -36,11 +36,13 @@ export class Registrocomponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
 
   // Solo roles permitidos en registro público (sin ADMIN); ajusta los idRol a tu BD
+  
   readonly tiposUsuario: readonly TipoUsuarioOption[] = [
-    { label: 'Pescador', codigo: 'PESCADOR', idRol: 3 },
-    { label: 'Restaurante', codigo: 'RESTAURANTE', idRol: 2 },
-    { label: 'Invitado (Guest)', codigo: 'GUEST', idRol: 1 },
+    { label: 'Pescador', codigo: 'PESCADOR', idRol: 2 },
+    { label: 'Restaurante', codigo: 'RESTAURANTE', idRol: 3 },
+    { label: 'Invitado (Guest)', codigo: 'GUEST', idRol: 4 },
   ];
+
 
   readonly form = this.fb.nonNullable.group({
     idRol: [null as number | null, [Validators.required]],

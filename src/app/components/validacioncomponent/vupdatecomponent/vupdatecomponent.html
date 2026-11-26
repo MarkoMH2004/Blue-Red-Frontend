@@ -14,43 +14,74 @@
           <span class="valor">{{ formValidacion.value.ID }}</span>
         </div>
 
-        <mat-form-field appearance="outline">
+        <div class="dato">
+          <h3>Lote de captura</h3>
+          <span class="valor">{{ descripcionLote(idLoteCaptura) }}</span>
+        </div>
+
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
           <mat-label>Especie detectada</mat-label>
           <input matInput formControlName="especieDetectada" />
-          <mat-error>Ingrese la especie detectada</mat-error>
+          @if (formValidacion.get('especieDetectada').hasError('maxlength')) {
+            <mat-error>Máximo 45 caracteres</mat-error>
+          } @else {
+            <mat-error>Ingrese la especie detectada</mat-error>
+          }
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
           <mat-label>Cantidad analizada</mat-label>
           <input matInput type="number" formControlName="cantidadAnalizada" />
-          <mat-error>Ingrese una cantidad válida (0 o mayor)</mat-error>
+          @if (formValidacion.get('cantidadAnalizada').hasError('required')) {
+            <mat-error>Ingrese la cantidad analizada</mat-error>
+          } @else if (formValidacion.get('cantidadAnalizada').hasError('min')) {
+            <mat-error>La cantidad debe ser mayor a 0</mat-error>
+          } @else {
+            <mat-error>La cantidad debe ser un número entero</mat-error>
+          }
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
           <mat-label>Longitud mínima detectada</mat-label>
           <input matInput type="number" formControlName="longitudMinimaDetectada" />
-          <mat-error>Ingrese una longitud válida (0 o mayor)</mat-error>
+          @if (formValidacion.get('longitudMinimaDetectada').hasError('required')) {
+            <mat-error>Ingrese la longitud mínima detectada</mat-error>
+          } @else {
+            <mat-error>La longitud debe ser mayor a 0</mat-error>
+          }
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
           <mat-label>Porcentaje de confianza</mat-label>
           <input matInput type="number" formControlName="porcentajeConfianza" />
-          <mat-error>Ingrese un porcentaje entre 0 y 100</mat-error>
+          @if (formValidacion.get('porcentajeConfianza').hasError('required')) {
+            <mat-error>Ingrese el porcentaje de confianza</mat-error>
+          } @else {
+            <mat-error>Ingrese un porcentaje entre 0 y 100</mat-error>
+          }
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
           <mat-label>Porcentaje de cumplimiento</mat-label>
           <input matInput type="number" formControlName="porcentajeCumplimiento" />
-          <mat-error>Ingrese un porcentaje entre 0 y 100</mat-error>
+          @if (formValidacion.get('porcentajeCumplimiento').hasError('required')) {
+            <mat-error>Ingrese el porcentaje de cumplimiento</mat-error>
+          } @else {
+            <mat-error>Ingrese un porcentaje entre 0 y 100</mat-error>
+          }
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
           <mat-label>Objeto de referencia detectado</mat-label>
           <input matInput formControlName="objetoReferenciaDetectado" />
-          <mat-error>Ingrese el objeto de referencia detectado</mat-error>
+          @if (formValidacion.get('objetoReferenciaDetectado').hasError('maxlength')) {
+            <mat-error>Máximo 45 caracteres</mat-error>
+          } @else {
+            <mat-error>Ingrese el objeto de referencia detectado</mat-error>
+          }
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
           <mat-label>Resultado</mat-label>
           <mat-select formControlName="resultado">
             @for (r of resultados; track r) {
@@ -60,7 +91,7 @@
           <mat-error>Seleccione el resultado</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
           <mat-label>Fecha de validación</mat-label>
           <input matInput [matDatepicker]="picker1" formControlName="fechaValidacion" />
           <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>

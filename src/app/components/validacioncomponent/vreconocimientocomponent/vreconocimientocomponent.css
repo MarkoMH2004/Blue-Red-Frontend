@@ -51,6 +51,10 @@ h3 {
   gap: 18px;
 }
 
+input[type='file'] {
+  max-width: 100%;
+}
+
 .vista-previa img {
   max-width: 100%;
   max-height: 320px;

@@ -11,6 +11,8 @@ import { LoteCapturaDTO } from '../../../models/LoteCapturaDTO';
 import { EspecieDTO } from '../../../models/EspecieDTO';
 import { ValidacionDTO } from '../../../models/ValidacionDTO';
 import { Validacionservice } from '../../../services/validacionservice';
+import { ReconocimientoEspecieDTO } from '../../../models/ReconocimientoEspecieDTO';
+import { Vreconocimientocomponent } from '../vreconocimientocomponent/vreconocimientocomponent';
 
 @Component({
   selector: 'app-vinsertcomponent',
@@ -21,6 +23,7 @@ import { Validacionservice } from '../../../services/validacionservice';
     MatDatepickerModule,
     MatButtonModule,
     RouterLink,
+    Vreconocimientocomponent,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './vinsertcomponent.html',
@@ -32,6 +35,9 @@ export class Vinsertcomponent implements OnInit {
   lotes: LoteCapturaDTO[] = [];
   especies: EspecieDTO[] = [];
   validaciones: ValidacionDTO[] = [];
+  lotesCargados: boolean = false;
+  validacionesCargadas: boolean = false;
+  errorCarga: string = '';
 
   resultados: string[] = ['Aceptado', 'Rechazado'];
 
@@ -43,13 +49,22 @@ export class Vinsertcomponent implements OnInit {
     private snackBar: MatSnackBar,
   ) {
     this.formValidacion = this.fb.group({
-      idLoteCaptura: [null, Validators.required],
-      especieDetectada: ['', Validators.required],
-      cantidadAnalizada: [null, [Validators.required, Validators.min(0)]],
-      longitudMinimaDetectada: [null, [Validators.required, Validators.min(0)]],
+      idLoteCaptura: [{ value: null, disabled: true }, Validators.required],
+      especieDetectada: [
+        '',
+        [Validators.required, Validators.maxLength(45), Validators.pattern(/\S/)],
+      ],
+      cantidadAnalizada: [
+        null,
+        [Validators.required, Validators.min(1), Validators.pattern(/^\d+$/)],
+      ],
+      longitudMinimaDetectada: [null, [Validators.required, Validators.min(Number.MIN_VALUE)]],
       porcentajeConfianza: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
       porcentajeCumplimiento: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
-      objetoReferenciaDetectado: ['', Validators.required],
+      objetoReferenciaDetectado: [
+        '',
+        [Validators.required, Validators.maxLength(45), Validators.pattern(/\S/)],
+      ],
       resultado: ['', Validators.required],
       fechaValidacion: [new Date(), Validators.required],
     });
@@ -59,11 +74,13 @@ export class Vinsertcomponent implements OnInit {
     this.vS.getLotes().subscribe({
       next: (data) => {
         this.lotes = data;
+        this.lotesCargados = true;
+        this.habilitarLotes();
         this.cdr.detectChanges();
       },
       error: (err) => {
         console.log('Ocurrió un error al listar los lotes de captura', err);
-        this.mensaje = 'No se pudieron cargar los lotes de captura.';
+        this.errorCarga = 'No se pudieron cargar los lotes de captura.';
         this.cdr.detectChanges();
       },
     });
@@ -83,10 +100,16 @@ export class Vinsertcomponent implements OnInit {
     this.vS.getValidaciones().subscribe({
       next: (data) => {
         this.validaciones = data;
+        this.validacionesCargadas = true;
+        this.habilitarLotes();
         this.cdr.detectChanges();
       },
       error: (err) => {
         console.log('Ocurrió un error al listar las validaciones', err);
+        this.errorCarga =
+          err.status === 403
+            ? 'Su usuario no tiene permisos de administrador para registrar validaciones.'
+            : 'No se pudieron verificar los lotes disponibles. Recargue la página para intentarlo nuevamente.';
         this.cdr.detectChanges();
       },
     });
@@ -99,13 +122,43 @@ export class Vinsertcomponent implements OnInit {
     );
   }
 
-  // Muestra "#ID – Nombre común" usando la especie registrada en el lote
+  get lotesListos(): boolean {
+    return this.lotesCargados && this.validacionesCargadas;
+  }
+
+  get sinLotesPendientes(): boolean {
+    return this.lotesListos && this.lotesDisponibles.length === 0;
+  }
+
+  private habilitarLotes(): void {
+    if (this.lotesListos) {
+      this.formValidacion.get('idLoteCaptura').enable();
+    }
+  }
+
+  // Muestra especie, fecha de captura y cantidad de peces del lote
   descripcionLote(lote: LoteCapturaDTO): string {
     const nombre = this.especies.find((e) => e.idEspecie === lote.idEspecie)?.nombreComun;
-    return nombre ? `#${lote.idLoteCaptura} – ${nombre}` : `#${lote.idLoteCaptura}`;
+    const fecha = String(lote.fechaCaptura).split('-').reverse().join('/');
+    const cantidad = `${lote.cantidadPeces} ${lote.cantidadPeces === 1 ? 'pez' : 'peces'}`;
+    return [nombre, fecha, cantidad].filter(Boolean).join(' – ');
+  }
+
+  // Recibe el resultado del reconocimiento; la confianza llega entre 0 y 1
+  completarReconocimiento(reconocimiento: ReconocimientoEspecieDTO): void {
+    this.formValidacion.patchValue({
+      especieDetectada: reconocimiento.especie,
+      porcentajeConfianza: Math.round(reconocimiento.confianza * 10000) / 100,
+    });
+    this.formValidacion.get('especieDetectada').markAsTouched();
+    this.formValidacion.get('porcentajeConfianza').markAsTouched();
+    this.cdr.detectChanges();
   }
 
   insertarValidacion(): void {
+    if (!this.lotesListos) {
+      return;
+    }
     if (this.formValidacion.invalid) {
       this.formValidacion.markAllAsTouched();
       this.mensaje = 'Por favor, complete todos los campos correctamente.';

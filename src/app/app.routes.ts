@@ -42,6 +42,13 @@ import { Usuarioscomponent } from './components/usuarioscomponent/usuarioscompon
 import { Usuariolistcomponent } from './components/usuarioscomponent/usuariolistcomponent/usuariolistcomponent';
 import { Usuarioupdatecomponent } from './components/usuarioscomponent/usuarioupdatecomponent/usuarioupdatecomponent';
 import { Menuxusuariocomponent } from './components/menuxusuariocomponent/menuxusuariocomponent';
+import { Reportelcxespeciecomponent } from './components/reportecomponent/reportelcxespeciecomponent/reportelcxespeciecomponent';
+import { Reportedocumentacioncomponent } from './components/reportecomponent/reportedocumentacioncomponent/reportedocumentacioncomponent';
+import { Reportetallaminimacomponent } from './components/reportecomponent/reportetallaminimacomponent/reportetallaminimacomponent';
+import { Reportecomprascomponent } from './components/reportecomponent/reportecomprascomponent/reportecomprascomponent';
+
+
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
@@ -56,22 +63,32 @@ export const routes: Routes = [
   data: { roles: ['ADMIN', 'PESCADOR', 'RESTAURANTE', 'GUEST'] },
   children: [
     { path: 'listar', component: Usuariolistcomponent },
-    { path: 'edicion/:id', component: Usuarioupdatecomponent },
+    { path: 'edicion/:id', component: Usuarioupdatecomponent, },
     { path: '', redirectTo: 'listar', pathMatch: 'full' },
   ],
 },
   {
-    path: 'especies',
-    component: Especiecomponent,
-    canActivate: [authGuard, roleGuard],
-    data: { roles: ['ADMIN', 'PESCADOR', 'RESTAURANTE', 'GUEST'] },
-    children: [
-      { path: '', redirectTo: 'listar', pathMatch: 'full' },
-      { path: 'listar', component: Especielistcomponent },
-      { path: 'insertar', component: Especieinsertcomponent },
-      { path: 'edicion/:id', component: Especieupdatecomponent },
-    ],
-  },
+  path: 'especies',
+  component: Especiecomponent,
+  canActivate: [authGuard, roleGuard],
+  data: { roles: ['ADMIN', 'PESCADOR', 'RESTAURANTE', 'GUEST'] },
+  children: [
+    { path: '', redirectTo: 'listar', pathMatch: 'full' },
+    { path: 'listar', component: Especielistcomponent },
+    {
+      path: 'insertar',
+      component: Especieinsertcomponent,
+      canActivate: [roleGuard],
+      data: { roles: ['ADMIN'] },
+    },
+    {
+      path: 'edicion/:id',
+      component: Especieupdatecomponent,
+      canActivate: [roleGuard],
+      data: { roles: ['ADMIN'] },
+    },
+  ],
+},
   {
     path: 'lotes-captura',
     component: Lotecapturacomponent,
@@ -89,12 +106,27 @@ export const routes: Routes = [
     path: 'validaciones',
     component: Validacioncomponent,
     canActivate: [authGuard, roleGuard],
-    data: { roles: ['ADMIN', 'PESCADOR', 'RESTAURANTE', 'GUEST'] },
+    data: { roles: ['ADMIN', 'PESCADOR'] },
     children: [
       { path: '', redirectTo: 'listar', pathMatch: 'full' },
-      { path: 'listar', component: Vlistcomponent },
-      { path: 'reconocer-especie', component: Vreconocimientocomponent },
-      { path: 'buscar', component: Vbuscarcomponent },
+      {
+        path: 'listar',
+        component: Vlistcomponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN'] },
+      },
+      {
+        path: 'reconocer-especie',
+        component: Vreconocimientocomponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN'] },
+      },
+      {
+        path: 'buscar',
+        component: Vbuscarcomponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN'] },
+      },
       {
         path: 'rechazadas',
         component: Vrechazadascomponent,
@@ -110,10 +142,14 @@ export const routes: Routes = [
       {
         path: 'editar/:id',
         component: Vupdatecomponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN'] },
       },
       {
         path: 'registrar',
         component: Vinsertcomponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN'] },
       },
     ],
   },
@@ -122,10 +158,28 @@ export const routes: Routes = [
     component: Reportecomponent,
     canActivate: [authGuard, roleGuard],
     data: { roles: ['ADMIN', 'PESCADOR', 'RESTAURANTE', 'GUEST'] },
+    
     children: [
       { path: '', redirectTo: 'veda', pathMatch: 'full' },
       { path: 'veda', component: Reportevedacomponent },
+      { path: 'lc-x-especie', component: Reportelcxespeciecomponent },
+
+      {
+        path: 'documentacion',
+        component: Reportedocumentacioncomponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN', 'RESTAURANTE'] }
+      },
+
+      { path: 'talla-minima', component: Reportetallaminimacomponent },
+      {
+        path: 'compras',
+        component: Reportecomprascomponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN', 'RESTAURANTE'] },
+      },
     ],
+
   },
   {
     path: 'certificaciones',

@@ -1,5 +1,4 @@
 <div class="container">
-  
   <!-- SECCIÓN DE FILTROS DE BÚSQUEDA -->
   <mat-card class="card-container">
     <mat-card-header>
@@ -7,7 +6,6 @@
     </mat-card-header>
     <mat-card-content>
       <form [formGroup]="form" class="filter-form">
-        
         <!-- ID de Especie con validación -->
         <mat-form-field appearance="fill" class="filter-field">
           <mat-label>ID de especie</mat-label>
@@ -34,7 +32,6 @@
             La talla mínima debe ser mayor a 0
           </mat-error>
         </mat-form-field>
-
       </form>
 
       <div class="button-container">
@@ -50,13 +47,36 @@
   <mat-card class="card-container">
     <mat-card-header class="header-list-card">
       <mat-card-title>Lista de Especies</mat-card-title>
-      <!-- BOTÓN DE NUEVO REGISTRO A LA DERECHA -->
-      <button mat-flat-button color="primary" [routerLink]="['/especies/insertar']" class="btn-nuevo">
-        <mat-icon>add</mat-icon> Nueva Especie
-      </button>
+      @if (esAdmin) {
+        <button mat-flat-button color="primary" [routerLink]="['/especies/insertar']" class="btn-nuevo">
+          <mat-icon>add</mat-icon> Nueva Especie
+        </button>
+      }
     </mat-card-header>
     <mat-card-content>
-      <!-- ... (tu tabla y paginador continúan igual) ... -->
+      @if (esAdmin && especiePendienteEliminar) {
+        <div class="confirm-box">
+          <p class="confirm-text">
+            ¿Estás seguro de que deseas eliminar la especie
+            <strong>{{ especiePendienteEliminar.nombreComun }}</strong>
+            (ID: {{ especiePendienteEliminar.idEspecie }})?
+          </p>
+          <div class="confirm-actions">
+            <button mat-stroked-button type="button" (click)="rechazarEliminar()">
+              Rechazar
+            </button>
+            <button
+              mat-flat-button
+              color="warn"
+              type="button"
+              class="btn-aceptar"
+              (click)="confirmarEliminar()"
+            >
+              Aceptar
+            </button>
+          </div>
+        </div>
+      }
 
       @if (mensaje) {
         <p class="mensaje-error">{{ mensaje }}</p>
@@ -65,7 +85,6 @@
       @if (dataSource.data.length > 0) {
         <div class="table-responsive">
           <table mat-table [dataSource]="dataSource" class="mat-elevation-z0">
-
             <ng-container matColumnDef="C1">
               <th mat-header-cell *matHeaderCellDef> ID </th>
               <td mat-cell *matCellDef="let element"> {{ element.idEspecie }} </td>
@@ -76,7 +95,6 @@
               <td mat-cell *matCellDef="let element"> {{ element.nombreComun }} </td>
             </ng-container>
 
-            <!-- Nombre Científico en cursiva -->
             <ng-container matColumnDef="C3">
               <th mat-header-cell *matHeaderCellDef> Nombre Científico </th>
               <td mat-cell *matCellDef="let element" class="nombre-cientifico"> {{ element.nombreCientifico }} </td>
@@ -96,40 +114,40 @@
               </td>
             </ng-container>
 
-            <ng-container matColumnDef="C6">
-              <th mat-header-cell *matHeaderCellDef> Eliminar </th>
-              <td mat-cell *matCellDef="let element">
-                <button mat-icon-button color="warn" (click)="eliminarEspecie(element.idEspecie)">
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </td>
-            </ng-container>
+            @if (esAdmin) {
+              <ng-container matColumnDef="C6">
+                <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+                <td mat-cell *matCellDef="let element">
+                  <button mat-icon-button color="warn" type="button" (click)="solicitarEliminar(element)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
 
-            <ng-container matColumnDef="C7">
-              <th mat-header-cell *matHeaderCellDef> Editar </th>
-              <td mat-cell *matCellDef="let element">
-                <button mat-icon-button color="primary" [routerLink]="['/especies/edicion', element.idEspecie]">
-                  <mat-icon>edit</mat-icon>
-                </button>
-              </td>
-            </ng-container>
-          
+              <ng-container matColumnDef="C7">
+                <th mat-header-cell *matHeaderCellDef> Editar </th>
+                <td mat-cell *matCellDef="let element">
+                  <button mat-icon-button color="primary" [routerLink]="['/especies/edicion', element.idEspecie]">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+            }
+
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
         </div>
 
-        <!-- PAGINADOR -->
-        <mat-paginator [pageSizeOptions]="[3, 5, 10]" 
-                       showFirstLastButtons 
-                       aria-label="Seleccionar página de especies">
+        <mat-paginator
+          [pageSizeOptions]="[3, 5, 10]"
+          showFirstLastButtons
+          aria-label="Seleccionar página de especies"
+        >
         </mat-paginator>
-
       } @else {
         <p class="no-records">No hay registros disponibles para mostrar.</p>
       }
-
     </mat-card-content>
   </mat-card>
-
 </div>

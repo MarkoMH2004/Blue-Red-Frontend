@@ -1,4 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterLink } from '@angular/router';
@@ -13,6 +20,9 @@ import { Loginservice } from '../../../services/loginservice';
   styleUrl: './vreconocimientocomponent.css',
 })
 export class Vreconocimientocomponent implements OnInit {
+  @Input() integrado: boolean = false;
+  @Output() especieReconocida = new EventEmitter<ReconocimientoEspecieDTO>();
+
   sinSesion: boolean = false;
   archivo: File | null = null;
   vistaPrevia: string = '';
@@ -77,6 +87,9 @@ export class Vreconocimientocomponent implements OnInit {
       next: (data) => {
         this.resultado = data;
         this.cargando = false;
+        if (data.especie?.trim() && data.confianza >= 0 && data.confianza <= 1) {
+          this.especieReconocida.emit(data);
+        }
         this.cdr.detectChanges();
       },
       error: (err) => {
