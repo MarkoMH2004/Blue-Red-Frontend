@@ -45,6 +45,7 @@ import { Menuxusuariocomponent } from './components/menuxusuariocomponent/menuxu
 import { Reportelcxespeciecomponent } from './components/reportecomponent/reportelcxespeciecomponent/reportelcxespeciecomponent';
 import { Reportedocumentacioncomponent } from './components/reportecomponent/reportedocumentacioncomponent/reportedocumentacioncomponent';
 import { Reportetallaminimacomponent } from './components/reportecomponent/reportetallaminimacomponent/reportetallaminimacomponent';
+import { Reportecomprascomponent } from './components/reportecomponent/reportecomprascomponent/reportecomprascomponent';
 
 
 
@@ -171,6 +172,12 @@ export const routes: Routes = [
       },
 
       { path: 'talla-minima', component: Reportetallaminimacomponent },
+      {
+        path: 'compras',
+        component: Reportecomprascomponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN', 'RESTAURANTE'] },
+      },
     ],
 
   },

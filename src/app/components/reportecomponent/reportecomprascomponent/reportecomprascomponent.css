@@ -1,0 +1,39 @@
+.contenedor-reporte {
+  width: 100%;
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 35px 30px;
+  box-sizing: border-box;
+  color: #0d3b5a;
+}
+
+.contenedor-reporte h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #0b3a59;
+}
+
+.contenedor-reporte > p {
+  font-size: 15px;
+  margin-bottom: 30px;
+}
+
+.tablero {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 25px;
+  align-items: stretch;
+}
+
+@media (max-width: 1200px) {
+  .tablero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .contenedor-reporte {
+    padding: 20px 15px;
+  }
+}

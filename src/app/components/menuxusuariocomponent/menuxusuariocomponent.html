@@ -155,6 +155,12 @@
           <a mat-list-item routerLink="/reportes/talla-minima" routerLinkActive="active">
             Especies por talla mínima
           </a>
+
+          @if (esAdmin || esRestaurante) {
+            <a mat-list-item routerLink="/reportes/compras" routerLinkActive="active">
+              Reportes de compras
+            </a>
+          }
         </mat-nav-list>
       </mat-expansion-panel>
 
