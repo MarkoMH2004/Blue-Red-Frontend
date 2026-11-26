@@ -42,6 +42,7 @@ import { Usuarioscomponent } from './components/usuarioscomponent/usuarioscompon
 import { Usuariolistcomponent } from './components/usuarioscomponent/usuariolistcomponent/usuariolistcomponent';
 import { Usuarioupdatecomponent } from './components/usuarioscomponent/usuarioupdatecomponent/usuarioupdatecomponent';
 import { Menuxusuariocomponent } from './components/menuxusuariocomponent/menuxusuariocomponent';
+import { Reportelcxespeciecomponent } from './components/reportecomponent/reportelcxespeciecomponent/reportelcxespeciecomponent';
 import { Reportedocumentacioncomponent } from './components/reportecomponent/reportedocumentacioncomponent/reportedocumentacioncomponent';
 import { Reportetallaminimacomponent } from './components/reportecomponent/reportetallaminimacomponent/reportetallaminimacomponent';
 
@@ -61,22 +62,32 @@ export const routes: Routes = [
   data: { roles: ['ADMIN', 'PESCADOR', 'RESTAURANTE', 'GUEST'] },
   children: [
     { path: 'listar', component: Usuariolistcomponent },
-    { path: 'edicion/:id', component: Usuarioupdatecomponent },
+    { path: 'edicion/:id', component: Usuarioupdatecomponent, },
     { path: '', redirectTo: 'listar', pathMatch: 'full' },
   ],
 },
   {
-    path: 'especies',
-    component: Especiecomponent,
-    canActivate: [authGuard, roleGuard],
-    data: { roles: ['ADMIN', 'PESCADOR', 'RESTAURANTE', 'GUEST'] },
-    children: [
-      { path: '', redirectTo: 'listar', pathMatch: 'full' },
-      { path: 'listar', component: Especielistcomponent },
-      { path: 'insertar', component: Especieinsertcomponent },
-      { path: 'edicion/:id', component: Especieupdatecomponent },
-    ],
-  },
+  path: 'especies',
+  component: Especiecomponent,
+  canActivate: [authGuard, roleGuard],
+  data: { roles: ['ADMIN', 'PESCADOR', 'RESTAURANTE', 'GUEST'] },
+  children: [
+    { path: '', redirectTo: 'listar', pathMatch: 'full' },
+    { path: 'listar', component: Especielistcomponent },
+    {
+      path: 'insertar',
+      component: Especieinsertcomponent,
+      canActivate: [roleGuard],
+      data: { roles: ['ADMIN'] },
+    },
+    {
+      path: 'edicion/:id',
+      component: Especieupdatecomponent,
+      canActivate: [roleGuard],
+      data: { roles: ['ADMIN'] },
+    },
+  ],
+},
   {
     path: 'lotes-captura',
     component: Lotecapturacomponent,
@@ -131,6 +142,7 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'veda', pathMatch: 'full' },
       { path: 'veda', component: Reportevedacomponent },
+      { path: 'lc-x-especie', component: Reportelcxespeciecomponent },
 
       {
         path: 'documentacion',

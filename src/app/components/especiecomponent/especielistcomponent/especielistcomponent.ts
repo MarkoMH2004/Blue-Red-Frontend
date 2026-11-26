@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'; // <-- 1. Importar Validators
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,6 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 import { EspecieDTO } from '../../../models/EspecieDTO';
 import { Especieservice } from '../../../services/especieservice';
+import { Loginservice } from '../../../services/loginservice';
 
 @Component({
   selector: 'app-especielistcomponent',
@@ -27,17 +28,16 @@ import { Especieservice } from '../../../services/especieservice';
     MatInputModule,
     MatSelectModule,
     MatCardModule,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './especielistcomponent.html',
   styleUrl: './especielistcomponent.css',
 })
 export class Especielistcomponent implements OnInit {
-
   form: FormGroup = new FormGroup({});
-  displayedColumns: string[] = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7'];
   dataSource: MatTableDataSource<EspecieDTO> = new MatTableDataSource();
   mensaje: string = '';
+  especiePendienteEliminar: EspecieDTO | null = null;
 
   @ViewChild(MatPaginator) set paginator(value: MatPaginator) {
     if (value) {
@@ -47,18 +47,27 @@ export class Especielistcomponent implements OnInit {
 
   constructor(
     private eS: Especieservice,
+    private loginservice: Loginservice,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
+
+  get esAdmin(): boolean {
+    return this.loginservice.hasAnyRole(['ADMIN']);
+  }
+
+  get displayedColumns(): string[] {
+    const columnasBase = ['C1', 'C2', 'C3', 'C4', 'C5'];
+    return this.esAdmin ? [...columnasBase, 'C6', 'C7'] : columnasBase;
+  }
 
   ngOnInit(): void {
-    // 2. Definir validadores (ej. IDs y tallas mínimos mayores a 0)
     this.form = this.fb.group({
       idEspecie: [null, [Validators.min(1)]],
       estadoVeda: [null],
-      tallaMinima: [null, [Validators.min(0.1)]]
+      tallaMinima: [null, [Validators.min(0.1)]],
     });
-    this.obtenerEspecies(); 
+    this.obtenerEspecies();
   }
 
   obtenerEspecies() {
@@ -76,8 +85,8 @@ export class Especielistcomponent implements OnInit {
 
   consultar() {
     this.mensaje = '';
+    this.especiePendienteEliminar = null;
 
-    // Si el formulario tiene errores de validación, no avanzamos
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -95,10 +104,9 @@ export class Especielistcomponent implements OnInit {
           this.dataSource.data = [];
           this.mensaje = err.error?.message || 'No se encontró la especie con ese ID.';
           this.cdr.detectChanges();
-        }
+        },
       });
-    } 
-    else if (estadoVeda !== null && estadoVeda !== '') {
+    } else if (estadoVeda !== null && estadoVeda !== '') {
       this.eS.searchByVeda(estadoVeda === 'true').subscribe({
         next: (data: EspecieDTO[]) => {
           this.dataSource.data = data;
@@ -108,10 +116,9 @@ export class Especielistcomponent implements OnInit {
           this.dataSource.data = [];
           this.mensaje = err.error?.message || 'No se encontraron especies con ese estado de veda.';
           this.cdr.detectChanges();
-        }
+        },
       });
-    } 
-    else if (tallaMinima !== null && tallaMinima !== '' && !isNaN(tallaMinima)) {
+    } else if (tallaMinima !== null && tallaMinima !== '' && !isNaN(tallaMinima)) {
       this.eS.searchByTallaMinima(tallaMinima).subscribe({
         next: (data: EspecieDTO[]) => {
           this.dataSource.data = data;
@@ -121,34 +128,56 @@ export class Especielistcomponent implements OnInit {
           this.dataSource.data = [];
           this.mensaje = err.error?.message || 'No se encontraron especies con esa talla mínima.';
           this.cdr.detectChanges();
-        }
+        },
       });
-    } 
-    else {
+    } else {
       this.obtenerEspecies();
     }
   }
 
   limpiar() {
     this.form.reset();
-    this.obtenerEspecies(); 
+    this.especiePendienteEliminar = null;
+    this.obtenerEspecies();
     this.mensaje = '';
   }
 
-  eliminarEspecie(id: number) {
+  solicitarEliminar(especie: EspecieDTO) {
+    if (!this.esAdmin) return;
+    this.mensaje = '';
+    this.especiePendienteEliminar = especie;
+  }
+
+  rechazarEliminar() {
+    this.especiePendienteEliminar = null;
+  }
+
+  confirmarEliminar() {
+    if (!this.esAdmin) return;
+    const id = this.especiePendienteEliminar?.idEspecie;
+    if (!id) return;
+
+    this.especiePendienteEliminar = null;
+
     this.eS.deleteEspecie(id).subscribe({
       next: () => {
         this.mensaje = 'Especie eliminada correctamente.';
         this.obtenerEspecies();
         this.cdr.detectChanges();
-        setTimeout(() => { this.mensaje = ''; this.cdr.detectChanges(); }, 5000);
+        setTimeout(() => {
+          this.mensaje = '';
+          this.cdr.detectChanges();
+        }, 5000);
       },
       error: (err: any) => {
         console.log('Error al eliminar!!', err);
         this.mensaje = err.error?.message || 'Ocurrió un error al eliminar la especie.';
         this.cdr.detectChanges();
-        setTimeout(() => { this.mensaje = ''; this.cdr.detectChanges(); }, 4000);
-      }
+        setTimeout(() => {
+          this.mensaje = '';
+          this.cdr.detectChanges();
+        }, 4000);
+      },
     });
   }
 }
