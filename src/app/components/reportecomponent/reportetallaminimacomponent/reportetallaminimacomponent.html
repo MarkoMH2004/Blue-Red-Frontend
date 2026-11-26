@@ -1,0 +1,102 @@
+
+<div class="contenedor-reporte">
+  <h1>REPORTE DE ESPECIES POR TALLA MÍNIMA</h1>
+  <p>Consulta las especies marinas según su talla mínima registrada.</p>
+
+  <div class="tarjeta">
+    <h2>FILTRO DE BÚSQUEDA</h2>
+
+    <form [formGroup]="formulario" (ngSubmit)="consultar()">
+      <div class="fila-filtro">
+        <div class="campo">
+          <label for="tallaMinima">Talla mínima (cm)</label>
+
+          <input
+            id="tallaMinima"
+            type="number"
+            min="0.1"
+            step="0.1"
+            formControlName="tallaMinima"
+            placeholder="Ingrese la talla mínima"
+          />
+
+          <small
+            class="error"
+            *ngIf="formulario.controls.tallaMinima.invalid &&
+                   formulario.controls.tallaMinima.touched"
+          >
+            Ingrese una talla mínima válida mayor o igual a 0.1 cm.
+          </small>
+        </div>
+
+        <div class="acciones">
+          <button type="button" class="btn-limpiar" (click)="limpiar()">
+            Limpiar
+          </button>
+
+          <button
+            type="submit"
+            class="btn-consultar"
+            [disabled]="formulario.invalid || consultando"
+          >
+            {{ consultando ? 'Consultando...' : 'Consultar' }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="tarjeta">
+    <h2>RESULTADOS DE LA CONSULTA</h2>
+
+    <p class="mensaje" *ngIf="mensaje">
+      {{ mensaje }}
+    </p>
+
+    <div class="tabla-contenedor" *ngIf="especies.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre común</th>
+            <th>Nombre científico</th>
+            <th>Talla mínima (cm)</th>
+            <th>Estado de veda</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let especie of especies">
+            <td>{{ especie.idEspecie }}</td>
+            <td>{{ especie.nombreComun }}</td>
+            <td>{{ especie.nombreCientifico }}</td>
+            <td>{{ especie.tallaMinima }}</td>
+            <td>
+              <span
+                class="estado"
+                [ngClass]="especie.enVeda ? 'en-veda' : 'sin-veda'"
+              >
+                {{ especie.enVeda ? 'En veda' : 'Sin veda' }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="total">
+        Total de especies encontradas: {{ especies.length }}
+      </p>
+    </div>
+
+    <p
+      class="sin-resultados"
+      *ngIf="!consultaRealizada && !consultando"
+    >
+      Ingrese una talla mínima y presione Consultar.
+    </p>
+
+    <p class="sin-resultados" *ngIf="consultando">
+      Consultando especies...
+    </p>
+  </div>
+</div>
