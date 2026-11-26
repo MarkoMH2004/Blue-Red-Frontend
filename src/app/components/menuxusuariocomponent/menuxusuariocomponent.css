@@ -69,18 +69,39 @@
   font-weight: 700;
   color: #8c9bab;
   letter-spacing: 1px;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.5rem;
 }
 
 .sidebar mat-expansion-panel {
   background: transparent;
-  border-radius: 0;
+  border-radius: 20px;
+  margin-bottom: 11px;
+}
+
+.item-simple{
+  --mat-list-list-item-label-text-size: 16px;
+  --mat-list-list-item-label-text-weight: 500;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.sidebar ::ng-deep .mat-mdc-list-item {
+  border-radius: 20px !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+  margin-bottom: 5px;
+
+}
+
+
+
+
+.sidebar ::ng-deep .mat-expansion-panel-body {
+  padding: 0;
 }
 
 .sidebar a.active {
   background: #e6f2f8;
-  color: #1f7ab8;
-  font-weight: 600;
 }
 
 .contenido {

@@ -35,6 +35,13 @@ export class Menuxusuariocomponent {
     void this.router.navigate(['/inicio']);
   }
 
+  get rolNombre(): string {
+  if (this.esAdmin) return 'ADMINISTRADOR';
+  if (this.esPescador) return 'PESCADOR';
+  if (this.esRestaurante) return 'RESTAURANTE';
+  return 'Invitado';
+}
+
   get esPescador(): boolean {
     return this.auth.hasAnyRole(['PESCADOR']);
   }
