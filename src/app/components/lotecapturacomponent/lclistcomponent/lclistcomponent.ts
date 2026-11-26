@@ -73,6 +73,7 @@ export class Lclistcomponent implements OnInit {
     // 2. Definir validadores (ej. IDs mayores a 0)
     this.form = this.fb.group({
       idLoteCaptura: ['', [Validators.min(1)]],
+      idPescador: ['', [Validators.min(1)]],
       estado: [''],
       idEspecie: [''],
     });
@@ -84,13 +85,14 @@ export class Lclistcomponent implements OnInit {
 
     //LOGICA DEL FILTRADO
     this.dataSource.filterPredicate = (lote: LoteCapturaDTO) => {
-      const { idLoteCaptura, estado, idEspecie } = this.form.value;
+      const { idLoteCaptura, idPescador, estado, idEspecie } = this.form.value;
       const coincideID = !idLoteCaptura || lote.idLoteCaptura === Number(idLoteCaptura);
+      const coincidePescador = !idPescador || lote.idUsuario === Number(idPescador);
       const coincideEstado =
         !estado || (lote.estado ?? '').toLowerCase().startsWith(estado.toLowerCase());
       const coincideEspecie = !idEspecie || lote.idEspecie === idEspecie;
 
-      return coincideID && coincideEstado && coincideEspecie;
+      return coincideID && coincidePescador && coincideEstado && coincideEspecie;
     };
 
     this.obtenerLotesCaptura();
@@ -121,6 +123,7 @@ export class Lclistcomponent implements OnInit {
   limpiar() {
     this.form.reset({
       idLoteCaptura: null,
+      idPescador: null,
       estado: '',
       idEspecie: '',
     });
