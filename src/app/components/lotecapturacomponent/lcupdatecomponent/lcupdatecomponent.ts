@@ -13,6 +13,7 @@ import { Especieservice } from '../../../services/especieservice';
 import { LoteCapturaDTO } from '../../../models/LoteCapturaDTO';
 import { isPlatformBrowser } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Loginservice } from '../../../services/loginservice';
 
 @Component({
   imports: [
@@ -35,7 +36,7 @@ export class Lcupdatecomponent implements OnInit, AfterViewInit {
   mensaje: string = '';
   especies: EspecieDTO[] = [];
   nombreImagen: string = '';
-  idUsuarioSesion = 7;
+  idUsuarioLote = 0
 
 
   //mapa
@@ -50,7 +51,8 @@ export class Lcupdatecomponent implements OnInit, AfterViewInit {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private route: ActivatedRoute,
-    private snackBar: MatSnackBar //servicio
+    private snackBar: MatSnackBar, //servicio
+    private auth: Loginservice
   ) {}
 
   ngOnInit(): void {
@@ -66,11 +68,11 @@ export class Lcupdatecomponent implements OnInit, AfterViewInit {
       ID: [this.idLoteCaptura],
       idEspecie: ['', Validators.required],
       fechacaptura: [new Date(), Validators.required],
-      cantidad: ['', Validators.required],
-      peso: ['', Validators.required],
+      cantidad: ['', [Validators.required , Validators.min(1)] ],
+      peso: ['', [Validators.required , Validators.min(1)] ],
       latitud: ['', Validators.required],
       longitud: ['', Validators.required],
-      precio: ['', Validators.required],
+      precio: ['', [Validators.required , Validators.min(1)] ],
       imagenReferencia: ['', Validators.required],
       estado: ['', Validators.required]
     });
@@ -153,6 +155,7 @@ export class Lcupdatecomponent implements OnInit, AfterViewInit {
         console.log('Lote encontrado:', data);
 
         this.nombreImagen=data.imagenReferencia
+        this.idUsuarioLote=data.idUsuario
 
         this.formLoteCaptura.patchValue({
           ID: data.idLoteCaptura,
@@ -178,9 +181,16 @@ export class Lcupdatecomponent implements OnInit, AfterViewInit {
   }
 
   actualizarLoteCaptura(): void {
+
+    if (this.formLoteCaptura.invalid) {
+      this.formLoteCaptura.markAllAsTouched();
+      this.mensaje = 'Por favor, complete todos los campos requeridos.';
+      return;
+    }
+
     const dto = {
       idLoteCaptura: this.formLoteCaptura.value.ID,
-      idUsuario: this.idUsuarioSesion, //por mientras
+      idUsuario: this.idUsuarioLote, //por mientras
       idEspecie: this.formLoteCaptura.value.idEspecie,
       fechaCaptura: this.formLoteCaptura.value.fechacaptura,
       cantidadPeces: this.formLoteCaptura.value.cantidad,
@@ -217,5 +227,13 @@ export class Lcupdatecomponent implements OnInit, AfterViewInit {
     if (e.startsWith('aceptado')) return 'estado aceptado';
     if (e.startsWith('rechazado')) return 'estado rechazado';
     return 'estado';
+  }
+
+  get esAdmin(): boolean {
+    return this.auth.hasAnyRole(['ADMIN']);
+  }
+
+  get esPescador(): boolean {
+    return this.auth.hasAnyRole(['PESCADOR']);
   }
 }

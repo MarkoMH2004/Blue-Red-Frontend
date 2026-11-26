@@ -57,7 +57,7 @@ export class Logincomponent {
         const destination =
           returnUrl?.startsWith('/') && !returnUrl.startsWith('//') && returnUrl !== '/'
             ? returnUrl
-            : '/lotes-captura/insertar'; // adonde debe ir luego de log in
+            : '/especies/listar'; // adonde debe ir luego de log in
 
         void this.router.navigateByUrl(destination);
       },
