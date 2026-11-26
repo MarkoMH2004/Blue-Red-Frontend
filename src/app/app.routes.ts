@@ -87,7 +87,7 @@ export const routes: Routes = [
     path: 'validaciones',
     component: Validacioncomponent,
     canActivate: [authGuard, roleGuard],
-    data: { roles: ['ADMIN', 'PESCADOR', 'RESTAURANTE', 'GUEST'] },
+    data: { roles: ['ADMIN'] },
     children: [
       { path: '', redirectTo: 'listar', pathMatch: 'full' },
       { path: 'listar', component: Vlistcomponent },

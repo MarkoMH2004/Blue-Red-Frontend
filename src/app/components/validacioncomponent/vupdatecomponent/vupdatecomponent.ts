@@ -8,6 +8,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ValidacionDTO } from '../../../models/ValidacionDTO';
+import { LoteCapturaDTO } from '../../../models/LoteCapturaDTO';
+import { EspecieDTO } from '../../../models/EspecieDTO';
 import { Validacionservice } from '../../../services/validacionservice';
 
 @Component({
@@ -29,6 +31,8 @@ export class Vupdatecomponent implements OnInit {
   idLoteCaptura: number = 0;
   formValidacion: any;
   mensaje: string = '';
+  lotes: LoteCapturaDTO[] = [];
+  especies: EspecieDTO[] = [];
 
   resultados: string[] = ['Aceptado', 'Rechazado'];
 
@@ -52,17 +56,66 @@ export class Vupdatecomponent implements OnInit {
 
     this.formValidacion = this.fb.group({
       ID: [this.idValidacion],
-      especieDetectada: ['', Validators.required],
-      cantidadAnalizada: [null, [Validators.required, Validators.min(0)]],
-      longitudMinimaDetectada: [null, [Validators.required, Validators.min(0)]],
+      especieDetectada: [
+        '',
+        [Validators.required, Validators.maxLength(45), Validators.pattern(/\S/)],
+      ],
+      cantidadAnalizada: [
+        null,
+        [Validators.required, Validators.min(1), Validators.pattern(/^\d+$/)],
+      ],
+      longitudMinimaDetectada: [null, [Validators.required, Validators.min(Number.MIN_VALUE)]],
       porcentajeConfianza: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
       porcentajeCumplimiento: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
-      objetoReferenciaDetectado: ['', Validators.required],
+      objetoReferenciaDetectado: [
+        '',
+        [Validators.required, Validators.maxLength(45), Validators.pattern(/\S/)],
+      ],
       resultado: ['', Validators.required],
       fechaValidacion: [null, Validators.required],
     });
 
     this.buscarPorId();
+    this.obtenerLotes();
+    this.obtenerEspecies();
+  }
+
+  obtenerLotes(): void {
+    this.vS.getLotes().subscribe({
+      next: (data) => {
+        this.lotes = data;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.log('Ocurrió un error al listar los lotes de captura', err);
+        this.cdr.detectChanges();
+      },
+    });
+  }
+
+  obtenerEspecies(): void {
+    this.vS.getEspecies().subscribe({
+      next: (data) => {
+        this.especies = data;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.log('Ocurrió un error al listar las especies', err);
+        this.cdr.detectChanges();
+      },
+    });
+  }
+
+  // Muestra especie, fecha de captura y cantidad de peces del lote
+  descripcionLote(idLoteCaptura: number): string {
+    const lote = this.lotes.find((l) => l.idLoteCaptura === idLoteCaptura);
+    if (!lote) {
+      return '';
+    }
+    const nombre = this.especies.find((e) => e.idEspecie === lote.idEspecie)?.nombreComun;
+    const fecha = String(lote.fechaCaptura).split('-').reverse().join('/');
+    const cantidad = `${lote.cantidadPeces} ${lote.cantidadPeces === 1 ? 'pez' : 'peces'}`;
+    return [nombre, fecha, cantidad].filter(Boolean).join(' – ');
   }
 
   buscarPorId(): void {
@@ -93,8 +146,10 @@ export class Vupdatecomponent implements OnInit {
   actualizarValidacion(): void {
     if (this.formValidacion.invalid) {
       this.formValidacion.markAllAsTouched();
+      this.mensaje = 'Por favor, complete todos los campos correctamente.';
       return;
     }
+    this.mensaje = '';
 
     const dto: ValidacionDTO = {
       idValidacion: this.formValidacion.value.ID,

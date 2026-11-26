@@ -1,17 +1,32 @@
 <div class="container">
-  <div class="encabezado">
-    <div class="titulo">
-      <h2>Reconocimiento de especies con IA</h2>
-      <p class="descripcion">Selecciona una fotografía de un pez para identificar su especie.</p>
+  @if (!integrado) {
+    <div class="encabezado">
+      <div class="titulo">
+        <h2>Reconocimiento de especies con IA</h2>
+        <p class="descripcion">Selecciona una fotografía de un pez para identificar su especie.</p>
+      </div>
     </div>
-  </div>
+  }
   <div class="bloque">
+    @if (integrado) {
+      <div>
+        <h3>Reconocimiento de especies con IA</h3>
+        <p class="descripcion">
+          Al analizar una fotografía se completan la especie detectada y el porcentaje de confianza.
+        </p>
+      </div>
+    }
     @if (sinSesion) {
       <p class="aviso-sesion">
         No hay una sesión iniciada. <a routerLink="/login">Iniciar sesión</a>
       </p>
     }
-    <input type="file" accept="image/jpeg,image/png" (change)="seleccionarImagen($event)" />
+    <input
+      type="file"
+      accept="image/jpeg,image/png"
+      [disabled]="cargando"
+      (change)="seleccionarImagen($event)"
+    />
 
     @if (vistaPrevia) {
       <div class="vista-previa">

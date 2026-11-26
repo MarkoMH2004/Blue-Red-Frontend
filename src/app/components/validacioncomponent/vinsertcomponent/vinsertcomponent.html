@@ -6,83 +6,130 @@
     </div>
   </div>
 
-  <div class="formulario">
-    <form [formGroup]="formValidacion" (ngSubmit)="insertarValidacion()">
-      <mat-form-field appearance="outline" class="campo-ancho">
-        <mat-label>Lote de captura</mat-label>
-        <mat-select formControlName="idLoteCaptura">
-          @for (l of lotesDisponibles; track l.idLoteCaptura) {
-            <mat-option [value]="l.idLoteCaptura">{{ descripcionLote(l) }}</mat-option>
+  <div class="contenido-registro">
+    <div class="formulario">
+      <h3>Datos de la validación</h3>
+      <form [formGroup]="formValidacion" (ngSubmit)="insertarValidacion()">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="campo-ancho">
+          <mat-label>Lote de captura</mat-label>
+          <mat-select formControlName="idLoteCaptura">
+            @for (l of lotesDisponibles; track l.idLoteCaptura) {
+              <mat-option [value]="l.idLoteCaptura">{{ descripcionLote(l) }}</mat-option>
+            } @empty {
+              @if (sinLotesPendientes) {
+                <mat-option disabled>No hay lotes pendientes de validación</mat-option>
+              }
+            }
+          </mat-select>
+          @if (errorCarga) {
+            <mat-hint>Selección no disponible por un error de carga</mat-hint>
+          } @else if (!lotesListos) {
+            <mat-hint>Cargando lotes de captura...</mat-hint>
+          } @else {
+            <mat-hint>Solo se muestran los lotes que aún no tienen validación</mat-hint>
           }
-        </mat-select>
-        <mat-hint>Solo se muestran los lotes que aún no tienen validación</mat-hint>
-        <mat-error>Seleccione un lote de captura</mat-error>
-      </mat-form-field>
+          <mat-error>Seleccione un lote de captura</mat-error>
+        </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Especie detectada</mat-label>
-        <input matInput formControlName="especieDetectada" />
-        <mat-error>Ingrese la especie detectada</mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Cantidad analizada</mat-label>
-        <input matInput type="number" formControlName="cantidadAnalizada" />
-        <mat-error>Ingrese una cantidad válida (0 o mayor)</mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Longitud mínima detectada</mat-label>
-        <input matInput type="number" formControlName="longitudMinimaDetectada" />
-        <mat-error>Ingrese una longitud válida (0 o mayor)</mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Porcentaje de confianza</mat-label>
-        <input matInput type="number" formControlName="porcentajeConfianza" />
-        <mat-error>Ingrese un porcentaje entre 0 y 100</mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Porcentaje de cumplimiento</mat-label>
-        <input matInput type="number" formControlName="porcentajeCumplimiento" />
-        <mat-error>Ingrese un porcentaje entre 0 y 100</mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Objeto de referencia detectado</mat-label>
-        <input matInput formControlName="objetoReferenciaDetectado" />
-        <mat-error>Ingrese el objeto de referencia detectado</mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Resultado</mat-label>
-        <mat-select formControlName="resultado">
-          @for (r of resultados; track r) {
-            <mat-option [value]="r">{{ r }}</mat-option>
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Especie detectada</mat-label>
+          <input matInput formControlName="especieDetectada" />
+          @if (formValidacion.get('especieDetectada').hasError('maxlength')) {
+            <mat-error>Máximo 45 caracteres</mat-error>
+          } @else {
+            <mat-error>Ingrese la especie detectada</mat-error>
           }
-        </mat-select>
-        <mat-error>Seleccione el resultado</mat-error>
-      </mat-form-field>
+        </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Fecha de validación</mat-label>
-        <input matInput [matDatepicker]="picker1" formControlName="fechaValidacion" />
-        <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
-        <mat-datepicker #picker1></mat-datepicker>
-        <mat-error>Seleccione la fecha de validación</mat-error>
-      </mat-form-field>
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Cantidad analizada</mat-label>
+          <input matInput type="number" formControlName="cantidadAnalizada" />
+          @if (formValidacion.get('cantidadAnalizada').hasError('required')) {
+            <mat-error>Ingrese la cantidad analizada</mat-error>
+          } @else if (formValidacion.get('cantidadAnalizada').hasError('min')) {
+            <mat-error>La cantidad debe ser mayor a 0</mat-error>
+          } @else {
+            <mat-error>La cantidad debe ser un número entero</mat-error>
+          }
+        </mat-form-field>
 
-      <div class="acciones">
-        <button matButton type="button" class="btn-cancelar" routerLink="/validaciones/listar">
-          Cancelar
-        </button>
-        <button matButton type="submit">Registrar validación</button>
-      </div>
-    </form>
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Longitud mínima detectada</mat-label>
+          <input matInput type="number" formControlName="longitudMinimaDetectada" />
+          @if (formValidacion.get('longitudMinimaDetectada').hasError('required')) {
+            <mat-error>Ingrese la longitud mínima detectada</mat-error>
+          } @else {
+            <mat-error>La longitud debe ser mayor a 0</mat-error>
+          }
+        </mat-form-field>
 
-    @if (mensaje) {
-      <p class="mensaje">{{ mensaje }}</p>
-    }
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Porcentaje de confianza</mat-label>
+          <input matInput type="number" formControlName="porcentajeConfianza" />
+          @if (formValidacion.get('porcentajeConfianza').hasError('required')) {
+            <mat-error>Ingrese el porcentaje de confianza</mat-error>
+          } @else {
+            <mat-error>Ingrese un porcentaje entre 0 y 100</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Porcentaje de cumplimiento</mat-label>
+          <input matInput type="number" formControlName="porcentajeCumplimiento" />
+          @if (formValidacion.get('porcentajeCumplimiento').hasError('required')) {
+            <mat-error>Ingrese el porcentaje de cumplimiento</mat-error>
+          } @else {
+            <mat-error>Ingrese un porcentaje entre 0 y 100</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Objeto de referencia detectado</mat-label>
+          <input matInput formControlName="objetoReferenciaDetectado" />
+          @if (formValidacion.get('objetoReferenciaDetectado').hasError('maxlength')) {
+            <mat-error>Máximo 45 caracteres</mat-error>
+          } @else {
+            <mat-error>Ingrese el objeto de referencia detectado</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Resultado</mat-label>
+          <mat-select formControlName="resultado">
+            @for (r of resultados; track r) {
+              <mat-option [value]="r">{{ r }}</mat-option>
+            }
+          </mat-select>
+          <mat-error>Seleccione el resultado</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Fecha de validación</mat-label>
+          <input matInput [matDatepicker]="picker1" formControlName="fechaValidacion" />
+          <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+          <mat-error>Seleccione la fecha de validación</mat-error>
+        </mat-form-field>
+
+        <div class="acciones">
+          <button matButton type="button" class="btn-cancelar" routerLink="/validaciones/listar">
+            Cancelar
+          </button>
+          <button matButton type="submit" [disabled]="!lotesListos">Registrar validación</button>
+        </div>
+      </form>
+
+      @if (errorCarga) {
+        <p class="mensaje" role="alert">{{ errorCarga }}</p>
+      }
+      @if (mensaje) {
+        <p class="mensaje">{{ mensaje }}</p>
+      }
+    </div>
+
+    <app-vreconocimientocomponent
+      [integrado]="true"
+      (especieReconocida)="completarReconocimiento($event)"
+    ></app-vreconocimientocomponent>
   </div>
 </div>
