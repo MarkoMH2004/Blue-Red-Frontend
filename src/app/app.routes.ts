@@ -45,6 +45,7 @@ import { Menuxusuariocomponent } from './components/menuxusuariocomponent/menuxu
 import { Reportelcxespeciecomponent } from './components/reportecomponent/reportelcxespeciecomponent/reportelcxespeciecomponent';
 import { Reportedocumentacioncomponent } from './components/reportecomponent/reportedocumentacioncomponent/reportedocumentacioncomponent';
 import { Reportetallaminimacomponent } from './components/reportecomponent/reportetallaminimacomponent/reportetallaminimacomponent';
+import { Reportecomprascomponent } from './components/reportecomponent/reportecomprascomponent/reportecomprascomponent';
 
 
 
@@ -105,12 +106,27 @@ export const routes: Routes = [
     path: 'validaciones',
     component: Validacioncomponent,
     canActivate: [authGuard, roleGuard],
-    data: { roles: ['ADMIN', 'PESCADOR', 'RESTAURANTE', 'GUEST'] },
+    data: { roles: ['ADMIN', 'PESCADOR'] },
     children: [
       { path: '', redirectTo: 'listar', pathMatch: 'full' },
-      { path: 'listar', component: Vlistcomponent },
-      { path: 'reconocer-especie', component: Vreconocimientocomponent },
-      { path: 'buscar', component: Vbuscarcomponent },
+      {
+        path: 'listar',
+        component: Vlistcomponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN'] },
+      },
+      {
+        path: 'reconocer-especie',
+        component: Vreconocimientocomponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN'] },
+      },
+      {
+        path: 'buscar',
+        component: Vbuscarcomponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN'] },
+      },
       {
         path: 'rechazadas',
         component: Vrechazadascomponent,
@@ -126,10 +142,14 @@ export const routes: Routes = [
       {
         path: 'editar/:id',
         component: Vupdatecomponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN'] },
       },
       {
         path: 'registrar',
         component: Vinsertcomponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN'] },
       },
     ],
   },
@@ -152,6 +172,12 @@ export const routes: Routes = [
       },
 
       { path: 'talla-minima', component: Reportetallaminimacomponent },
+      {
+        path: 'compras',
+        component: Reportecomprascomponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN', 'RESTAURANTE'] },
+      },
     ],
 
   },

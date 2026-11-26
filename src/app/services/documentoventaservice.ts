@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { forkJoin, Observable, of, switchMap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { DocumentoVentaDTO } from '../models/DocumentoVentaDTO';
+import { CostoCompraEspecieDTO } from '../models/CostoCompraEspecieDTO';
 import { Loginservice } from './loginservice';
 import { Detalleventaservice } from './detalleventaservice';
 
@@ -45,6 +46,29 @@ export class Documentoventaservice {
   // HU20 - Eliminar documento de venta
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiURL}/${id}`, this.opciones());
+  }
+
+  // HU96 - Costo de compras por especie
+  getCostoComprasPorEspecie(
+    idUsuario: number,
+    fechaInicio: string,
+    fechaFin: string,
+  ): Observable<CostoCompraEspecieDTO[]> {
+    return this.http.get<CostoCompraEspecieDTO[]>(
+      `${this.apiURL}/costo-compras-especie/${idUsuario}`,
+      { params: { fechaInicio, fechaFin } },
+    );
+  }
+
+  // HU97 - Costo total de compras
+  getCostoTotalCompras(
+    idUsuario: number,
+    fechaInicio: string,
+    fechaFin: string,
+  ): Observable<number> {
+    return this.http.get<number>(`${this.apiURL}/costo-total-general/${idUsuario}`, {
+      params: { fechaInicio, fechaFin },
+    });
   }
 
   // El documento no se puede borrar mientras tenga detalles (clave foránea):

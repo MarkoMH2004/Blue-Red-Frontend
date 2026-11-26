@@ -1,0 +1,73 @@
+<div class="tarjeta">
+  <h2>Costo de compras por especie</h2>
+
+  <form [formGroup]="formFechas">
+    @if (esAdmin) {
+      <mat-form-field appearance="outline" class="campo-restaurante">
+        <mat-label>Restaurante</mat-label>
+        <mat-select formControlName="idRestaurante">
+          @for (r of restaurantes; track r.idUsuario) {
+            <mat-option [value]="r.idUsuario">{{ descripcionRestaurante(r) }}</mat-option>
+          }
+        </mat-select>
+        <mat-error>Seleccione un restaurante</mat-error>
+      </mat-form-field>
+
+      @if (mensajeRestaurantes) {
+        <p class="mensaje aviso-restaurantes">{{ mensajeRestaurantes }}</p>
+      }
+    }
+
+    <div class="fila-filtro">
+      <mat-form-field appearance="outline">
+        <mat-label>Fecha de inicio</mat-label>
+        <input matInput [matDatepicker]="pickerInicio" formControlName="fechaInicio" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+        <mat-datepicker #pickerInicio></mat-datepicker>
+        <mat-error>Seleccione la fecha de inicio</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Fecha de fin</mat-label>
+        <input matInput [matDatepicker]="pickerFin" formControlName="fechaFin" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="pickerFin"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFin></mat-datepicker>
+        <mat-error>Seleccione la fecha de fin</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="acciones">
+      <button type="button" class="btn-limpiar" [disabled]="consultando" (click)="limpiar()">
+        Limpiar
+      </button>
+      <button type="button" class="btn-consultar" [disabled]="consultando" (click)="consultar()">
+        Consultar
+      </button>
+    </div>
+  </form>
+
+  @if (mensaje) {
+    <p class="mensaje">{{ mensaje }}</p>
+  }
+
+  @if (restauranteConsultado) {
+    <p class="consultado">Restaurante consultado: <strong>{{ restauranteConsultado }}</strong></p>
+  }
+
+  @if (lista.length > 0) {
+    <div class="grafico">
+      <canvas baseChart [type]="chartType" [data]="chartData" [options]="chartOptions"></canvas>
+    </div>
+
+    <ul class="montos">
+      @for (item of lista; track $index) {
+        <li>
+          <span>{{ item.nombreEspecie }}</span>
+          <strong>S/ {{ item.costoTotal.toFixed(2) }}</strong>
+        </li>
+      }
+    </ul>
+  }
+</div>

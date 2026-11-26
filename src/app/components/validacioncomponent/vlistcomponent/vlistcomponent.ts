@@ -102,11 +102,16 @@ export class Vlistcomponent implements OnInit {
     });
   }
 
-  // Muestra "#ID – Nombre común" usando la especie registrada en el lote
+  // Muestra especie, fecha de captura y cantidad de peces del lote
   descripcionLote(idLoteCaptura: number): string {
     const lote = this.lotes.find((l) => l.idLoteCaptura === idLoteCaptura);
-    const nombre = this.especies.find((e) => e.idEspecie === lote?.idEspecie)?.nombreComun;
-    return nombre ? `#${idLoteCaptura} – ${nombre}` : `#${idLoteCaptura}`;
+    if (!lote) {
+      return '';
+    }
+    const nombre = this.especies.find((e) => e.idEspecie === lote.idEspecie)?.nombreComun;
+    const fecha = String(lote.fechaCaptura).split('-').reverse().join('/');
+    const cantidad = `${lote.cantidadPeces} ${lote.cantidadPeces === 1 ? 'pez' : 'peces'}`;
+    return [nombre, fecha, cantidad].filter(Boolean).join(' – ');
   }
 
   // Pide confirmación; solo si se acepta se ejecuta el DELETE
