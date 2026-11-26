@@ -6,17 +6,17 @@
         Revisa tus lotes registrados y el estado de su validación y certificación.
       </p>
     </div>
-    @if(esPescador){
-    <button matButton type="button" class="btn-nuevo" routerLink="/lotes-captura/insertar">
-      + Registrar nuevo lote
-    </button>
-  }
+    @if (esPescador) {
+      <button matButton type="button" class="btn-nuevo" routerLink="/lotes-captura/insertar">
+        + Registrar nuevo lote
+      </button>
+    }
   </div>
 
   <div class="bloqueA">
     <h3>Filtros de búsqueda</h3>
 
-    <form [formGroup]="form" class="filter-form">
+    <form [formGroup]="form" class="filter-form" [class.con-pescador]="esAdmin">
       <!-- ID de Especie con validación -->
       <mat-form-field appearance="outline" class="filter-field">
         <mat-label>ID del lote de captura</mat-label>
@@ -25,6 +25,17 @@
           <mat-error>El ID debe ser mayor o igual a 1</mat-error>
         }
       </mat-form-field>
+
+      <!-- Pescador -->
+      @if (esAdmin) {
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>ID del pescador</mat-label>
+          <input matInput type="number" formControlName="idPescador" placeholder="Ingresar ID" />
+          @if (form.get('idPescador')?.hasError('min')) {
+            <mat-error>El ID debe ser mayor o igual a 1</mat-error>
+          }
+        </mat-form-field>
+      }
 
       <!-- Estado -->
       <mat-form-field appearance="outline" class="filter-field">
@@ -73,7 +84,7 @@
         </ng-container>
 
         <!-- ID USUARIO (SOLO PARA ADMIN)-->
-         <ng-container matColumnDef="CUSUARIO">
+        <ng-container matColumnDef="CUSUARIO">
           <th mat-header-cell *matHeaderCellDef>ID Pescador</th>
           <td mat-cell *matCellDef="let element">{{ element.idUsuario }}</td>
         </ng-container>
@@ -119,8 +130,7 @@
               <button
                 mat-button
                 class="btn-editar"
-                //clase inactivo para que el boton se vea apagado auqnue si se pueda presionar
-                [class.inactivo]="!puedeEditar(element.estado)" 
+                [class.inactivo]="!puedeEditar(element.estado)"
                 (click)="editar(element)"
               >
                 <mat-icon>edit</mat-icon>
@@ -157,15 +167,12 @@
       >
       </mat-paginator>
     } @else {
-      <p>
-        @if (dataSource.data.length === 0) {
-         
-          <P> No se encontraron lotes de captura </P>
-        } @else {
-          <!--mensaje-->
-          <p>No se encontraron resultados</p>
-        }
-      </p>
+      @if (dataSource.data.length === 0) {
+        <p> No hay lotes registrados.</p>
+      } @else {
+        <!--mensaje-->
+        <p>No se encontraron resultados</p>
+      }
     }
   </div>
 </div>

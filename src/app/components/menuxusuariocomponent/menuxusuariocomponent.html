@@ -44,7 +44,8 @@
         </mat-nav-list>
       </mat-expansion-panel>
 
-      <mat-expansion-panel class="mat-elevation-z0">
+      @if(esAdmin || esPescador){
+        <mat-expansion-panel class="mat-elevation-z0">
         <mat-expansion-panel-header>
           <mat-panel-title>Lote de captura</mat-panel-title>
         </mat-expansion-panel-header>
@@ -65,6 +66,8 @@
           }
         </mat-nav-list>
       </mat-expansion-panel>
+      }
+      
 
       @if (esAdmin || esPescador) {
         <mat-expansion-panel class="mat-elevation-z0">
