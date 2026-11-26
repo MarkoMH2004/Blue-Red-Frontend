@@ -37,6 +37,11 @@ import { Vupdatecomponent } from './components/validacioncomponent/vupdatecompon
 import { Vinsertcomponent } from './components/validacioncomponent/vinsertcomponent/vinsertcomponent';
 import { Registrocomponent } from './components/registrocomponent/registrocomponent';
 import { Menuxusuariocomponent } from './components/menuxusuariocomponent/menuxusuariocomponent';
+import { Reportedocumentacioncomponent } from './components/reportecomponent/reportedocumentacioncomponent/reportedocumentacioncomponent';
+import { Reportetallaminimacomponent } from './components/reportecomponent/reportetallaminimacomponent/reportetallaminimacomponent';
+
+
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
@@ -94,10 +99,14 @@ export const routes: Routes = [
     component: Reportecomponent,
     canActivate: [authGuard, roleGuard],
     data: { roles: ['ADMIN', 'PESCADOR', 'RESTAURANTE', 'GUEST'] },
+    
     children: [
       { path: '', redirectTo: 'veda', pathMatch: 'full' },
       { path: 'veda', component: Reportevedacomponent },
+      { path: 'documentacion', component: Reportedocumentacioncomponent },
+      { path: 'talla-minima', component: Reportetallaminimacomponent },
     ],
+
   },
   {
     path: 'certificaciones',
