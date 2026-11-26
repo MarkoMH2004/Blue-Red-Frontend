@@ -15,10 +15,26 @@
   </div>
   @if (lote) {
     <div class="bloque-id">
-      <h3>ID de la captura</h3>
-      <div class="dato">
-        <span class="valor">{{ lote.idLoteCaptura }}</span>
-      </div>
+      @if (esPescador) {
+        <h3>ID de la captura</h3>
+        <div class="dato">
+          <span class="valor">{{ lote.idLoteCaptura }}</span>
+        </div>
+      }
+
+      @if (esAdmin) {
+        <h3>ID</h3>
+        <div class="dato">
+          <span class="etiqueta">ID del lote de captura</span>
+          <span class="valor">{{ lote.idLoteCaptura }}</span>
+        </div>
+
+        <!-- Usuario -->
+        <div class="dato">
+          <span class="etiqueta">ID del pescador</span>
+          <span class="valor">{{ lote.idUsuario }}</span>
+        </div>
+      }
     </div>
 
     <div class="bloque-A">

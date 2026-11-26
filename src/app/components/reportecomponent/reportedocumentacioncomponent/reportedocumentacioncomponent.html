@@ -1,0 +1,93 @@
+
+<div class="contenedor-reporte">
+  <h1>DOCUMENTACIÓN DEL PESCADOR</h1>
+  <p>Consulta la información y documentación registrada de un pescador.</p>
+
+  <div class="tarjeta">
+    <h2>FILTRO DE BÚSQUEDA</h2>
+
+    <form [formGroup]="formulario" (ngSubmit)="consultar()">
+      <div class="fila-filtro">
+        <div class="campo">
+          <label for="idPescador">ID del pescador</label>
+          <input
+            id="idPescador"
+            type="number"
+            min="1"
+            step="1"
+            formControlName="idPescador"
+            placeholder="Ingrese el ID del pescador"
+          />
+
+          <small
+            class="error"
+            *ngIf="formulario.controls.idPescador.invalid &&
+                   formulario.controls.idPescador.touched"
+          >
+            Ingrese un ID válido mayor a cero.
+          </small>
+        </div>
+
+        <div class="acciones">
+          <button type="button" class="btn-limpiar" (click)="limpiar()">
+            Limpiar
+          </button>
+
+          <button
+            type="submit"
+            class="btn-consultar"
+            [disabled]="formulario.invalid || consultando"
+          >
+            {{ consultando ? 'Consultando...' : 'Consultar' }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="tarjeta">
+    <h2>RESULTADO DE DOCUMENTACIÓN</h2>
+
+    <p class="mensaje-error" *ngIf="mensaje">
+      {{ mensaje }}
+    </p>
+
+    <div *ngIf="documentacion as pescador" class="resultado">
+      <div class="dato">
+        <strong>ID del pescador</strong>
+        <span>{{ pescador.idPescador }}</span>
+      </div>
+
+      <div class="dato">
+        <strong>Nombre</strong>
+        <span>{{ pescador.nombre }}</span>
+      </div>
+
+      <div class="dato">
+        <strong>Apellido</strong>
+        <span>{{ pescador.apellido }}</span>
+      </div>
+
+      <div class="dato">
+        <strong>DNI</strong>
+        <span>{{ pescador.dni || 'No registrado' }}</span>
+      </div>
+
+      <div class="dato">
+        <strong>Número de licencia</strong>
+        <span>{{ pescador.numeroLicencia || 'No registrado' }}</span>
+      </div>
+    </div>
+
+    <p
+      class="sin-resultados"
+      *ngIf="!documentacion && !mensaje && !consultando"
+    >
+      Ingrese el ID de un pescador y presione Consultar.
+    </p>
+
+    <p class="sin-resultados" *ngIf="consultando">
+      Consultando documentación...
+    </p>
+  </div>
+</div>

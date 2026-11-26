@@ -6,7 +6,7 @@
 .barra {
   background: #0b3c5d;
   color: #ffffff;
-  height: 64px;
+  height: 70px;
 }
 
 .logo {
@@ -28,10 +28,21 @@
   margin-right: 12px;
 }
 
+.user-role {
+  font-size: 14px;
+  margin-right: 30px;
+}
+
+.linea {
+  font-size: 14px;
+  margin-right: 12px;
+}
+
 .btn-sesion {
   background: #d7263d;
   color: #ffffff !important;
   border-radius: 8px;
+   margin-right: 22px;
 }
 
 .btn-sesion:hover{
@@ -41,7 +52,7 @@
 
 /* LATERAL + CONTENIDO */
 .cuerpo {
-  height: calc(100vh - 64px);     /* todo el alto menos la barra */
+  height: calc(99.3vh - 64px);     /* todo el alto menos la barra */
   background: #f5f5f7;
 }
 
@@ -58,18 +69,39 @@
   font-weight: 700;
   color: #8c9bab;
   letter-spacing: 1px;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.5rem;
 }
 
 .sidebar mat-expansion-panel {
   background: transparent;
-  border-radius: 0;
+  border-radius: 20px;
+  margin-bottom: 11px;
+}
+
+.item-simple{
+  --mat-list-list-item-label-text-size: 16px;
+  --mat-list-list-item-label-text-weight: 500;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.sidebar ::ng-deep .mat-mdc-list-item {
+  border-radius: 20px !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+  margin-bottom: 5px;
+
+}
+
+
+
+
+.sidebar ::ng-deep .mat-expansion-panel-body {
+  padding: 0;
 }
 
 .sidebar a.active {
   background: #e6f2f8;
-  color: #1f7ab8;
-  font-weight: 600;
 }
 
 .contenido {

@@ -1,0 +1,168 @@
+
+.contenedor-reporte {
+  width: 100%;
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 35px 30px;
+  box-sizing: border-box;
+  color: #0d3b5a;
+}
+
+.contenedor-reporte h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #0b3a59;
+}
+
+.contenedor-reporte > p {
+  font-size: 15px;
+  margin-bottom: 30px;
+}
+
+.tarjeta {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 25px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+.tarjeta h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0b3a59;
+  margin-bottom: 25px;
+}
+
+.fila-filtro {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.campo {
+  flex: 1;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.campo label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.campo input {
+  height: 50px;
+  padding: 0 15px;
+  border: 1px solid #b8c3ce;
+  border-radius: 5px;
+  background: #e3e6ef;
+  font-size: 15px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.campo input:focus {
+  outline: 2px solid #0b3a59;
+  outline-offset: 1px;
+}
+
+.acciones {
+  display: flex;
+  gap: 10px;
+}
+
+.acciones button {
+  height: 45px;
+  padding: 0 25px;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-limpiar {
+  background: #ffffff;
+  color: #0b3a59;
+  border: 1px solid #b8c3ce;
+}
+
+.btn-consultar {
+  background: #0b3a59;
+  color: white;
+  border: none;
+}
+
+.btn-consultar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.resultado {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.dato {
+  background: #f1f4f7;
+  border-radius: 6px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-wrap: anywhere;
+}
+
+.dato strong {
+  font-size: 14px;
+  color: #0b3a59;
+}
+
+.dato span {
+  font-size: 16px;
+  color: #333333;
+}
+
+.sin-resultados {
+  text-align: center;
+  padding: 25px;
+  color: #657585;
+}
+
+.mensaje-error,
+.error {
+  color: #c62828;
+}
+
+.mensaje-error {
+  text-align: center;
+  font-weight: 600;
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .contenedor-reporte {
+    padding: 20px 15px;
+  }
+
+  .tarjeta {
+    padding: 20px;
+  }
+
+  .fila-filtro {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .acciones {
+    justify-content: flex-end;
+  }
+
+  .resultado {
+    grid-template-columns: 1fr;
+  }
+}

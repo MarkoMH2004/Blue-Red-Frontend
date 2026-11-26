@@ -5,6 +5,8 @@ import { environment } from '../../environments/environment';
 import { ValidacionDTO } from '../models/ValidacionDTO';
 import { LoteCapturaDTO } from '../models/LoteCapturaDTO';
 import { EspecieDTO } from '../models/EspecieDTO';
+import { ValidacionRechazadaDTO } from '../models/ValidacionRechazadaDTO';
+import { ValidacionAceptadaDTO } from '../models/ValidacionAceptadaDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -48,5 +50,15 @@ export class Validacionservice {
   // Eliminación de una validación por su ID (HU51)
   deleteValidacion(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiURL}/${id}`);
+  }
+
+  // Validaciones rechazadas de un pescador (HU42)
+  getRechazadasPorPescador(idUsuario: number): Observable<ValidacionRechazadaDTO[]> {
+    return this.http.get<ValidacionRechazadaDTO[]>(`${this.apiURL}/rechazadas-por-pescador/${idUsuario}`);
+  }
+
+  // Validaciones aceptadas de un pescador (HU43)
+  getAceptadasPorPescador(idUsuario: number): Observable<ValidacionAceptadaDTO[]> {
+    return this.http.get<ValidacionAceptadaDTO[]>(`${this.apiURL}/aceptadas-por-pescador/${idUsuario}`);
   }
 }

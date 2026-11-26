@@ -13,6 +13,8 @@ import { Validacioncomponent } from './components/validacioncomponent/validacion
 import { Vlistcomponent } from './components/validacioncomponent/vlistcomponent/vlistcomponent';
 import { Vreconocimientocomponent } from './components/validacioncomponent/vreconocimientocomponent/vreconocimientocomponent';
 import { Vbuscarcomponent } from './components/validacioncomponent/vbuscarcomponent/vbuscarcomponent';
+import { Vrechazadascomponent } from './components/validacioncomponent/vrechazadascomponent/vrechazadascomponent';
+import { Vaceptadascomponent } from './components/validacioncomponent/vaceptadascomponent/vaceptadascomponent';
 import { Reportecomponent } from './components/reportecomponent/reportecomponent';
 import { Reportevedacomponent } from './components/reportecomponent/reportevedacomponent/reportevedacomponent';
 import { Certificacioncomponent } from './components/certificacioncomponent/certificacioncomponent';
@@ -41,6 +43,11 @@ import { Usuariolistcomponent } from './components/usuarioscomponent/usuariolist
 import { Usuarioupdatecomponent } from './components/usuarioscomponent/usuarioupdatecomponent/usuarioupdatecomponent';
 import { Menuxusuariocomponent } from './components/menuxusuariocomponent/menuxusuariocomponent';
 import { Reportelcxespeciecomponent } from './components/reportecomponent/reportelcxespeciecomponent/reportelcxespeciecomponent';
+import { Reportedocumentacioncomponent } from './components/reportecomponent/reportedocumentacioncomponent/reportedocumentacioncomponent';
+import { Reportetallaminimacomponent } from './components/reportecomponent/reportetallaminimacomponent/reportetallaminimacomponent';
+
+
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
@@ -105,6 +112,18 @@ export const routes: Routes = [
       { path: 'reconocer-especie', component: Vreconocimientocomponent },
       { path: 'buscar', component: Vbuscarcomponent },
       {
+        path: 'rechazadas',
+        component: Vrechazadascomponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN', 'PESCADOR'] },
+      },
+      {
+        path: 'aceptadas',
+        component: Vaceptadascomponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN', 'PESCADOR'] },
+      },
+      {
         path: 'editar/:id',
         component: Vupdatecomponent,
       },
@@ -119,11 +138,22 @@ export const routes: Routes = [
     component: Reportecomponent,
     canActivate: [authGuard, roleGuard],
     data: { roles: ['ADMIN', 'PESCADOR', 'RESTAURANTE', 'GUEST'] },
+    
     children: [
       { path: '', redirectTo: 'veda', pathMatch: 'full' },
       { path: 'veda', component: Reportevedacomponent },
-      { path: 'lc-x-especie', component: Reportelcxespeciecomponent }
+      { path: 'lc-x-especie', component: Reportelcxespeciecomponent },
+
+      {
+        path: 'documentacion',
+        component: Reportedocumentacioncomponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN', 'RESTAURANTE'] }
+      },
+
+      { path: 'talla-minima', component: Reportetallaminimacomponent },
     ],
+
   },
   {
     path: 'certificaciones',

@@ -1,10 +1,12 @@
 <!-- BARRA SUPERIOR -->
 <mat-toolbar class="barra">
-  <a routerLink="/inicio" class="logo"> <mat-icon>home</mat-icon> BlueRed </a>
+  <span> BlueRed </span>
 
   <!-- EMPUJA TODO LO SIGUIENTE A LA DERECHA -->
   <span class="spacer"></span>
   <span class="user-correo">{{ auth.getCorreo() }}</span>
+  <span class="linea">|</span>
+  <span class="user-role">{{ rolNombre }}</span>
   <button matButton type="button" class="btn-sesion" (click)="cerrarSesion()">Cerrar sesión</button>
 </mat-toolbar>
 
@@ -16,9 +18,11 @@
 
       <!-- INICIO POR MIENTRAS -->
       <mat-nav-list>
-        <a mat-list-item routerLink="/especies/listar" routerLinkActive="active" class="item-simple">Inicio</a>
+        <a mat-list-item routerLink="/especies/listar" routerLinkActive="active" class="item-simple"
+          >Inicio</a
+        >
       </mat-nav-list>
-      
+
       <mat-expansion-panel class="mat-elevation-z0">
         <mat-expansion-panel-header>
           <mat-panel-title>Usuarios</mat-panel-title>
@@ -45,10 +49,16 @@
           <mat-panel-title>Lote de captura</mat-panel-title>
         </mat-expansion-panel-header>
         <mat-nav-list>
-          <a mat-list-item routerLink="/lotes-captura/listar" routerLinkActive="active"
-            >Mis capturas</a
-          >
+          @if (esAdmin) {
+            <a mat-list-item routerLink="/lotes-captura/listar" routerLinkActive="active"
+              >Lista de lotes</a
+            >
+          }
+
           @if (esPescador) {
+            <a mat-list-item routerLink="/lotes-captura/listar" routerLinkActive="active"
+              >Mis capturas</a
+            >
             <a mat-list-item routerLink="/lotes-captura/insertar" routerLinkActive="active"
               >Registrar lote</a
             >
@@ -63,6 +73,14 @@
         <mat-nav-list>
           <a mat-list-item routerLink="/validaciones/listar" routerLinkActive="active">Listar</a>
           <a mat-list-item routerLink="/validaciones/buscar" routerLinkActive="active">Buscar</a>
+          @if (esAdmin || esPescador) {
+            <a mat-list-item routerLink="/validaciones/rechazadas" routerLinkActive="active"
+              >Rechazadas</a
+            >
+            <a mat-list-item routerLink="/validaciones/aceptadas" routerLinkActive="active"
+              >Aceptadas</a
+            >
+          }
           <a mat-list-item routerLink="/validaciones/registrar" routerLinkActive="active"
             >Registrar</a
           >
@@ -113,18 +131,39 @@
           </mat-nav-list>
         </mat-expansion-panel>
       }
-
+      
       <mat-expansion-panel class="mat-elevation-z0">
         <mat-expansion-panel-header>
           <mat-panel-title>Reportes</mat-panel-title>
         </mat-expansion-panel-header>
+
         <mat-nav-list>
-          <a mat-list-item routerLink="/reportes/veda" routerLinkActive="active">Reporte01</a>
-          <a mat-list-item routerLink="/reportes/lc-x-especie" routerLinkActive="active">Reporte0x</a>
+          <a mat-list-item routerLink="/reportes/veda" routerLinkActive="active">
+            Reporte de veda
+          </a>
+          
+          <a mat-list-item routerLink="/reportes/lc-x-especie" routerLinkActive="active">Reporte lote de captura por especie </a>
+
+          @if (esAdmin || esRestaurante) {
+            <a mat-list-item routerLink="/reportes/documentacion" routerLinkActive="active">
+              Documentación del pescador
+            </a>
+          }
+
+
+          <a mat-list-item routerLink="/reportes/talla-minima" routerLinkActive="active">
+            Especies por talla mínima
+          </a>
         </mat-nav-list>
       </mat-expansion-panel>
+
+
     </mat-accordion>
   </mat-sidenav>
+
+
+
+
 
   <mat-sidenav-content class="contenido">
     <router-outlet></router-outlet>

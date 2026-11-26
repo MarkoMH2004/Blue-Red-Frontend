@@ -8,6 +8,7 @@ import { LoteCapturaDTO } from '../../../models/LoteCapturaDTO';
 import { MatIconModule } from '@angular/material/icon';
 import { DatePipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Loginservice } from '../../../services/loginservice';
 
 @Component({
   imports: [MatButtonModule, RouterLink, MatIconModule, DatePipe],
@@ -28,6 +29,7 @@ export class Lcdetallecomponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute, 
     private snackBar: MatSnackBar, //servicio
+    private auth:Loginservice
   ) {}
 
   ngOnInit(): void {
@@ -99,5 +101,13 @@ export class Lcdetallecomponent implements OnInit {
       return;
     }
     this.router.navigate(['/lotes-captura/editar', dto.idLoteCaptura]);
+  }
+
+  get esAdmin(): boolean {
+    return this.auth.hasAnyRole(['ADMIN']);
+  }
+
+  get esPescador(): boolean {
+    return this.auth.hasAnyRole(['PESCADOR']);
   }
 }
