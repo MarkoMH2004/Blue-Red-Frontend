@@ -1,14 +1,26 @@
 <div class="container">
   <mat-toolbar>
-    <button matIconButton class="example-icon" routerLink="/inicio" aria-label="Ir al inicio">
-      <mat-icon>home</mat-icon>
+    <!-- 1. LOGO A LA IZQUIERDA -->
+    <button class="logo-btn" routerLink="/inicio" aria-label="Ir al inicio">
+      <img src="images/logo-blured.png" alt="Logo BlueRed" class="logo-img" />
     </button>
 
-    
-
-    <!-- EMPUJA TODO LO SIGUIENTE A LA DERECHA -->
+    <!-- ESPACIADOR IZQUIERDO -->
     <span class="spacer"></span>
 
+    <!-- 2. ENLACES EN EL MEDIO -->
+    <nav class="nav-links">
+      <a mat-button routerLink="/inicio" routerLinkActive="active-link">Inicio</a>
+      <a mat-button routerLink="/inicio" routerLinkActive="active-link">Nosotros</a>
+      <a mat-button routerLink="/inicio" routerLinkActive="active-link">Cómo funciona</a>
+      <a mat-button routerLink="/inicio" routerLinkActive="active-link">Beneficios</a>
+      <a mat-button routerLink="/inicio" routerLinkActive="active-link">Contacto</a>
+    </nav>
+
+    <!-- ESPACIADOR DERECHO -->
+    <span class="spacer"></span>
+
+    <!-- 3. BOTÓN DE SESIÓN A LA DERECHA -->
     @if (auth.isAuthenticated()) {
       <span class="user-correo">{{ auth.getCorreo() }}</span>
       <button matButton type="button" class="btn-sesion" (click)="cerrarSesion()">

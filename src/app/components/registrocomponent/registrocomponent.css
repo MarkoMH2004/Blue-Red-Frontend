@@ -16,7 +16,8 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 2rem;
+  padding: 5rem;
+  height: auto;
 }
 
 .visual-image {
@@ -34,7 +35,7 @@
   align-items: flex-start;
   justify-content: center;
   padding: 2.5rem 2rem;
-  background: #ffffff;
+  background: #bdced8;
 }
 
 .register-form {
@@ -46,9 +47,9 @@
 
 .brand-logo {
   align-self: flex-start;
-  width: 150px;
+  width: 180px;
   height: auto;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 .register-title {

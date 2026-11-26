@@ -1,7 +1,7 @@
 <section class="login-page">
   <div class="login-visual">
     <img
-      src="/pesca-artesanal.jpg"
+      src="images/PescaArtesanal-InicioSesion.jpg"
       alt="Pesca artesanal y trazabilidad con BlueRed"
       class="visual-image"
     />
@@ -14,13 +14,14 @@
       (ngSubmit)="submit()"
       novalidate
     >
-      <img src="/logo.jpg" alt="Logo BlueRed" class="brand-logo" />
+      <img src="images/logo-blured.png" alt="Logo BlueRed" class="brand-logo" />
 
       <h1 class="login-title">Iniciar sesión</h1>
       <p class="login-subtitle">
         Bienvenido a BlueRed. Ingresa con tu cuenta para gestionar tus operaciones.
       </p>
 
+      
       <label class="field-label" for="correo">CORREO ELECTRÓNICO</label>
       <mat-form-field appearance="outline" class="full-width">
         <input
@@ -62,6 +63,7 @@
           <mat-error>*Ingresa tu contraseña.</mat-error>
         }
       </mat-form-field>
+      
 
       @if (errorMessage) {
         <p class="error-banner" role="alert">{{ errorMessage }}</p>
