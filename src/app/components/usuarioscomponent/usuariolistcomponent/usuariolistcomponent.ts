@@ -79,9 +79,13 @@ export class Usuariolistcomponent implements OnInit {
     return this.esPescador || this.esRestaurante || this.esInvitado;
   }
 
+  get puedeModificarMiCuenta(): boolean {
+    return this.esPescador || this.esRestaurante || this.esInvitado;
+  }
+
   get displayedColumns(): string[] {
-    const columnasBase = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7'];
-    return this.esAdmin ? [...columnasBase, 'C8'] : columnasBase;
+    const columnasBase = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6'];
+    return this.esAdmin ? [...columnasBase, 'C7', 'C8'] : columnasBase;
   }
 
   ngOnInit(): void {
@@ -146,6 +150,35 @@ export class Usuariolistcomponent implements OnInit {
     this.obtenerUsuarios();
   }
 
+  modificarMiCuenta(): void {
+    if (!this.puedeModificarMiCuenta) return;
+    this.mensaje = '';
+
+    const idLocal = this.obtenerIdUsuarioActual(this.dataSource.data);
+    if (idLocal) {
+      this.router.navigate(['/usuarios/edicion', idLocal]);
+      return;
+    }
+
+    this.uS.getUsuarios().subscribe({
+      next: (usuarios: UsuarioDTO[]) => {
+        const idRemoto = this.obtenerIdUsuarioActual(usuarios);
+        if (idRemoto) {
+          this.router.navigate(['/usuarios/edicion', idRemoto]);
+        } else {
+          this.mensaje = 'No se pudo identificar tu usuario actual para modificar la cuenta.';
+          this.cdr.detectChanges();
+        }
+      },
+      error: (err: any) => {
+        console.log('Error al obtener el usuario actual para editar!!', err);
+        this.mensaje =
+          err.error?.message || 'No se pudo obtener los datos de tu cuenta para editar.';
+        this.cdr.detectChanges();
+      },
+    });
+  }
+
   solicitarEliminar(usuario: UsuarioDTO): void {
     if (!this.esAdmin) return;
     this.mensaje = '';
@@ -194,7 +227,7 @@ export class Usuariolistcomponent implements OnInit {
     });
   }
 
-  private obtenerIdUsuarioActual(): number | null {
+  private obtenerIdUsuarioActual(usuarios: UsuarioDTO[] = []): number | null {
     const token = sessionStorage.getItem('token');
     if (token) {
       try {
@@ -204,7 +237,7 @@ export class Usuariolistcomponent implements OnInit {
           if (decoded.idUsuario) return Number(decoded.idUsuario);
           if (decoded.id) return Number(decoded.id);
           if (decoded.sub) {
-            const porCorreo = this.dataSource.data.find(
+            const porCorreo = usuarios.find(
               (u) => u.correo?.toLowerCase() === String(decoded.sub).toLowerCase()
             );
             if (porCorreo?.idUsuario) return Number(porCorreo.idUsuario);
@@ -217,7 +250,7 @@ export class Usuariolistcomponent implements OnInit {
 
     const correoSesion = sessionStorage.getItem('correo') || sessionStorage.getItem('username');
     if (correoSesion) {
-      const encontrado = this.dataSource.data.find(
+      const encontrado = usuarios.find(
         (u) => u.correo?.toLowerCase() === correoSesion.toLowerCase()
       );
       if (encontrado?.idUsuario) return Number(encontrado.idUsuario);
@@ -228,7 +261,7 @@ export class Usuariolistcomponent implements OnInit {
 
   confirmarEliminarMiCuenta(): void {
     if (!this.puedeEliminarMiCuenta) return;
-    const idActual = this.obtenerIdUsuarioActual();
+    const idActual = this.obtenerIdUsuarioActual(this.dataSource.data);
     this.confirmandoEliminarMiCuenta = false;
 
     if (!idActual) {

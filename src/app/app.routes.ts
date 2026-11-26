@@ -40,6 +40,7 @@ import { Usuarioscomponent } from './components/usuarioscomponent/usuarioscompon
 import { Usuariolistcomponent } from './components/usuarioscomponent/usuariolistcomponent/usuariolistcomponent';
 import { Usuarioupdatecomponent } from './components/usuarioscomponent/usuarioupdatecomponent/usuarioupdatecomponent';
 import { Menuxusuariocomponent } from './components/menuxusuariocomponent/menuxusuariocomponent';
+import { Reportelcxespeciecomponent } from './components/reportecomponent/reportelcxespeciecomponent/reportelcxespeciecomponent';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
@@ -111,6 +112,7 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'veda', pathMatch: 'full' },
       { path: 'veda', component: Reportevedacomponent },
+      { path: 'lc-x-especie', component: Reportelcxespeciecomponent }
     ],
   },
   {
