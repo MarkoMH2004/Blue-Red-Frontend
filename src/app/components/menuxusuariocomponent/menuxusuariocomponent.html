@@ -38,7 +38,9 @@
         </mat-expansion-panel-header>
         <mat-nav-list>
           <a mat-list-item routerLink="/especies/listar" routerLinkActive="active">Listar</a>
-          <a mat-list-item routerLink="/especies/insertar" routerLinkActive="active">Registrar</a>
+          @if (esAdmin) {
+            <a mat-list-item routerLink="/especies/insertar" routerLinkActive="active">Registrar</a>
+          }
         </mat-nav-list>
       </mat-expansion-panel>
 
@@ -141,6 +143,7 @@
             Reporte de veda
           </a>
           
+          <a mat-list-item routerLink="/reportes/lc-x-especie" routerLinkActive="active">Reporte lote de captura por especie </a>
 
           @if (esAdmin || esRestaurante) {
             <a mat-list-item routerLink="/reportes/documentacion" routerLinkActive="active">

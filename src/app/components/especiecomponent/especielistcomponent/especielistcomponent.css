@@ -55,6 +55,36 @@ button[color="primary"] {
   color: #ffffff !important;
 }
 
+/* Cuadro de confirmación para eliminar */
+.confirm-box {
+  background-color: #FFF8F6;
+  border: 1px solid #F5C2C7;
+  border-left: 4px solid #D7263D;
+  padding: 14px 18px;
+  margin: 15px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.confirm-text {
+  margin: 0;
+  color: #0F1B2A;
+  font-size: 14px;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-aceptar {
+  background-color: #D7263D !important;
+  color: #ffffff !important;
+}
+
 /* Tabla y Estilos de la guía */
 .table-responsive {
   width: 100%;
@@ -69,7 +99,7 @@ table {
   background-color: #ffffff;
 }
 
-/* Fondo gris claro/azulado suave para la cabecera de la tabla (como en el mockup) */
+/* Fondo gris claro/azulado suave para la cabecera de la tabla */
 th.mat-header-cell {
   background-color: #F8FAFC !important;
   color: #0B3C5D !important;
@@ -87,7 +117,7 @@ td.mat-cell {
   padding: 12px 8px;
 }
 
-/* Nombre científico en cursiva como en el mockup de referencia */
+/* Nombre científico en cursiva */
 .nombre-cientifico {
   font-style: italic;
   color: #475569;
@@ -113,8 +143,8 @@ td.mat-cell {
 }
 
 /* Forzar diseño rectangular en los botones de la pantalla */
-button, 
-.mdc-button, 
+button,
+.mdc-button,
 .mat-mdc-button-base {
   border-radius: 0px !important;
 }
