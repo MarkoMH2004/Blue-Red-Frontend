@@ -103,7 +103,14 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'veda', pathMatch: 'full' },
       { path: 'veda', component: Reportevedacomponent },
-      { path: 'documentacion', component: Reportedocumentacioncomponent },
+
+      {
+        path: 'documentacion',
+        component: Reportedocumentacioncomponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN', 'RESTAURANTE'] }
+      },
+
       { path: 'talla-minima', component: Reportetallaminimacomponent },
     ],
 

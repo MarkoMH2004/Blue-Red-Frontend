@@ -112,10 +112,14 @@
           <a mat-list-item routerLink="/reportes/veda" routerLinkActive="active">
             Reporte de veda
           </a>
+          
 
-          <a mat-list-item routerLink="/reportes/documentacion" routerLinkActive="active">
-            Documentación del pescador
-          </a>
+          @if (esAdmin || esRestaurante) {
+            <a mat-list-item routerLink="/reportes/documentacion" routerLinkActive="active">
+              Documentación del pescador
+            </a>
+          }
+
 
           <a mat-list-item routerLink="/reportes/talla-minima" routerLinkActive="active">
             Especies por talla mínima
