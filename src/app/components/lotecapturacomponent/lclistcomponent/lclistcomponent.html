@@ -16,7 +16,7 @@
   <div class="bloqueA">
     <h3>Filtros de búsqueda</h3>
 
-    <form [formGroup]="form" class="filter-form" [class.con-pescador]="esAdmin">
+    <form [formGroup]="form" class="filter-form" [class.con-pescador]="esAdmin">  <!-- elegir la segunda clase solo si es Admin -->
       <!-- ID de Especie con validación -->
       <mat-form-field appearance="outline" class="filter-field">
         <mat-label>ID del lote de captura</mat-label>
