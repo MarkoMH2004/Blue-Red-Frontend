@@ -1,84 +1,115 @@
+
 .dashboard-layout {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  font-family: 'Inter', sans-serif;
-  background-color: #F8FBFC;
+  background: #f8fbfc;
+  font-family: Inter, Arial, sans-serif;
 }
 
-/* Header superior interno */
 .dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background-color: #FFFFFF;
-  border-bottom: 1px solid #E1EDF5;
+  padding: 18px 30px;
+  background: white;
+  border-bottom: 1px solid #e1edf5;
 }
 
-.dashboard-user {
-  font-size: 0.9rem;
-  color: #0B3C5D;
+.dashboard-logo {
+  font-family: Poppins, Arial, sans-serif;
+  color: #0b3c5d;
+  font-size: 23px;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.dashboard-logo span {
+  color: #d7263d;
+}
+
+.dashboard-user button {
+  background: none;
+  border: none;
   cursor: pointer;
+  color: #0b3c5d;
+  font: inherit;
 }
 
-.logout-link:hover {
-  color: #D7263D;
+.dashboard-user button:hover {
+  color: #d7263d;
 }
 
-/* Layout de cuerpo (Sidebar + Contenido) */
 .dashboard-body {
-  display: flex;
   flex: 1;
-  overflow: hidden;
+  display: flex;
 }
 
-/* Sidebar izquierdo */
 .sidebar {
   width: 260px;
-  background-color: #FFFFFF;
-  border-right: 1px solid #E1EDF5;
-  padding: 1.5rem 1rem;
+  flex-shrink: 0;
+  background: white;
+  border-right: 1px solid #e1edf5;
+  padding: 24px 15px;
 }
 
 .menu-title {
-  font-size: 0.75rem;
+  padding: 4px 12px;
+  font-size: 12px;
   font-weight: 700;
-  color: #8C9BA5;
   letter-spacing: 1px;
-  padding-left: 0.8rem;
+  color: #8c9ba5;
 }
 
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  margin-top: 1rem;
+  gap: 8px;
+  margin-top: 16px;
 }
 
 .sidebar-item {
-  padding: 0.75rem 1rem;
-  text-decoration: none;
-  color: #0B3C5D;
-  font-size: 0.95rem;
+  padding: 12px 14px;
   border-radius: 6px;
-  transition: background 0.2s;
+  color: #0b3c5d;
+  text-decoration: none;
+  font-size: 15px;
 }
 
 .sidebar-item:hover {
-  background-color: #F0F6FA;
+  background: #f0f6fa;
 }
 
-/* Estilo activo para "Especies" como en tu captura */
 .sidebar-item.active {
-  background-color: #E6F2F8;
-  color: #1F7AB8;
-  font-weight: 600;
+  background: #e6f2f8;
+  color: #1f7ab8;
+  font-weight: 700;
 }
 
-/* Contenedor del Listado que ya hiciste */
 .main-content {
   flex: 1;
-  padding: 2.5rem;
-  overflow-y: auto;
+  min-width: 0;
+  padding: 32px;
+}
+
+@media (max-width: 760px) {
+  .dashboard-body {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: auto;
+    padding: 12px;
+    border-right: none;
+    border-bottom: 1px solid #e1edf5;
+  }
+
+  .sidebar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .main-content {
+    padding: 16px;
+  }
 }

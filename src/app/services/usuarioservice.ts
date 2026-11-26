@@ -18,6 +18,18 @@ export class Usuarioservice {
     return this.http.get<UsuarioDTO>(`${this.apiURL}/${id}`);
   }
 
+  getUsuarios(): Observable<UsuarioDTO[]> {
+    return this.http.get<UsuarioDTO[]>(this.apiURL);
+  }
+
+  updateUsuario(usuario: UsuarioDTO): Observable<UsuarioDTO> {
+    return this.http.put<UsuarioDTO>(this.apiURL, usuario);
+  }
+
+  deleteUsuario(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiURL}/${id}`);
+  }
+
   getDocumentacionPescador(id: number): Observable<DocumentacionPescadorDTO> {
     return this.http.get<DocumentacionPescadorDTO>(
       `${this.apiURL}/${id}/documentacion`

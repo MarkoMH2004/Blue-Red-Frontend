@@ -13,6 +13,8 @@ import { Validacioncomponent } from './components/validacioncomponent/validacion
 import { Vlistcomponent } from './components/validacioncomponent/vlistcomponent/vlistcomponent';
 import { Vreconocimientocomponent } from './components/validacioncomponent/vreconocimientocomponent/vreconocimientocomponent';
 import { Vbuscarcomponent } from './components/validacioncomponent/vbuscarcomponent/vbuscarcomponent';
+import { Vrechazadascomponent } from './components/validacioncomponent/vrechazadascomponent/vrechazadascomponent';
+import { Vaceptadascomponent } from './components/validacioncomponent/vaceptadascomponent/vaceptadascomponent';
 import { Reportecomponent } from './components/reportecomponent/reportecomponent';
 import { Reportevedacomponent } from './components/reportecomponent/reportevedacomponent/reportevedacomponent';
 import { Certificacioncomponent } from './components/certificacioncomponent/certificacioncomponent';
@@ -36,6 +38,9 @@ import { Component } from '@angular/core';
 import { Vupdatecomponent } from './components/validacioncomponent/vupdatecomponent/vupdatecomponent';
 import { Vinsertcomponent } from './components/validacioncomponent/vinsertcomponent/vinsertcomponent';
 import { Registrocomponent } from './components/registrocomponent/registrocomponent';
+import { Usuarioscomponent } from './components/usuarioscomponent/usuarioscomponent';
+import { Usuariolistcomponent } from './components/usuarioscomponent/usuariolistcomponent/usuariolistcomponent';
+import { Usuarioupdatecomponent } from './components/usuarioscomponent/usuarioupdatecomponent/usuarioupdatecomponent';
 import { Menuxusuariocomponent } from './components/menuxusuariocomponent/menuxusuariocomponent';
 import { Reportedocumentacioncomponent } from './components/reportecomponent/reportedocumentacioncomponent/reportedocumentacioncomponent';
 import { Reportetallaminimacomponent } from './components/reportecomponent/reportetallaminimacomponent/reportetallaminimacomponent';
@@ -49,6 +54,17 @@ export const routes: Routes = [
   { path: 'inicio', component: Homecomponent },
   { path: 'registro', component: Registrocomponent },
   
+  {
+  path: 'usuarios',
+  component: Usuarioscomponent,
+  canActivate: [authGuard, roleGuard],
+  data: { roles: ['ADMIN', 'PESCADOR', 'RESTAURANTE', 'GUEST'] },
+  children: [
+    { path: 'listar', component: Usuariolistcomponent },
+    { path: 'edicion/:id', component: Usuarioupdatecomponent },
+    { path: '', redirectTo: 'listar', pathMatch: 'full' },
+  ],
+},
   {
     path: 'especies',
     component: Especiecomponent,
@@ -84,6 +100,18 @@ export const routes: Routes = [
       { path: 'listar', component: Vlistcomponent },
       { path: 'reconocer-especie', component: Vreconocimientocomponent },
       { path: 'buscar', component: Vbuscarcomponent },
+      {
+        path: 'rechazadas',
+        component: Vrechazadascomponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN', 'PESCADOR'] },
+      },
+      {
+        path: 'aceptadas',
+        component: Vaceptadascomponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN', 'PESCADOR'] },
+      },
       {
         path: 'editar/:id',
         component: Vupdatecomponent,

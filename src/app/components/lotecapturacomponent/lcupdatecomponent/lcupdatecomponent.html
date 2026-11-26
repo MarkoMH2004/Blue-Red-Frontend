@@ -10,12 +10,30 @@
 
   <div class="formulario">
     <form [formGroup]="formLoteCaptura" (ngSubmit)="actualizarLoteCaptura()">
+
+
       <div class="bloque-id">
+      @if (esPescador) {
         <h3>ID de la captura</h3>
         <div class="dato">
           <span class="valor">{{ formLoteCaptura.value.ID }}</span>
         </div>
-      </div>
+      }
+
+      @if (esAdmin) {
+        <h3>ID</h3>
+        <div class="dato">
+          <span class="etiqueta">ID del lote de captura</span>
+          <span class="valor">{{formLoteCaptura.value.ID }}</span>
+        </div>
+
+        <!-- Usuario -->
+        <div class="dato">
+          <span class="etiqueta">ID del pescador</span>
+          <span class="valor">{{ idUsuarioLote}}</span>
+        </div>
+      }
+    </div>
 
       <div class="bloque-A">
         <h3>Datos de la captura</h3>
@@ -43,14 +61,22 @@
         <mat-form-field appearance="outline">
           <mat-label>Cantidad de peces</mat-label>
           <input matInput type="number" placeholder="Ej. 50" formControlName="cantidad" />
-          <mat-error>Ingrese la cantidad de peces</mat-error>
+          @if (formLoteCaptura.get('cantidad')?.hasError('min')) {
+            <mat-error>La cantidad debe ser mayor a 0</mat-error>
+          } @else if (formLoteCaptura.get('cantidad')?.hasError('required')) {
+            <mat-error>Ingrese la cantidad de peces</mat-error>
+          }
         </mat-form-field>
 
         <!-- Peso -->
         <mat-form-field appearance="outline">
           <mat-label>Peso total</mat-label>
           <input matInput type="number" placeholder="Ej. 100" formControlName="peso" />
-          <mat-error>Ingrese el peso total</mat-error>
+          @if (formLoteCaptura.get('peso')?.hasError('min')) {
+            <mat-error>El peso debe ser mayor a 0</mat-error>
+          } @else if (formLoteCaptura.get('cantidad')?.hasError('required')) {
+            <mat-error>Ingrese el peso total</mat-error>
+          }
         </mat-form-field>
       </div>
 
@@ -64,14 +90,18 @@
         <mat-form-field appearance="outline">
           <mat-label>Latitud</mat-label>
           <input matInput type="number" placeholder="Ej. 10.5" formControlName="latitud" />
-          <mat-error>Ingrese la latitud</mat-error>
+          @if (formLoteCaptura.get('latitud')?.hasError('required')) {
+            <mat-error>Ingrese la latitud</mat-error>
+          }
         </mat-form-field>
 
         <!-- Longitud -->
         <mat-form-field appearance="outline">
           <mat-label>Longitud</mat-label>
           <input matInput type="number" placeholder="Ej. -70.5" formControlName="longitud" />
-          <mat-error>Ingrese la longitud</mat-error>
+          @if (formLoteCaptura.get('longitud')?.hasError('required')) {
+            <mat-error>Ingrese la longitud</mat-error>
+          }
         </mat-form-field>
       </div>
 
@@ -109,7 +139,11 @@
         <mat-form-field appearance="outline">
           <mat-label>Precio del lote</mat-label>
           <input matInput type="number" placeholder="Ej. 10.5" formControlName="precio" />
-          <mat-error>Ingrese el precio por kilogramo</mat-error>
+           @if (formLoteCaptura.get('precio')?.hasError('min')) {
+            <mat-error>El precio debe ser mayor a 0</mat-error>
+          } @else if (formLoteCaptura.get('cantidad')?.hasError('required')) {
+            <mat-error>Ingrese el precio por kilogramo</mat-error>
+          }
         </mat-form-field>
       </div>
 
