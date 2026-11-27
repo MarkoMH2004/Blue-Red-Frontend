@@ -1,0 +1,42 @@
+.indicadores {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.indicador {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: #ffffff;
+  border-radius: 12px;
+  border-top: 4px solid #0b3c5d;
+  padding: 12px 20px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+.titulo {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0b3a59;
+}
+
+.indicador strong {
+  font-size: 32px;
+  line-height: 40px;
+  color: #0b3c5d;
+}
+
+.estado,
+.error {
+  font-size: 15px;
+  line-height: 40px;
+}
+
+.estado {
+  color: #6b7a8a;
+}
+
+.error {
+  color: #d7263d;
+}

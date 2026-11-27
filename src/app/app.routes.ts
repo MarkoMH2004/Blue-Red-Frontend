@@ -46,6 +46,8 @@ import { Reportelcxespeciecomponent } from './components/reportecomponent/report
 import { Reportedocumentacioncomponent } from './components/reportecomponent/reportedocumentacioncomponent/reportedocumentacioncomponent';
 import { Reportetallaminimacomponent } from './components/reportecomponent/reportetallaminimacomponent/reportetallaminimacomponent';
 import { Reportecomprascomponent } from './components/reportecomponent/reportecomprascomponent/reportecomprascomponent';
+import { Dashboardcomponent } from './components/dashboardcomponent/dashboardcomponent';
+import { Dashboardpanelcomponent } from './components/dashboardcomponent/dashboardpanelcomponent/dashboardpanelcomponent';
 
 
 
@@ -55,6 +57,13 @@ export const routes: Routes = [
   { path: 'login', component: Logincomponent },
   { path: 'inicio', component: Homecomponent },
   { path: 'registro', component: Registrocomponent },
+  {
+    path: 'dashboard',
+    component: Dashboardcomponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMIN', 'PESCADOR', 'RESTAURANTE', 'GUEST'] },
+    children: [{ path: '', component: Dashboardpanelcomponent }],
+  },
   
   {
   path: 'usuarios',
