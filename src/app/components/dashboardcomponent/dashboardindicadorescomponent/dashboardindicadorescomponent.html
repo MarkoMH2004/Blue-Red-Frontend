@@ -1,0 +1,55 @@
+<div class="indicadores">
+  <div class="indicador">
+    <span class="titulo">Especies registradas</span>
+    @if (errorEspecies) {
+      <span class="error">No se pudo cargar</span>
+    } @else if (especies === null) {
+      <span class="estado">Cargando...</span>
+    } @else if (especies.length === 0) {
+      <span class="estado">Sin datos</span>
+    } @else {
+      <strong>{{ especies.length }}</strong>
+    }
+  </div>
+
+  <div class="indicador">
+    <span class="titulo">Especies en veda</span>
+    @if (errorEspecies) {
+      <span class="error">No se pudo cargar</span>
+    } @else if (especies === null) {
+      <span class="estado">Cargando...</span>
+    } @else if (especies.length === 0) {
+      <span class="estado">Sin datos</span>
+    } @else {
+      <strong>{{ especiesEnVeda }}</strong>
+    }
+  </div>
+
+  <div class="indicador">
+    <span class="titulo">{{ esPescador ? 'Mis lotes' : 'Lotes de captura' }}</span>
+    @if (errorLotes) {
+      <span class="error">No se pudo cargar</span>
+    } @else if (lotes === null) {
+      <span class="estado">Cargando...</span>
+    } @else if (lotes.length === 0) {
+      <span class="estado">Sin datos</span>
+    } @else {
+      <strong>{{ lotes.length }}</strong>
+    }
+  </div>
+
+  @if (esAdmin) {
+    <div class="indicador">
+      <span class="titulo">Usuarios registrados</span>
+      @if (errorUsuarios) {
+        <span class="error">No se pudo cargar</span>
+      } @else if (usuarios === null) {
+        <span class="estado">Cargando...</span>
+      } @else if (usuarios.length === 0) {
+        <span class="estado">Sin datos</span>
+      } @else {
+        <strong>{{ usuarios.length }}</strong>
+      }
+    </div>
+  }
+</div>

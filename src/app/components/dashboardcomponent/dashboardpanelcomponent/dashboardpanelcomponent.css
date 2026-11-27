@@ -1,0 +1,100 @@
+.contenedor-dashboard {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 20px 30px;
+}
+
+.contenedor-dashboard h1 {
+  font-size: 24px;
+  margin: 0 0 14px;
+}
+
+.tablero {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.tarjeta {
+  min-width: 0;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+.tarjeta,
+.tablero ::ng-deep .tarjeta {
+  padding: 18px 20px;
+}
+
+.tablero ::ng-deep .container {
+  padding: 0;
+}
+
+.contenedor-dashboard .tablero ::ng-deep .tarjeta h2 {
+  font-size: 18px;
+  text-align: left;
+  margin: 0 0 12px;
+}
+
+.tablero ::ng-deep .grafico {
+  height: 250px;
+  margin-top: 10px;
+}
+
+.tablero ::ng-deep mat-form-field {
+  --mat-form-field-container-height: 48px;
+  --mat-form-field-container-vertical-padding: 12px;
+}
+
+.tablero ::ng-deep .fila-filtro {
+  gap: 4px 12px;
+}
+
+.tablero ::ng-deep .fila-filtro mat-form-field {
+  min-width: 170px;
+}
+
+.tablero ::ng-deep .acciones {
+  margin-top: 4px;
+}
+
+.contenedor-dashboard .tablero ::ng-deep .acciones button {
+  height: 38px;
+}
+
+.tablero ::ng-deep .consultado {
+  margin-top: 10px;
+}
+
+.tablero ::ng-deep .mensaje {
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.tablero ::ng-deep .montos {
+  margin-top: 8px;
+}
+
+.contenedor-dashboard .tablero ::ng-deep .montos li {
+  padding: 5px;
+}
+
+.tablero ::ng-deep .total {
+  gap: 2px;
+  margin-top: 10px;
+  padding: 8px;
+}
+
+@media (max-width: 1200px) {
+  .tablero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .contenedor-dashboard {
+    padding: 20px 15px;
+  }
+}
