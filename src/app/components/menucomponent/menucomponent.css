@@ -1,6 +1,13 @@
 /* Importando fuentes de Google Fonts indicadas en la guía */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@700&display=swap');
 
+/* El menú queda fijo arriba al desplazarse por la página */
+.container {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
 mat-toolbar {
   background: #0b3c5d;
   color: #ffffff;
@@ -72,8 +79,9 @@ mat-icon {
 /* Contenedor de los enlaces centrales */
 .nav-links {
   display: flex;
-  gap: 1.5rem; /* Separación entre palabras */
+  gap: 1rem; /* Separación entre palabras */
   align-items: center;
+  margin-left: 1.5rem;
 }
 
 /* Estilo de los textos del menú */
@@ -84,6 +92,7 @@ mat-icon {
   font-weight: 500; /* Medium */
   text-transform: none; /* Los enlaces no van en mayúsculas, solo los títulos */
   text-decoration: none;
+  cursor: pointer;
   transition: opacity 0.2s;
 }
 
@@ -95,4 +104,18 @@ mat-icon {
 .active-link {
   font-weight: 700 !important;
   border-bottom: 1px solid #ffffff;
+}
+
+
+/* Botón para volver al panel (dashboard) */
+.btn-panel {
+  background-color: #ffffff;
+  color: #0b3c5d !important;
+  font-weight: 600;
+  padding: 0 14px;
+  margin-right: 12px;
+}
+
+.btn-panel:hover {
+  background-color: #e1edf5;
 }
