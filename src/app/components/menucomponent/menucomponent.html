@@ -1,27 +1,29 @@
 <div class="container">
   <mat-toolbar>
     <!-- 1. LOGO A LA IZQUIERDA -->
-    <button class="logo-btn" routerLink="/inicio" aria-label="Ir al inicio">
+    <button class="logo-btn" type="button" (click)="irA('inicio')" aria-label="Ir al inicio">
       <img src="images/logo-blured.png" alt="Logo BlueRed" class="logo-img" />
     </button>
 
-    <!-- ESPACIADOR IZQUIERDO -->
-    <span class="spacer"></span>
-
-    <!-- 2. ENLACES EN EL MEDIO -->
+    <!-- 2. ENLACES: al hacer clic se desplaza hasta la sección -->
     <nav class="nav-links">
-      <a mat-button routerLink="/inicio" routerLinkActive="active-link">Inicio</a>
-      <a mat-button routerLink="/inicio" routerLinkActive="active-link">Nosotros</a>
-      <a mat-button routerLink="/inicio" routerLinkActive="active-link">Cómo funciona</a>
-      <a mat-button routerLink="/inicio" routerLinkActive="active-link">Beneficios</a>
-      <a mat-button routerLink="/inicio" routerLinkActive="active-link">Contacto</a>
+      <a mat-button (click)="irA('inicio')">Inicio</a>
+      <a mat-button (click)="irA('nosotros')">Nosotros</a>
+      <a mat-button (click)="irA('como-funciona')">Cómo funciona</a>
+      <a mat-button (click)="irA('beneficios')">Beneficios</a>
+      <a mat-button (click)="irA('contacto')">Contacto</a>
     </nav>
 
-    <!-- ESPACIADOR DERECHO -->
+    <!-- ESPACIADOR -->
     <span class="spacer"></span>
 
     <!-- 3. BOTÓN DE SESIÓN A LA DERECHA -->
     @if (auth.isAuthenticated()) {
+      @if (puedeVerPanel) {
+        <button matButton type="button" class="btn-panel" routerLink="/dashboard">
+          Ir al panel
+        </button>
+      }
       <span class="user-correo">{{ auth.getCorreo() }}</span>
       <button matButton type="button" class="btn-sesion" (click)="cerrarSesion()">
         Cerrar sesión

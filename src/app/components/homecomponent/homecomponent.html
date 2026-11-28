@@ -1,27 +1,26 @@
 <app-menucomponent></app-menucomponent>
 <div class="landing-container">
-  
-  <!-- SECCIÓN 1: HERO / PORTADA PRINCIPAL -->
-  <section class="hero-section">
+
+  <!-- SECCIÓN 1: INICIO / PORTADA -->
+  <section id="inicio" class="hero-section">
     <div class="hero-content">
-      <span class="badge">PESCA ARTESANAL & TRAZABILIDAD DIGITAL</span>
+      <span class="badge">PESCA ARTESANAL &amp; TRAZABILIDAD DIGITAL</span>
       <h1>Conectamos la pesca artesanal con un futuro sostenible</h1>
       <p>
         BlueRed conecta a pescadores artesanales, restaurantes y consumidores mediante una plataforma tecnológica que promueve la verificación de capturas, la trazabilidad y la comercialización responsable de productos marinos.
       </p>
       <div class="hero-buttons">
-        <button class="btn-primary">Conoce BlueRed</button>
-        <button class="btn-secondary">Cómo funciona</button>
+        <button type="button" class="btn-primary" (click)="irA('nosotros')">Conoce BlueRed</button>
+        <button type="button" class="btn-secondary" (click)="irA('como-funciona')">Cómo funciona</button>
       </div>
     </div>
     <div class="hero-image">
-      <!-- Imagen de pescador artesanal -->
       <img src="images/IMAGEN PESCADOR1.PNG" alt="Pescador artesanal con captura" />
     </div>
   </section>
 
-  <!-- SECCIÓN 2: ¿QUÉ ES BLUERED? -->
-  <section class="about-section">
+  <!-- SECCIÓN 2: NOSOTROS (¿QUÉ ES BLUERED?) -->
+  <section id="nosotros" class="about-section">
     <h2>¿Qué es BlueRed?</h2>
     <div class="about-grid">
       <div class="about-image">
@@ -30,41 +29,202 @@
       <div class="about-text">
         <h3>Tecnología al servicio de la pesca sostenible</h3>
         <p>
-          BlueRed es una startup tecnológica peruana que busca impulsar la pesca artesanal sostenible mediante herramientas digitales e inteligencia artificial. Nuestra plataforma facilita la verificación de capturas y permite que restaurantes y consumidores conozcan mejor el origen de los productos marinos.
+          BlueRed es una startup tecnológica peruana que busca impulsar la pesca artesanal sostenible mediante herramientas digitales e inteligencia artificial. Nuestra plataforma facilita la verificación de capturas y permite que restaurantes y consumidores conozcan mejor el origen de los productos marinos, promoviendo la transparencia y el uso responsable de los recursos del océano.
         </p>
         <div class="about-features">
-          <div class="feature-badge">Verificación</div>
-          <div class="feature-badge">Trazabilidad</div>
-          <div class="feature-badge">Conservación</div>
+          <div class="feature-badge">
+            <span class="material-symbols-outlined">verified</span>
+            Verificación
+          </div>
+          <div class="feature-badge">
+            <span class="material-symbols-outlined">link</span>
+            Trazabilidad
+          </div>
+          <div class="feature-badge">
+            <span class="material-symbols-outlined">public</span>
+            Conservación
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SECCIÓN 3: ¿CÓMO FUNCIONA BLUERED? -->
-  <section class="how-it-works">
+  <!-- SECCIÓN 3: CÓMO FUNCIONA -->
+  <section id="como-funciona" class="how-it-works">
     <h2>¿Cómo funciona BlueRed?</h2>
     <p class="section-subtitle">Conoce cómo nuestra plataforma busca facilitar la verificación y trazabilidad de las capturas artesanales.</p>
-    
+
     <div class="steps-grid">
       <div class="step-card">
-        <span class="step-number">01</span>
+        <div class="step-top">
+          <span class="step-number">01</span>
+          <span class="step-icon material-symbols-outlined">edit_note</span>
+        </div>
         <h3>Registra tu captura</h3>
         <p>El pescador registra los datos de su lote, incluyendo la especie, fecha de captura, cantidad de peces y peso total.</p>
+        <span class="step-tag">Paso inicial de registro</span>
       </div>
-      
+
       <div class="step-card">
-        <span class="step-number">02</span>
+        <div class="step-top">
+          <span class="step-number">02</span>
+          <span class="step-icon material-symbols-outlined">photo_camera</span>
+        </div>
         <h3>Verifica con inteligencia artificial</h3>
-        <p>La plataforma analiza una fotografía del pez junto a una moneda de 1 sol para identificar su especie y estimar su longitud.</p>
+        <p>La plataforma analiza una fotografía del pez junto a una moneda de 1 sol para identificar su especie y estimar su longitud, comparándola con las tallas mínimas correspondientes.</p>
+        <span class="step-tag">Referencia métrica fotométrica</span>
       </div>
-      
+
       <div class="step-card">
-        <span class="step-number">03</span>
+        <div class="step-top">
+          <span class="step-number">03</span>
+          <span class="step-icon material-symbols-outlined">workspace_premium</span>
+        </div>
         <h3>Obtén una certificación digital</h3>
-        <p>Cuando la captura cumple con los criterios de validación correspondientes, se genera una certificación digital que facilita la consulta de su información.</p>
+        <p>Cuando la captura cumple con los criterios de validación correspondientes, puede generarse una certificación digital que facilita la consulta de su información.</p>
+        <span class="step-tag step-tag-verde">Emisión de credencial digital</span>
       </div>
     </div>
   </section>
+
+  <!-- SECCIÓN 4: BENEFICIOS -->
+  <section id="beneficios" class="benefits-section">
+    <div class="benefit-card">
+      <div class="benefit-text">
+        <span class="benefit-label">PARA EL SECTOR PESQUERO</span>
+        <h3>Para pescadores artesanales</h3>
+        <ul>
+          <li>Registrar y organizar lotes de captura.</li>
+          <li>Consultar información sobre especies y tallas mínimas.</li>
+          <li>Gestionar validaciones y certificaciones digitales.</li>
+          <li>Acceder a oportunidades de comercialización con restaurantes.</li>
+        </ul>
+      </div>
+      <div class="benefit-image">
+        <img src="images/pescador-muelle.jpg" alt="Pescador artesanal en el muelle" />
+      </div>
+    </div>
+
+    <div class="benefit-card invertido">
+      <div class="benefit-image">
+        <img src="images/chef-cocinando.jpg" alt="Chef preparando un plato con productos marinos" />
+      </div>
+      <div class="benefit-text">
+        <span class="benefit-label">PARA GASTRONOMÍA &amp; HOSTELERÍA</span>
+        <h3>Para restaurantes</h3>
+        <ul>
+          <li>Consultar lotes de pesca certificados disponibles.</li>
+          <li>Conocer información sobre el origen de los productos marinos.</li>
+          <li>Acceder a datos de trazabilidad de las capturas.</li>
+          <li>Consultar y gestionar información relacionada con las compras.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="benefit-card">
+      <div class="benefit-text">
+        <span class="benefit-label">PARA EL PÚBLICO GENERAL</span>
+        <h3>Para consumidores</h3>
+        <ul>
+          <li>Conocer la procedencia de los productos marinos.</li>
+          <li>Consultar información sobre certificaciones y capturas.</li>
+          <li>Comprender la importancia de respetar las tallas mínimas.</li>
+          <li>Promover el consumo responsable y la sostenibilidad marina.</li>
+        </ul>
+      </div>
+      <div class="benefit-image">
+        <img src="images/consumidora.jpg" alt="Consumidora disfrutando de un plato de pescado" />
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 5: COMPROMISO -->
+  <section class="commitment-section">
+    <div class="commitment-image">
+      <img src="images/buzos-cardumen.jpg" alt="Buzos y cardumen en el fondo marino" />
+    </div>
+    <div class="commitment-text">
+      <h2>Nuestro compromiso con la pesca sostenible</h2>
+      <h3>Protegemos nuestros recursos marinos</h3>
+      <p>
+        En BlueRed buscamos contribuir a la conservación de los recursos marinos mediante herramientas tecnológicas que faciliten la verificación de tallas mínimas, la consulta de vedas y el acceso a información sobre la procedencia de las capturas.
+      </p>
+      <div class="commitment-item">
+        <strong>01. Respeto a las tallas mínimas</strong>
+        <span>Promovemos la verificación de la longitud de los peces para contribuir a la protección de ejemplares juveniles.</span>
+      </div>
+      <div class="commitment-item">
+        <strong>02. Protección de especies marinas</strong>
+        <span>Facilitamos la consulta de información sobre especies y periodos de veda para apoyar prácticas responsables.</span>
+      </div>
+      <div class="commitment-item">
+        <strong>03. Transparencia y trazabilidad</strong>
+        <span>Buscamos que pescadores, restaurantes y consumidores accedan a información verificable sobre las capturas.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 6: CONTACTO -->
+  <section id="contacto" class="contact-section">
+    <h2>Contáctanos</h2>
+    <p class="section-subtitle">¿Quieres conocer más sobre BlueRed? Envíanos tu consulta y conoce nuestra propuesta para una pesca artesanal sostenible.</p>
+
+    <form class="contact-form" [formGroup]="formContacto" (ngSubmit)="enviar()" novalidate>
+      <label for="nombre">Nombre completo</label>
+      <input id="nombre" type="text" formControlName="nombre" placeholder="Ej. Juan Pérez" [class.invalido]="esInvalido('nombre')" />
+      @if (esInvalido('nombre')) {
+        <small class="error">Ingresa tu nombre completo (mínimo 3 caracteres).</small>
+      }
+
+      <label for="correo">Correo electrónico</label>
+      <input id="correo" type="email" formControlName="correo" placeholder="ejemplo@correo.com" [class.invalido]="esInvalido('correo')" />
+      @if (esInvalido('correo')) {
+        <small class="error">Ingresa un correo electrónico válido.</small>
+      }
+
+      <label for="tipo">Soy…</label>
+      <select id="tipo" formControlName="tipo" [class.invalido]="esInvalido('tipo')">
+        <option value="" disabled>Selecciona una opción</option>
+        @for (t of tiposConsulta; track t) {
+          <option [value]="t">{{ t }}</option>
+        }
+      </select>
+      @if (esInvalido('tipo')) {
+        <small class="error">Selecciona cómo te relacionas con BlueRed.</small>
+      }
+
+      <label for="mensaje">Mensaje</label>
+      <textarea id="mensaje" rows="4" formControlName="mensaje" placeholder="Escribe tu consulta aquí..." [class.invalido]="esInvalido('mensaje')"></textarea>
+      @if (esInvalido('mensaje')) {
+        <small class="error">El mensaje debe tener al menos 10 caracteres.</small>
+      }
+
+      <button type="submit" class="btn-enviar">Enviar mensaje</button>
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-marca">
+        <img src="images/logo-blured.png" alt="Logo BlueRed" class="footer-logo" />
+        <p>Tecnología para una pesca artesanal sostenible.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navegación</h4>
+        <a (click)="irA('inicio')">Inicio</a>
+        <a (click)="irA('nosotros')">Nosotros</a>
+        <a (click)="irA('como-funciona')">Cómo funciona</a>
+        <a (click)="irA('beneficios')">Beneficios</a>
+        <a (click)="irA('contacto')">Contacto</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <span>contacto&#64;bluered.pe</span>
+        <span>Lima — Perú</span>
+      </div>
+    </div>
+    <p class="footer-copy">© {{ anio }} BlueRed. Todos los derechos reservados.</p>
+  </footer>
 
 </div>
