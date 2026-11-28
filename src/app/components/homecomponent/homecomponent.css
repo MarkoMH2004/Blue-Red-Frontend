@@ -1,5 +1,5 @@
 /* Importando fuentes de Google Fonts indicadas en la guía */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap');
 
 .landing-container {
   font-family: 'Inter', sans-serif;
@@ -7,21 +7,36 @@
   background-color: #F8FBFC;
 }
 
-/* Títulos con Poppins Bold y mayúsculas según requerimiento */
-h1, h2, h3 {
+h1, h2, h3, h4 {
   font-family: 'Poppins', sans-serif;
   font-weight: 700;
-  text-transform: uppercase;
   color: #0F1B2A;
+  margin: 0;
 }
 
-/* HERO SECTION */
+section {
+  scroll-margin-top: 100px; /* evita que el menú fijo tape el título al desplazarse */
+}
+
+.section-subtitle {
+  max-width: 640px;
+  margin: 0.75rem auto 0;
+  color: #4A5B6B;
+}
+
+.material-symbols-outlined {
+  font-size: 20px;
+  vertical-align: middle;
+}
+
+/* HERO */
 .hero-section {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 3rem;
   padding: 4rem 8%;
-  background-color: #D6EBF7; /* Fondo Espuma claro */
+  background-color: #F8FBFC;
 }
 
 .hero-content {
@@ -29,36 +44,44 @@ h1, h2, h3 {
 }
 
 .badge {
-  background-color: #1F7AB8; /* Azul Mar */
-  color: #FFFFFF;
-  padding: 0.4rem 0.8rem;
+  display: inline-block;
+  background-color: #E1EDF5;
+  color: #1F7AB8;
+  padding: 0.4rem 0.9rem;
   border-radius: 20px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 600;
 }
 
 .hero-content h1 {
-  font-size: 2.5rem;
-  margin: 1rem 0;
+  font-size: 2.6rem;
+  margin: 1.2rem 0;
   line-height: 1.2;
 }
 
 .hero-content p {
   font-size: 1rem;
-  color: #0B3C5D; /* Azul Océano */
+  line-height: 1.6;
+  color: #3B4A5A;
   margin-bottom: 2rem;
 }
 
-/* Botón Principal - Usando el Rojo Coral exclusivo de acciones principales */
+.hero-image img {
+  width: 100%;
+  max-width: 460px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(11, 60, 93, 0.18);
+  display: block;
+}
+
 .btn-primary {
-  background-color: #D7263D; /* Rojo Coral */
+  background-color: #D7263D; /* Rojo Coral: solo acciones principales */
   color: #FFFFFF;
   border: none;
   padding: 0.8rem 1.8rem;
   font-family: 'Poppins', sans-serif;
-  font-weight: 700;
-  text-transform: uppercase;
-  border-radius: 4px;
+  font-weight: 600;
+  border-radius: 6px;
   cursor: pointer;
   margin-right: 1rem;
 }
@@ -71,17 +94,21 @@ h1, h2, h3 {
   background-color: transparent;
   color: #0B3C5D;
   border: 2px solid #0B3C5D;
-  padding: 0.8rem 1.8rem;
+  padding: 0.75rem 1.8rem;
   font-family: 'Poppins', sans-serif;
-  font-weight: 700;
-  border-radius: 4px;
+  font-weight: 600;
+  border-radius: 6px;
   cursor: pointer;
 }
 
-/* SECCIÓN ¿QUÉ ES BLUERED? */
+.btn-secondary:hover {
+  background-color: #E1EDF5;
+}
+
+/* NOSOTROS */
 .about-section {
   padding: 5rem 8%;
-  background-color: #FFFFFF;
+  background-color: #D6EBF7;
   text-align: center;
 }
 
@@ -93,45 +120,400 @@ h1, h2, h3 {
   text-align: left;
 }
 
-.about-text {
-  flex: 1;
-}
-
+.about-text,
 .about-image {
   flex: 1;
 }
 
 .about-image img {
   width: 100%;
-  border-radius: 8px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(11, 60, 93, 0.18);
+  display: block;
 }
 
-/* SECCIÓN CÓMO FUNCIONA */
+.about-text h3 {
+  font-size: 1.2rem;
+  color: #0B3C5D;
+  margin-bottom: 0.8rem;
+}
+
+.about-text p {
+  line-height: 1.7;
+  color: #2F3E4E;
+}
+
+.about-features {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.feature-badge {
+  background: #FFFFFF;
+  border-radius: 10px;
+  padding: 0.9rem 1.2rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0B3C5D;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 110px;
+}
+
+.feature-badge .material-symbols-outlined {
+  color: #1F7AB8;
+  background: #E1EDF5;
+  border-radius: 50%;
+  padding: 6px;
+}
+
+/* CÓMO FUNCIONA */
 .how-it-works {
   padding: 5rem 8%;
-  background-color: #F8FBFC;
+  background-color: #FFFFFF;
   text-align: center;
 }
 
 .steps-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  gap: 1.5rem;
   margin-top: 3rem;
   text-align: left;
 }
 
 .step-card {
   background: #FFFFFF;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+  padding: 1.6rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
   border: 1px solid #E1EDF5;
+  display: flex;
+  flex-direction: column;
+}
+
+.step-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .step-number {
   font-family: 'Poppins', sans-serif;
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 700;
   color: #1F7AB8;
+}
+
+.step-icon {
+  background: #E1EDF5;
+  color: #1F7AB8;
+  border-radius: 10px;
+  padding: 8px;
+}
+
+.step-card h3 {
+  font-size: 1.05rem;
+  margin: 1rem 0 0.5rem;
+}
+
+.step-card p {
+  color: #4A5B6B;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  flex: 1;
+}
+
+.step-tag {
+  margin-top: 1rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid #E1EDF5;
+  font-size: 0.78rem;
+  color: #1F7AB8;
+}
+
+.step-tag-verde {
+  color: #1E8A4C;
+}
+
+/* BENEFICIOS */
+.benefits-section {
+  padding: 4rem 8%;
+  background-color: #F8FBFC;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.benefit-card {
+  background: #FFFFFF;
+  border: 1px solid #E1EDF5;
+  border-radius: 14px;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.benefit-card.invertido {
+  flex-direction: row;
+}
+
+.benefit-text,
+.benefit-image {
+  flex: 1;
+}
+
+.benefit-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #1F7AB8;
+  letter-spacing: 0.04em;
+}
+
+.benefit-text h3 {
+  font-size: 1.5rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.benefit-text ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.benefit-text li {
+  position: relative;
+  padding-left: 1.8rem;
+  margin-bottom: 0.7rem;
+  color: #3B4A5A;
+  font-size: 0.92rem;
+}
+
+.benefit-text li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #E1EDF5;
+  color: #1F7AB8;
+  font-size: 0.7rem;
+  text-align: center;
+  line-height: 18px;
+}
+
+/* El contenedor mantiene un fondo claro si la imagen aún no existe */
+.benefit-image,
+.commitment-image {
+  background: #E1EDF5;
+  border-radius: 12px;
+  min-height: 220px;
+  overflow: hidden;
+}
+
+.benefit-image img,
+.commitment-image img {
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+/* COMPROMISO */
+.commitment-section {
+  padding: 5rem 8%;
+  background-color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.commitment-image,
+.commitment-text {
+  flex: 1;
+}
+
+.commitment-text h2 {
+  font-size: 1.7rem;
+}
+
+.commitment-text h3 {
+  font-size: 1.05rem;
+  color: #1F7AB8;
+  margin: 0.8rem 0;
+}
+
+.commitment-text p {
+  color: #3B4A5A;
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+}
+
+.commitment-item {
+  background: #E8F1F9;
+  border: 1px solid #D6E4F0;
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.commitment-item strong {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  color: #0B3C5D;
+}
+
+.commitment-item span {
+  font-size: 0.82rem;
+  color: #3B4A5A;
+}
+
+/* CONTACTO */
+.contact-section {
+  padding: 5rem 8%;
+  background-color: #D6EBF7;
+  text-align: center;
+}
+
+.contact-form {
+  background: #FFFFFF;
+  max-width: 480px;
+  margin: 2rem auto 0;
+  padding: 1.8rem;
+  border-radius: 12px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin: 0.9rem 0 0.35rem;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  border: 1px solid #D5E2EC;
+  border-radius: 6px;
+  padding: 0.65rem 0.8rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  background: #FFFFFF;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: #1F7AB8;
+}
+
+.contact-form .invalido {
+  border-color: #D7263D;
+}
+
+.contact-form .error {
+  color: #D7263D;
+  font-size: 0.75rem;
+  margin-top: 0.3rem;
+}
+
+.btn-enviar {
+  margin-top: 1.4rem;
+  background-color: #D7263D;
+  color: #FFFFFF;
+  border: none;
+  padding: 0.8rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-enviar:hover {
+  opacity: 0.9;
+}
+
+/* FOOTER */
+.footer {
+  background-color: #0B3C5D;
+  color: #E6F2F8;
+  padding: 2.5rem 8% 1.2rem;
+}
+
+.footer-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.footer-logo {
+  height: 56px;
+  width: auto;
+}
+
+.footer-marca p {
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.footer-col h4 {
+  color: #FFFFFF;
+  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+}
+
+.footer-col a {
+  cursor: pointer;
+  color: #E6F2F8;
+}
+
+.footer-col a:hover {
+  text-decoration: underline;
+}
+
+.footer-copy {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  margin-top: 1.8rem;
+  padding-top: 1rem;
+  text-align: center;
+  font-size: 0.78rem;
+}
+
+/* Pantallas pequeñas */
+@media (max-width: 900px) {
+  .hero-section,
+  .about-grid,
+  .commitment-section,
+  .benefit-card {
+    flex-direction: column;
+  }
+  .hero-content {
+    max-width: 100%;
+  }
+  .steps-grid {
+    grid-template-columns: 1fr;
+  }
 }
